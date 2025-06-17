@@ -42,7 +42,6 @@ export default function useSliderDrag(currentPage, setCurrentPage, totalPages) {
     bounceTimer.current = setTimeout(() => setOffsetX(0), 200);
   };
 
-  // JSX에서 바로 쓸 수 있게 객체로 묶어 반환
   const bindDrag = {
     onMouseDown: handleStart,
     onMouseMove: handleMove,
