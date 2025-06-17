@@ -9,7 +9,7 @@ export default function MovieCardsList() {
   return (
     <>
       <TopMoviesSlider />
-      <section className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-6 w-full max-w-[1800px] mx-auto px-6">
+      <section className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-6 w-full max-w-[1800px] mx-auto mt-10 px-6">
         {movieData.map((movie) => (
           <Link to="/details" key={movie.id}>
             <MovieCard
