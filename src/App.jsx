@@ -3,7 +3,7 @@ import dummy from "./data/movieListData.json";
 import MovieCard from "./components/MovieCard";
 
 function App() {
-  const [movieData, setMovieData] = useState(dummy.results);
+  const [movieData, _] = useState(dummy.results);
 
   return (
     <>
