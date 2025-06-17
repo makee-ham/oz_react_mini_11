@@ -34,18 +34,22 @@ export default function TopMoviesSlider() {
   }, []);
 
   const [startX, setStartX] = useState(null);
+  const [dragDistance, setDragDistance] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
 
   const handleDragStart = (e) => {
     setStartX(e.clientX || e.touches[0].clientX);
     setIsDragging(true);
+    setDragDistance(0);
   };
 
   const handleDragMove = (e) => {
     if (!isDragging || startX === null) return;
     const currentX = e.clientX || e.touches[0].clientX;
     const diff = startX - currentX;
-    // 드래그 방향 감지
+
+    setDragDistance(Math.abs(diff));
+
     if (diff > 50) {
       setCurrentPage((prev) => Math.min(prev + 1, totalPage - 1));
       setIsDragging(false);
@@ -55,9 +59,17 @@ export default function TopMoviesSlider() {
     }
   };
 
-  const handleDragEnd = () => {
+  const handleDragEnd = (e) => {
+    if (dragDistance < 10) {
+      const target = e.target;
+      if (target.tagName === "BUTTON" || target.closest("button")) {
+        return;
+      }
+    }
+
     setIsDragging(false);
     setStartX(null);
+    setDragDistance(0);
   };
 
   return (
