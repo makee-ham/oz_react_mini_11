@@ -7,10 +7,10 @@ export default function NavBar() {
         <Link to="/">
           <h1 className="text-2xl font-logo tracking-wider">CineVisor</h1>
         </Link>
-        <div className="flex-1 mx-20">
+        <div className="flex-1 max-w-5xl mx-20">
           <input
             type="text"
-            className="w-full rounded-full px-4 py-2 bg-(--text-default) outline-none text-[#333] text-sm focus:ring-2 focus:ring-(--point-color) transition"
+            className="w-full max-w-5xl rounded-full px-4 py-2 bg-(--text-default) outline-none text-[#333] text-sm focus:ring-2 focus:ring-(--point-color) transition"
           />
         </div>
         <div className="flex gap-2">
