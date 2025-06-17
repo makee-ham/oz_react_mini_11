@@ -42,6 +42,8 @@ export default function TopMoviesSlider() {
   const [startX, setStartX] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const isClickPrevented = useRef(false);
+  const [offsetX, setOffsetX] = useState(0);
+  const bounceTimeoutRef = useRef(null);
 
   const handleDragStart = (e) => {
     setStartX(e.clientX || e.touches[0].clientX);
@@ -53,15 +55,25 @@ export default function TopMoviesSlider() {
     const currentX = e.clientX || e.touches[0].clientX;
     const diff = startX - currentX;
 
-    if (Math.abs(diff) > 10) {
-      isClickPrevented.current = true;
-    }
+    if (Math.abs(diff) > 10) isClickPrevented.current = true;
 
     if (diff > 50) {
-      setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1));
+      if (currentPage < totalPages - 1) {
+        setCurrentPage((prev) => prev + 1);
+      } else {
+        setOffsetX(-60);
+        clearTimeout(bounceTimeoutRef.current);
+        bounceTimeoutRef.current = setTimeout(() => setOffsetX(0), 150);
+      }
       setIsDragging(false);
     } else if (diff < -50) {
-      setCurrentPage((prev) => Math.max(prev - 1, 0));
+      if (currentPage > 0) {
+        setCurrentPage((prev) => prev - 1);
+      } else {
+        setOffsetX(60);
+        clearTimeout(bounceTimeoutRef.current);
+        bounceTimeoutRef.current = setTimeout(() => setOffsetX(0), 150);
+      }
       setIsDragging(false);
     }
   };
@@ -100,11 +112,11 @@ export default function TopMoviesSlider() {
           </button>
 
           <div
-            className={`flex gap-6 transition-transform duration-500 ${
+            className={`flex gap-6 transition-transform ${
               isDragging ? "cursor-grabbing" : "cursor-grab"
-            }`}
+            } ${offsetX !== 0 ? "duration-300 ease-out" : "duration-500 ease-in-out"}`}
             style={{
-              transform: `translateX(-${SLIDE_UNIT * currentPage}px)`,
+              transform: `translateX(calc(-${SLIDE_UNIT * currentPage}px + ${offsetX}px))`,
             }}
             onMouseDown={handleDragStart}
             onMouseMove={handleDragMove}
