@@ -1,21 +1,29 @@
 import { useState } from "react";
 import dummy from "../data/movieDetailData.json";
+import { TMDB_IMAGE_BASE_URL } from "../constants/imageBaseUrl";
 
 export default function MovieDetail() {
   const [detailData, _] = useState(dummy);
   return (
     <section>
-      <article>포스터</article>
+      <article>
+        <img
+          src={TMDB_IMAGE_BASE_URL + detailData.poster_path}
+          alt={detailData.title}
+        />
+      </article>
       <article>
         <div>
-          <h2>제목</h2>
-          <h3>평점</h3>
+          <h2>{detailData.title}</h2>
+          <h3>{detailData.vote_average}</h3>
         </div>
         <div>
-          <h4>장르</h4>
+          {detailData.genres.map((genre, idx) => (
+            <span key={idx}>{genre.name}</span>
+          ))}
         </div>
         <div>
-          <p>줄거리</p>
+          <p>{detailData.overview}</p>
         </div>
       </article>
     </section>
