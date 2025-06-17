@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Megrim&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -20,12 +21,6 @@
   --point-sub-color: #ff5f5f;
   --line-color: #2e2e2e;
   --font-logo: "Megrim", "sans-serif";
-}
-
-.megrim-regular {
-  font-family: "Megrim", system-ui;
-  font-weight: 400;
-  font-style: normal;
 }
 
 html,
