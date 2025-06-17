@@ -6,7 +6,7 @@ export default function MovieDetail() {
   const [detailData, _] = useState(dummy);
 
   return (
-    <section className="flex justify-center items-start  gap-10 w-full max-w-6xl mx-auto mt-24 p-8">
+    <section className="flex justify-center items-start gap-10 w-full max-w-6xl mx-auto mt-24 p-8">
       {/* 왼쪽: 포스터 */}
       <article className="w-[300px] aspect-[2/3] shrink-0 overflow-hidden rounded shadow-lg">
         <img

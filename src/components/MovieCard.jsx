@@ -2,9 +2,9 @@ import { TMDB_IMAGE_BASE_URL } from "../constants/imageBaseUrl";
 
 export default function MovieCard({ poster, title, score }) {
   const getScoreColor = (score) => {
-    if (score >= 8) return "bg-[#ff5f5f]/90";
-    if (score >= 6) return "bg-[#fb923c]/90";
-    return "bg-[#facc15]/90";
+    if (score >= 8) return "#ff5f5f";
+    if (score >= 6) return "#fb923c";
+    return "#facc15";
   };
 
   return (
@@ -28,6 +28,7 @@ export default function MovieCard({ poster, title, score }) {
               style={{
                 width: `${(score / 10) * 100}%`,
                 backgroundColor: getScoreColor(score),
+                opacity: 0.9,
               }}
             />
           </div>
