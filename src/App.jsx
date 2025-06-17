@@ -1,9 +1,11 @@
 import MovieCardsList from "./pages/MovieCardsList";
+import MovieDetail from "./pages/MovieDetail";
 
 function App() {
   return (
     <>
-      <MovieCardsList />
+      {/* <MovieCardsList /> */}
+      <MovieDetail />
     </>
   );
 }
