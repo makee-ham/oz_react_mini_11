@@ -1,6 +1,24 @@
 @import "tailwindcss";
 
 @theme {
+  --bg-primary: "#0F0F0F";
+  --bg-secondary: "#1A1A1A";
+  --text-default: "#f1f1f1";
+  --text-sub: "#aaaaaa";
+  --point-color: "#00ffff";
+  --point-sub-color: "#ff5f5f";
+  --line-color: "#2E2E2E";
+  --font-logo: "Megrim", "sans-serif";
+}
+
+:root {
+  --bg-primary: #0f0f0f;
+  --bg-secondary: #1a1a1a;
+  --text-default: #f1f1f1;
+  --text-sub: #aaaaaa;
+  --point-color: #00ffff;
+  --point-sub-color: #ff5f5f;
+  --line-color: #2e2e2e;
   --font-logo: "Megrim", "sans-serif";
 }
 
@@ -15,4 +33,7 @@ body,
 #root {
   width: 100%;
   height: 100vh;
+
+  background-color: var(--bg-primary);
+  color: var(--text-default);
 }

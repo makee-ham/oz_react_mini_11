@@ -31,7 +31,7 @@ export default function MovieDetail() {
           {detailData.genres.map((genre, idx) => (
             <span
               key={idx}
-              className="px-3 py-1 bg-gray-200 text-sm rounded-full"
+              className="px-3 py-1 bg-(--line-color) text-sm rounded-full"
             >
               {genre.name}
             </span>
@@ -39,7 +39,7 @@ export default function MovieDetail() {
         </div>
 
         {/* 줄거리 */}
-        <div className="bg-gray-100 p-4 rounded text-sm leading-relaxed">
+        <div className="bg-(--bg-secondary) p-4 rounded text-sm leading-relaxed">
           <p>{detailData.overview}</p>
         </div>
       </article>
