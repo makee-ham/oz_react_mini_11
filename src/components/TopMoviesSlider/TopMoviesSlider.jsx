@@ -8,6 +8,8 @@ import movieData from "../../data/movieListData.json";
 import TopMovieCard from "./TopMovieCard";
 import useThrottle from "../../hooks/useThrottle.js";
 import useSliderDrag from "../../hooks/useSliderDrag.js";
+import ChevronLeft from "../../assets/ChevronLeft.jsx";
+import ChevronRight from "../../assets/ChevronRight.jsx";
 
 export default function TopMoviesSlider() {
   const topMovies = getTopRatedMovies(movieData.results, 20);
@@ -55,19 +57,21 @@ export default function TopMoviesSlider() {
       >
         <div className="relative group w-full overflow-hidden px-6 md:px-10">
           {/* TODO 버튼 예쁘게 호버 */}
+          <div className="absolute -left-6 top-0 h-full w-16 rounded-r-full bg-gradient-to-r from-[#00ffff]/20 to-transparent z-1 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm" />
+          <div className="absolute -right-6 top-0 h-full w-16 rounded-l-full bg-gradient-to-l from-[#00ffff]/20 to-transparent z-1 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm" />
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
-            className="absolute left-2 top-1/2 -translate-y-1/2 w-6 h-full opacity-0 group-hover:opacity-100 transition z-10"
+            className="flex justify-center items-center absolute left-2 top-1/2 -translate-y-1/2 w-6 h-full opacity-0 group-hover:opacity-100 transition duration-300 z-10"
           >
-            {"<"}
+            <ChevronLeft />
           </button>
           <button
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))
             }
-            className="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-full opacity-0 group-hover:opacity-100 transition z-10"
+            className="flex justify-center items-center absolute right-2 top-1/2 -translate-y-1/2 w-6 h-full opacity-0 group-hover:opacity-100 transition duration-300 z-10"
           >
-            {">"}
+            <ChevronRight />
           </button>
 
           <div
