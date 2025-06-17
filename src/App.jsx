@@ -1,3 +1,5 @@
+import dummy from "./data/movieListData.json";
+
 function App() {
   return (
     <>
