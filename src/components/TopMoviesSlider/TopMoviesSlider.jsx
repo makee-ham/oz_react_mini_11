@@ -56,7 +56,6 @@ export default function TopMoviesSlider() {
         onDragStart={(e) => e.preventDefault()}
       >
         <div className="relative group w-full overflow-hidden px-6 md:px-10">
-          {/* TODO 버튼 예쁘게 호버 */}
           <div className="absolute -left-6 top-0 h-full w-16 rounded-r-full bg-gradient-to-r from-[#00ffff]/20 to-transparent z-1 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm" />
           <div className="absolute -right-6 top-0 h-full w-16 rounded-l-full bg-gradient-to-l from-[#00ffff]/20 to-transparent z-1 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm" />
           <button
