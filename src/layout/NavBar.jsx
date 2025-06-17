@@ -16,13 +16,13 @@ export default function NavBar() {
         <div className="flex gap-2">
           <button
             type="button"
-            className="px-3 py-1 rounded text-sm text-(--text-default) hover:bg-(--point-color) hover:text-(--bg-primary) transition"
+            className="px-3 py-1 rounded text-sm text-(--text-default) hover:bg-(--point-color) hover:text-(--bg-primary) transition duration-200"
           >
             로그인
           </button>
           <button
             type="button"
-            className="px-3 py-1 rounded text-sm text-(--text-default) hover:bg-(--point-color) hover:text-(--bg-primary) transition"
+            className="px-3 py-1 rounded text-sm text-(--text-default) hover:bg-(--point-color) hover:text-(--bg-primary) transition duration-200"
           >
             회원가입
           </button>
