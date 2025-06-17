@@ -17,6 +17,9 @@ export default function TopMoviesSlider() {
   const CARD_WIDTH = 220;
   const GAP = 24;
 
+  // 슬라이드 이동 거리를 카드 한 페이지 전체 너비와 일치하게 둠으로써
+  // currentPage 증가 시 딱 그만큼 묶음을 이동시켜
+  // 맨 앞 카드가, 예를 들어 itemsPerPage가 5라면 1, 6, 11,... 처럼 인덱스 고정
   const totalPages = Math.ceil(topMovies.length / itemsPerPage);
   const SLIDE_UNIT = (CARD_WIDTH + GAP) * itemsPerPage;
 
