@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import getTopRatedMovies from "../../utils/getTopRatedMovies";
 import movieData from "../../data/movieListData.json";
 import TopMovieCard from "./TopMovieCard";
+import useThrottle from "../../hooks/useThrottle";
 
 export default function TopMoviesSlider() {
   const topMovies = getTopRatedMovies(movieData.results, 20);
@@ -20,18 +21,20 @@ export default function TopMoviesSlider() {
   const SLIDE_UNIT = (CARD_WIDTH + GAP) * itemsPerPage;
 
   // TODO 여기 throttle
-  useEffect(() => {
-    const handleResize = () => {
-      const screenWidth = window.innerWidth;
-      if (screenWidth >= 1200) setItemsPerPage(5);
-      else if (screenWidth >= 900) setItemsPerPage(4);
-      else if (screenWidth >= 600) setItemsPerPage(3);
-      else setItemsPerPage(2);
-    };
+  const updateItemsPerPage = () => {
+    const screenWidth = window.innerWidth;
+    if (screenWidth >= 1200) setItemsPerPage(5);
+    else if (screenWidth >= 900) setItemsPerPage(4);
+    else if (screenWidth >= 600) setItemsPerPage(3);
+    else setItemsPerPage(2);
+  };
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+  const throttledResizeHandler = useThrottle(updateItemsPerPage, 300);
+
+  useEffect(() => {
+    updateItemsPerPage();
+    window.addEventListener("resize", throttledResizeHandler);
+    return () => window.removeEventListener("resize", throttledResizeHandler);
   }, []);
 
   const [startX, setStartX] = useState(null);

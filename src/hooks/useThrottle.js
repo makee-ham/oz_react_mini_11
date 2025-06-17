@@ -1,13 +1,21 @@
-import { useRef } from "react";
+import { useRef, useCallback } from "react";
 
-export default function useThrottle(callback, delay) {
+export function useSimpleThrottle(callback, delay) {
   const lastCall = useRef(0);
+  const callbackRef = useRef(callback);
 
-  return (...args) => {
-    const now = new Date().getTime();
-    if (now - lastCall.current >= delay) {
-      lastCall.current = now;
-      callback(...args);
-    }
-  };
+  callbackRef.current = callback;
+
+  const throttledCallback = useCallback(
+    (...args) => {
+      const now = Date.now();
+      if (now - lastCall.current >= delay) {
+        lastCall.current = now;
+        callbackRef.current(...args);
+      }
+    },
+    [delay]
+  );
+
+  return throttledCallback;
 }
