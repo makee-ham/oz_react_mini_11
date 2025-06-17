@@ -1,12 +1,15 @@
 import { Route, Routes } from "react-router-dom";
 import MovieCardsList from "./pages/MovieCardsList";
 import MovieDetail from "./pages/MovieDetail";
+import Layout from "./layout/Layout";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<MovieCardsList />} />
-      <Route path="/details" element={<MovieDetail />} />
+      <Route element={<Layout />}>
+        <Route path="/" element={<MovieCardsList />} />
+        <Route path="/details" element={<MovieDetail />} />
+      </Route>
     </Routes>
   );
 }
