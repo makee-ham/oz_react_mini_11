@@ -1,6 +1,12 @@
 import { TMDB_IMAGE_BASE_URL } from "../constants/imageBaseUrl";
 
 export default function MovieCard({ poster, title, score }) {
+  const getScoreColor = (score) => {
+    if (score >= 8) return "bg-[#ff5f5f]/90";
+    if (score >= 6) return "bg-[#fb923c]/90";
+    return "bg-[#facc15]/90";
+  };
+
   return (
     <div className="flex flex-col w-50 h-84 rounded-lg overflow-hidden bg-(--bg-secondary) hover:shadow-[0_6px_20px_rgba(0,255,255,0.12)] transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015]">
       {/* 포스터 이미지 */}
@@ -14,7 +20,19 @@ export default function MovieCard({ poster, title, score }) {
       {/* 텍스트 영역 */}
       <div className="flex flex-col justify-between h-18 p-2 bg-(--bg-secondary)">
         <h3 className="font-bold line-clamp-1">{title}</h3>
-        <p className="font-light text-(--text-sub) text-sm">평점: {score}</p>
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-white/80">⭐</span>
+          <div className="w-full h-2 rounded-full bg-neutral-700 overflow-hidden">
+            <div
+              className="h-3"
+              style={{
+                width: `${(score / 10) * 100}%`,
+                backgroundColor: getScoreColor(score),
+              }}
+            />
+          </div>
+          <span className="text-sm text-(--text-sub) font-light">{score}</span>
+        </div>
       </div>
     </div>
   );
