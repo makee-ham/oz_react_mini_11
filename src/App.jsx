@@ -12,7 +12,7 @@ function App() {
         {movieData.map((movie) => (
           <MovieCard
             key={movie.id}
-            image={movie.poster_path}
+            poster={movie.poster_path}
             title={movie.title}
             score={movie.vote_average}
           />
