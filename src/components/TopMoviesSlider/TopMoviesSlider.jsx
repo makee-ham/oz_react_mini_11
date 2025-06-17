@@ -2,11 +2,12 @@
 // 마우스 드래그, 터치 스와이프 가능
 // 좌우 Arrows 구현 (호버 시 보이고 아니면 숨겨짐)
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import getTopRatedMovies from "../../utils/getTopRatedMovies";
 import movieData from "../../data/movieListData.json";
 import TopMovieCard from "./TopMovieCard";
 import useThrottle from "../../hooks/useThrottle.js";
+import useSliderDrag from "../../hooks/useSliderDrag.js";
 
 export default function TopMoviesSlider() {
   const topMovies = getTopRatedMovies(movieData.results, 20);
@@ -39,53 +40,11 @@ export default function TopMoviesSlider() {
     return () => window.removeEventListener("resize", throttledResizeHandler);
   }, []);
 
-  const [startX, setStartX] = useState(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const isClickPrevented = useRef(false);
-  const [offsetX, setOffsetX] = useState(0);
-  const bounceTimeoutRef = useRef(null);
-
-  const handleDragStart = (e) => {
-    setStartX(e.clientX || e.touches[0].clientX);
-    setIsDragging(true);
-  };
-
-  const handleDragMove = (e) => {
-    if (!isDragging || startX === null) return;
-    const currentX = e.clientX || e.touches[0].clientX;
-    const diff = startX - currentX;
-
-    if (Math.abs(diff) > 10) isClickPrevented.current = true;
-
-    if (diff > 50) {
-      if (currentPage < totalPages - 1) {
-        setCurrentPage((prev) => prev + 1);
-      } else {
-        setOffsetX(-60);
-        clearTimeout(bounceTimeoutRef.current);
-        bounceTimeoutRef.current = setTimeout(() => setOffsetX(0), 150);
-      }
-      setIsDragging(false);
-    } else if (diff < -50) {
-      if (currentPage > 0) {
-        setCurrentPage((prev) => prev - 1);
-      } else {
-        setOffsetX(60);
-        clearTimeout(bounceTimeoutRef.current);
-        bounceTimeoutRef.current = setTimeout(() => setOffsetX(0), 150);
-      }
-      setIsDragging(false);
-    }
-  };
-
-  const handleDragEnd = () => {
-    setIsDragging(false);
-    setStartX(null);
-
-    setTimeout(() => {
-      isClickPrevented.current = false;
-    }, 50);
-  };
+  const { bindDrag, offsetX, isDragging, isClickPrevented } = useSliderDrag(
+    currentPage,
+    setCurrentPage,
+    totalPages
+  );
 
   return (
     <section className="mt-30">
@@ -118,13 +77,7 @@ export default function TopMoviesSlider() {
             style={{
               transform: `translateX(calc(-${SLIDE_UNIT * currentPage}px + ${offsetX}px))`,
             }}
-            onMouseDown={handleDragStart}
-            onMouseMove={handleDragMove}
-            onMouseUp={handleDragEnd}
-            onMouseLeave={handleDragEnd}
-            onTouchStart={handleDragStart}
-            onTouchMove={handleDragMove}
-            onTouchEnd={handleDragEnd}
+            {...bindDrag}
           >
             {topMovies.map((movie, idx) => (
               <TopMovieCard
