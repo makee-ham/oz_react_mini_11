@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export default function MovieCardsList() {
   const [movieData, _] = useState(dummy.results);
   return (
-    <section className="flex flex-wrap justify-center gap-6 mt-6">
+    <section className="flex flex-wrap justify-center gap-6 mt-24">
       {movieData.map((movie) => (
         <Link to="/details" key={movie.id}>
           <MovieCard

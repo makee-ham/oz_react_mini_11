@@ -37,3 +37,7 @@ body,
   background-color: var(--bg-primary);
   color: var(--text-default);
 }
+
+button {
+  cursor: pointer;
+}
