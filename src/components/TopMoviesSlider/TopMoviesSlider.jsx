@@ -100,7 +100,9 @@ export default function TopMoviesSlider() {
 
           {/* 카드 슬라이드 wrapper (카드 간 GAP=24) */}
           <div
-            className="flex gap-6 transition-transform duration-500 px-10"
+            className={`flex gap-6 transition-transform duration-500 px-10 ${
+              isDragging ? "cursor-grabbing" : "cursor-grab"
+            }`}
             style={{
               transform: `translateX(-${SLIDE_WIDTH * currentPage}px)`,
             }}
