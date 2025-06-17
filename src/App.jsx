@@ -1,23 +1,9 @@
-import { useState } from "react";
-import dummy from "./data/movieListData.json";
-import MovieCard from "./components/MovieCard";
+import MovieCardsList from "./pages/MovieCardsList";
 
 function App() {
-  const [movieData, _] = useState(dummy.results);
-
   return (
     <>
-      {/* 영화 카드 목록 */}
-      <section className="flex flex-wrap justify-center gap-6 mt-6">
-        {movieData.map((movie) => (
-          <MovieCard
-            key={movie.id}
-            poster={movie.poster_path}
-            title={movie.title}
-            score={movie.vote_average}
-          />
-        ))}
-      </section>
+      <MovieCardsList />
     </>
   );
 }
