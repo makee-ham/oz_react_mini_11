@@ -9,8 +9,7 @@ export default function MovieCardsList() {
   return (
     <>
       <TopMoviesSlider />
-      {/* TODO 여기 왼쪽정렬 */}
-      <section className="flex flex-wrap justify-center gap-6 mt-10">
+      <section className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-6 w-full max-w-[1800px] mx-auto px-6">
         {movieData.map((movie) => (
           <Link to="/details" key={movie.id}>
             <MovieCard

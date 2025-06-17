@@ -2,6 +2,8 @@
 // 마우스 드래그, 터치 스와이프 가능
 // 좌우 Arrows 구현 (호버 시 보이고 아니면 숨겨짐)
 
+// TODO 드래그 로직 관련은 hooks나 utils로 분리
+
 import getTopRatedMovies from "../../utils/getTopRatedMovies";
 import movieData from "../../data/movieListData.json";
 import TopMovieCard from "./TopMovieCard";
@@ -34,22 +36,18 @@ export default function TopMoviesSlider() {
   }, []);
 
   const [startX, setStartX] = useState(null);
-  const [dragDistance, setDragDistance] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const isClickPrevented = useRef(false);
 
   const handleDragStart = (e) => {
     setStartX(e.clientX || e.touches[0].clientX);
     setIsDragging(true);
-    setDragDistance(0);
   };
 
   const handleDragMove = (e) => {
     if (!isDragging || startX === null) return;
     const currentX = e.clientX || e.touches[0].clientX;
     const diff = startX - currentX;
-
-    setDragDistance(Math.abs(diff));
 
     if (Math.abs(diff) > 10) {
       isClickPrevented.current = true;
@@ -64,17 +62,9 @@ export default function TopMoviesSlider() {
     }
   };
 
-  const handleDragEnd = (e) => {
-    if (dragDistance < 10) {
-      const target = e.target;
-      if (target.tagName === "BUTTON" || target.closest("button")) {
-        return;
-      }
-    }
-
+  const handleDragEnd = () => {
     setIsDragging(false);
     setStartX(null);
-    setDragDistance(0);
 
     setTimeout(() => {
       isClickPrevented.current = false;
@@ -90,6 +80,7 @@ export default function TopMoviesSlider() {
       >
         {/* 버튼과 slide wrapper group용 */}
         <div className="relative group w-full overflow-hidden">
+          {/* TODO 버튼 호버 시 효과 나타나게 하기 */}
           {/* 왼쪽 버튼 */}
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
@@ -140,7 +131,7 @@ export default function TopMoviesSlider() {
             <div
               key={idx}
               className={`w-2 h-2 rounded-full cursor-pointer ${
-                idx === currentPage ? "bg-white" : "bg-gray-500"
+                idx === currentPage ? "bg-(--text-default)" : "bg-(--text-sub)"
               }`}
               onClick={() => setCurrentPage(idx)}
             />
