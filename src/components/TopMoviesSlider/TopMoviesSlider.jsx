@@ -8,19 +8,37 @@ import TopMovieCard from "./TopMovieCard";
 
 export default function TopMoviesSlider() {
   const topMovies = getTopRatedMovies(movieData.results, 20);
+
   return (
-    <section>
-      {/* 컨테이너 */}
-      <div>
-        {/* wrapper */}
-        <div>
+    <section className="flex flex-col gap-12 overflow-hidden select-none w-full mt-24">
+      {/* 버튼과 slide wrapper group용 */}
+      <div className="relative group w-full overflow-hidden">
+        {/* 왼쪽 버튼 */}
+        <button className="absolute left-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition z-10">
+          {"<"}
+        </button>
+        {/* 오른쪽 버튼 */}
+        <button className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition z-10">
+          {">"}
+        </button>
+
+        {/* 카드 슬라이드 wrapper */}
+        <div className="flex transition-transform duration-500">
           {topMovies.map((movie, idx) => (
             <TopMovieCard key={movie.id} data={movie} ranking={idx + 1} />
           ))}
         </div>
       </div>
+
       {/* 페이지 인디케이터 */}
-      <div></div>
+      <div className="flex justify-center gap-2">
+        {Array.from({ length: totalPage }).map((_, idx) => (
+          <div
+            key={idx}
+            className={`w-2 h-2 rounded-full ${idx === currentIndex ? "bg-(--point-color)" : "bg-(--text-sub)"}`}
+          />
+        ))}
+      </div>
     </section>
   );
 }
