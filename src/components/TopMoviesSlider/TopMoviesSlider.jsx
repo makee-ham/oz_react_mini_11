@@ -19,6 +19,7 @@ export default function TopMoviesSlider() {
   const totalPages = Math.ceil(topMovies.length / itemsPerPage);
   const SLIDE_UNIT = (CARD_WIDTH + GAP) * itemsPerPage;
 
+  // TODO 여기 throttle
   useEffect(() => {
     const handleResize = () => {
       const screenWidth = window.innerWidth;
@@ -77,6 +78,7 @@ export default function TopMoviesSlider() {
         onDragStart={(e) => e.preventDefault()}
       >
         <div className="relative group w-full overflow-hidden px-6 md:px-10">
+          {/* TODO 버튼 예쁘게 호버 */}
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
             className="absolute left-2 top-1/2 -translate-y-1/2 w-6 h-full opacity-0 group-hover:opacity-100 transition z-10"

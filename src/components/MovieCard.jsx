@@ -2,7 +2,7 @@ import { TMDB_IMAGE_BASE_URL } from "../constants/imageBaseUrl";
 
 export default function MovieCard({ poster, title, score }) {
   return (
-    <div className="flex flex-col w-50 h-84 border border-(--line-color)">
+    <div className="flex flex-col w-50 h-84 border border-(--line-color) rounded-md overflow-hidden">
       {/* 포스터 이미지 */}
       <div className="aspect-[2/3] w-full overflow-hidden">
         <img

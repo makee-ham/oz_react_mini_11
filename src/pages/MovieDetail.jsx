@@ -22,7 +22,7 @@ export default function MovieDetail() {
         <div className="flex justify-between items-center">
           <h2 className="text-3xl font-bold">{detailData.title}</h2>
           <span className="text-lg text-yellow-500 font-semibold">
-            ⭐ {detailData.vote_average}
+            ⭐ {Math.round(detailData.vote_average * 10) / 10}
           </span>
         </div>
 

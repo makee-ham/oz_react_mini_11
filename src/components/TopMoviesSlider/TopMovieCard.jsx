@@ -14,7 +14,7 @@ export default function TopMovieCard({ data, ranking, isClickPrevented }) {
       }}
     >
       <h2 className="text-5xl pb-2 min-w-[40px] text-right">{ranking}</h2>
-      <div className="aspect-[2/3] w-full h-full overflow-hidden cursor-pointer">
+      <div className="aspect-[2/3] w-full h-full overflow-hidden cursor-pointer rounded">
         <img
           className="w-full h-full object-cover"
           src={TMDB_IMAGE_BASE_URL + data.poster_path}

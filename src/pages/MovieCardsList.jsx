@@ -15,7 +15,7 @@ export default function MovieCardsList() {
             <MovieCard
               poster={movie.poster_path}
               title={movie.title}
-              score={movie.vote_average}
+              score={Math.round(movie.vote_average * 10) / 10}
             />
           </Link>
         ))}
