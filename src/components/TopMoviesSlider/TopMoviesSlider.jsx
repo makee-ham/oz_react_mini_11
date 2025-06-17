@@ -98,7 +98,7 @@ export default function TopMoviesSlider() {
           {Array.from({ length: totalPages }).map((_, idx) => (
             <div
               key={idx}
-              className={`w-2 h-2 rounded-full cursor-pointer ${
+              className={`w-2 h-2 rounded-full cursor-pointer transition duration-300 ${
                 idx === currentPage ? "bg-(--point-color)" : "bg-(--text-sub)"
               }`}
               onClick={() => setCurrentPage(idx)}

@@ -13,8 +13,7 @@ export default function MovieCard({ poster, title, score }) {
       </div>
       {/* 텍스트 영역 */}
       <div className="flex flex-col justify-between h-18 p-2 bg-(--bg-secondary)">
-        {/* TODO 타이틀 한 줄 안 넘게 ... 처리 */}
-        <h3 className="font-bold">{title}</h3>
+        <h3 className="font-bold line-clamp-1">{title}</h3>
         <p className="font-light text-(--text-sub) text-sm">평점: {score}</p>
       </div>
     </div>
