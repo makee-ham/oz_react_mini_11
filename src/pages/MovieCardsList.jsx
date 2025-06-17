@@ -11,7 +11,7 @@ export default function MovieCardsList() {
       <TopMoviesSlider />
       <section className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-6 w-full max-w-[1800px] mx-auto mt-10 px-6">
         {movieData.map((movie) => (
-          <Link to="/details" key={movie.id}>
+          <Link to={`/details/${movie.id}`} key={movie.id}>
             <MovieCard
               poster={movie.poster_path}
               title={movie.title}

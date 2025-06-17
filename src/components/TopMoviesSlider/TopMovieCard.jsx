@@ -10,7 +10,7 @@ export default function TopMovieCard({ data, ranking, isClickPrevented }) {
       className="flex justify-center items-end gap-4 w-[220px] shrink-0"
       onClick={() => {
         if (isClickPrevented.current) return;
-        navigate(`/details`);
+        navigate(`/details/${data.id}`);
       }}
     >
       <h2 className="text-5xl pb-2 min-w-[40px] text-right">{ranking}</h2>
