@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       {/* 영화 카드 목록 */}
-      <section>
+      <section className="flex flex-wrap">
         {movieData.map((movie) => (
           <MovieCard
             key={movie.id}
