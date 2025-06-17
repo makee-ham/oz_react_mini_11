@@ -5,7 +5,7 @@
 import getTopRatedMovies from "../../utils/getTopRatedMovies";
 import movieData from "../../data/movieListData.json";
 import TopMovieCard from "./TopMovieCard";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function TopMoviesSlider() {
   const topMovies = getTopRatedMovies(movieData.results, 20);
@@ -36,6 +36,7 @@ export default function TopMoviesSlider() {
   const [startX, setStartX] = useState(null);
   const [dragDistance, setDragDistance] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const isClickPrevented = useRef(false);
 
   const handleDragStart = (e) => {
     setStartX(e.clientX || e.touches[0].clientX);
@@ -49,6 +50,10 @@ export default function TopMoviesSlider() {
     const diff = startX - currentX;
 
     setDragDistance(Math.abs(diff));
+
+    if (Math.abs(diff) > 10) {
+      isClickPrevented.current = true;
+    }
 
     if (diff > 50) {
       setCurrentPage((prev) => Math.min(prev + 1, totalPage - 1));
@@ -70,6 +75,10 @@ export default function TopMoviesSlider() {
     setIsDragging(false);
     setStartX(null);
     setDragDistance(0);
+
+    setTimeout(() => {
+      isClickPrevented.current = false;
+    }, 50);
   };
 
   return (
@@ -115,7 +124,12 @@ export default function TopMoviesSlider() {
             onTouchEnd={handleDragEnd}
           >
             {topMovies.map((movie, idx) => (
-              <TopMovieCard key={movie.id} data={movie} ranking={idx + 1} />
+              <TopMovieCard
+                key={movie.id}
+                data={movie}
+                ranking={idx + 1}
+                isClickPrevented={isClickPrevented}
+              />
             ))}
           </div>
         </div>
