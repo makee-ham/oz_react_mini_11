@@ -5,27 +5,101 @@
 import getTopRatedMovies from "../../utils/getTopRatedMovies";
 import movieData from "../../data/movieListData.json";
 import TopMovieCard from "./TopMovieCard";
+import { useEffect, useState } from "react";
 
 export default function TopMoviesSlider() {
   const topMovies = getTopRatedMovies(movieData.results, 20);
 
+  const [currentPage, setCurrentPage] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+
+  const CARD_WIDTH = 220;
+  const GAP = 24;
+  const SLIDE_WIDTH = (CARD_WIDTH + GAP) * itemsPerPage - GAP;
+  const totalPage = Math.ceil(topMovies.length / itemsPerPage);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const screenWidth = window.innerWidth;
+      if (screenWidth >= 1200) setItemsPerPage(5);
+      else if (screenWidth >= 900) setItemsPerPage(4);
+      else if (screenWidth >= 600) setItemsPerPage(3);
+      else setItemsPerPage(2);
+    };
+
+    // TODO throttle 적용
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const [startX, setStartX] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const handleDragStart = (e) => {
+    setStartX(e.clientX || e.touches[0].clientX);
+    setIsDragging(true);
+  };
+
+  const handleDragMove = (e) => {
+    if (!isDragging || startX === null) return;
+    const currentX = e.clientX || e.touches[0].clientX;
+    const diff = startX - currentX;
+    // 드래그 방향 감지
+    if (diff > 50) {
+      setCurrentPage((prev) => Math.min(prev + 1, totalPage - 1));
+      setIsDragging(false);
+    } else if (diff < -50) {
+      setCurrentPage((prev) => Math.max(prev - 1, 0));
+      setIsDragging(false);
+    }
+  };
+
+  const handleDragEnd = () => {
+    setIsDragging(false);
+    setStartX(null);
+  };
+
   return (
     <section className="mt-30">
       <h2 className="text-2xl font-bold ml-10 mb-5">평점순 TOP 20</h2>
-      <div className="flex flex-col gap-12 overflow-hidden select-none w-full ">
+      <div
+        className="flex flex-col gap-12 overflow-hidden select-none w-full"
+        onDragStart={(e) => e.preventDefault()}
+      >
         {/* 버튼과 slide wrapper group용 */}
         <div className="relative group w-full overflow-hidden">
           {/* 왼쪽 버튼 */}
-          <button className="absolute left-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition z-10">
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
+            className="absolute left-2 top-1/2 -translate-y-1/2 w-6 h-full opacity-0 group-hover:opacity-100 transition z-10"
+          >
             {"<"}
           </button>
           {/* 오른쪽 버튼 */}
-          <button className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition z-10">
+          <button
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPage - 1))
+            }
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-full opacity-0 group-hover:opacity-100 transition z-10"
+          >
             {">"}
           </button>
 
-          {/* 카드 슬라이드 wrapper */}
-          <div className="flex gap-6 transition-transform duration-500 px-10">
+          {/* 카드 슬라이드 wrapper (카드 간 GAP=24) */}
+          <div
+            className="flex gap-6 transition-transform duration-500 px-10"
+            style={{
+              transform: `translateX(-${SLIDE_WIDTH * currentPage}px)`,
+            }}
+            onMouseDown={handleDragStart}
+            onMouseMove={handleDragMove}
+            onMouseUp={handleDragEnd}
+            onMouseLeave={handleDragEnd}
+            onTouchStart={handleDragStart}
+            onTouchMove={handleDragMove}
+            onTouchEnd={handleDragEnd}
+          >
             {topMovies.map((movie, idx) => (
               <TopMovieCard key={movie.id} data={movie} ranking={idx + 1} />
             ))}
@@ -34,12 +108,15 @@ export default function TopMoviesSlider() {
 
         {/* 페이지 인디케이터 */}
         <div className="flex justify-center gap-2">
-          {/* {Array.from({ length: totalPage }).map((_, idx) => (
-          <div
-            key={idx}
-            className={`w-2 h-2 rounded-full ${idx === currentIndex ? "bg-(--point-color)" : "bg-(--text-sub)"}`}
-          />
-        ))} */}
+          {Array.from({ length: totalPage }).map((_, idx) => (
+            <div
+              key={idx}
+              className={`w-2 h-2 rounded-full cursor-pointer ${
+                idx === currentPage ? "bg-white" : "bg-gray-500"
+              }`}
+              onClick={() => setCurrentPage(idx)}
+            />
+          ))}
         </div>
       </div>
     </section>
