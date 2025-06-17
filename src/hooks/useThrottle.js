@@ -1,6 +1,6 @@
 import { useRef, useCallback } from "react";
 
-export function useSimpleThrottle(callback, delay) {
+export default function useSimpleThrottle(callback, delay) {
   const lastCall = useRef(0);
   const callbackRef = useRef(callback);
 

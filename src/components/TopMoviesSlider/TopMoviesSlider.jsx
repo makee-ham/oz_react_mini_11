@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import getTopRatedMovies from "../../utils/getTopRatedMovies";
 import movieData from "../../data/movieListData.json";
 import TopMovieCard from "./TopMovieCard";
-import useThrottle from "../../hooks/useThrottle";
+import useThrottle from "../../hooks/useThrottle.js";
 
 export default function TopMoviesSlider() {
   const topMovies = getTopRatedMovies(movieData.results, 20);
@@ -20,7 +20,6 @@ export default function TopMoviesSlider() {
   const totalPages = Math.ceil(topMovies.length / itemsPerPage);
   const SLIDE_UNIT = (CARD_WIDTH + GAP) * itemsPerPage;
 
-  // TODO 여기 throttle
   const updateItemsPerPage = () => {
     const screenWidth = window.innerWidth;
     if (screenWidth >= 1200) setItemsPerPage(5);
@@ -128,7 +127,7 @@ export default function TopMoviesSlider() {
             <div
               key={idx}
               className={`w-2 h-2 rounded-full cursor-pointer ${
-                idx === currentPage ? "bg-(--text-default)" : "bg-(--text-sub)"
+                idx === currentPage ? "bg-(--point-color)" : "bg-(--text-sub)"
               }`}
               onClick={() => setCurrentPage(idx)}
             />
