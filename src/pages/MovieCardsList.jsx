@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import TopMoviesSlider from "../components/TopMoviesSlider/TopMoviesSlider";
 
 export default function MovieCardsList() {
-  const [movieData, setMovieData] = useState();
+  const [movieData, _] = useState(dummy.results);
   return (
     <>
       <TopMoviesSlider />
