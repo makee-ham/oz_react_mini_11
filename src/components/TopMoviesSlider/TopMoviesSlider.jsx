@@ -2,7 +2,7 @@
 // 마우스 드래그, 터치 스와이프 가능
 // 좌우 Arrows 구현 (호버 시 보이고 아니면 숨겨짐)
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import getTopRatedMovies from "../../utils/getTopRatedMovies";
 import movieData from "../../data/movieListData.json";
 import TopMovieCard from "./TopMovieCard";
@@ -10,9 +10,25 @@ import useThrottle from "../../hooks/useThrottle.js";
 import useSliderDrag from "../../hooks/useSliderDrag.js";
 import ChevronLeft from "../../assets/ChevronLeft.jsx";
 import ChevronRight from "../../assets/ChevronRight.jsx";
+import useFetch from "../../hooks/useFetch.js";
+import { TMDB_API_OPTIONS } from "../../constants/apiOptions.js";
+import { TOP_RATED_MOVIES_DATA_URL } from "../../constants/tmdbUrl.js";
+import TopMovieCardSkeleton from "./TopMovieCardSkeleton.jsx";
 
 export default function TopMoviesSlider() {
-  const topMovies = getTopRatedMovies(movieData.results, 20);
+  const [topMovies, setTopMovies] = useState([]);
+
+  const { loading, data, error } = useFetch(
+    TOP_RATED_MOVIES_DATA_URL,
+    TMDB_API_OPTIONS
+  );
+
+  useEffect(() => {
+    if (data && data.results) {
+      const top = getTopRatedMovies(data.results, 20);
+      setTopMovies(top);
+    }
+  }, [data]);
 
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -23,7 +39,10 @@ export default function TopMoviesSlider() {
   // 슬라이드 이동 거리를 카드 한 페이지 전체 너비와 일치하게 둠으로써
   // currentPage 증가 시 딱 그만큼 묶음을 이동시켜
   // 맨 앞 카드가, 예를 들어 itemsPerPage가 5라면 1, 6, 11,... 처럼 인덱스 고정
-  const totalPages = Math.ceil(topMovies.length / itemsPerPage);
+  const totalPages = useMemo(
+    () => Math.ceil(topMovies.length / itemsPerPage),
+    [topMovies, itemsPerPage]
+  );
   const SLIDE_UNIT = (CARD_WIDTH + GAP) * itemsPerPage;
 
   const updateItemsPerPage = () => {
@@ -47,6 +66,12 @@ export default function TopMoviesSlider() {
     setCurrentPage,
     totalPages
   );
+
+  useEffect(() => {
+    if (currentPage >= totalPages) {
+      setCurrentPage(Math.max(totalPages - 1, 0));
+    }
+  }, [currentPage, totalPages]);
 
   return (
     <section className="mt-30">
@@ -82,14 +107,18 @@ export default function TopMoviesSlider() {
             }}
             {...bindDrag}
           >
-            {topMovies.map((movie, idx) => (
-              <TopMovieCard
-                key={movie.id}
-                data={movie}
-                ranking={idx + 1}
-                isClickPrevented={isClickPrevented}
-              />
-            ))}
+            {loading
+              ? Array.from({ length: 20 }).map((_, idx) => (
+                  <TopMovieCardSkeleton key={idx} />
+                ))
+              : topMovies.map((movie, idx) => (
+                  <TopMovieCard
+                    key={movie.id}
+                    data={movie}
+                    ranking={idx + 1}
+                    isClickPrevented={isClickPrevented}
+                  />
+                ))}
           </div>
         </div>
 

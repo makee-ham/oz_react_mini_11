@@ -4,7 +4,6 @@ import { TMDB_IMAGE_BASE_URL } from "../../constants/imageBaseUrl";
 export default function TopMovieCard({ data, ranking, isClickPrevented }) {
   const navigate = useNavigate();
 
-  // TODO 추후 details/영화id로 수정
   return (
     <div
       className="flex justify-center items-end gap-4 w-[220px] shrink-0"
