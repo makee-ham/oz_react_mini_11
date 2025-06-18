@@ -4,7 +4,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import getTopRatedMovies from "../../utils/getTopRatedMovies";
-import movieData from "../../data/movieListData.json";
 import TopMovieCard from "./TopMovieCard";
 import useThrottle from "../../hooks/useThrottle.js";
 import useSliderDrag from "../../hooks/useSliderDrag.js";
@@ -13,7 +12,7 @@ import ChevronRight from "../../assets/ChevronRight.jsx";
 import useFetch from "../../hooks/useFetch.js";
 import { TMDB_API_OPTIONS } from "../../constants/apiOptions.js";
 import { TOP_RATED_MOVIES_DATA_URL } from "../../constants/tmdbUrl.js";
-import TopMovieCardSkeleton from "./TopMovieCardSkeleton.jsx";
+import TopMovieCardSkeleton from "../skeletons/TopMovieCardSkeleton";
 
 export default function TopMoviesSlider() {
   const [topMovies, setTopMovies] = useState([]);
@@ -72,6 +71,8 @@ export default function TopMoviesSlider() {
       setCurrentPage(Math.max(totalPages - 1, 0));
     }
   }, [currentPage, totalPages]);
+
+  if (error) return <p>에러 발생: {error.message}</p>;
 
   return (
     <section className="mt-30">

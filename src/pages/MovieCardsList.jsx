@@ -5,7 +5,7 @@ import TopMoviesSlider from "../components/TopMoviesSlider/TopMoviesSlider";
 import useFetch from "../hooks/useFetch";
 import { POPULAR_MOVIES_DATA_URL } from "../constants/tmdbUrl";
 import { TMDB_API_OPTIONS } from "../constants/apiOptions";
-import MovieCardSkeleton from "../components/MovieCardSkeleton";
+import MovieCardSkeleton from "../components/skeletons/MovieCardSkeleton";
 
 export default function MovieCardsList() {
   const [movieData, setMovieData] = useState([]);

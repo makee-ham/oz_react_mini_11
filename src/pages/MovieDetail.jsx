@@ -4,6 +4,7 @@ import useFetch from "../hooks/useFetch";
 import getMovieDetailsURL from "../utils/getMovieDetails";
 import { useParams } from "react-router-dom";
 import { TMDB_API_OPTIONS } from "../constants/apiOptions";
+import MovieDetailSkeleton from "../components/skeletons/MovieDetailSkeleton";
 
 export default function MovieDetail() {
   const params = useParams();
@@ -16,8 +17,7 @@ export default function MovieDetail() {
     if (data) setDetailData(data);
   }, [data]);
 
-  // TODO 예외처리 디벨롭, 로딩 ui
-  if (loading) return <p>로딩 중...</p>;
+  if (loading) return <MovieDetailSkeleton />;
   if (error) return <p>에러 발생: {error.message}</p>;
 
   return (
