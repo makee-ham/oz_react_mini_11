@@ -3,11 +3,12 @@ import dummy from "../data/movieListData.json";
 import MovieCard from "../components/MovieCard";
 import { Link } from "react-router-dom";
 import TopMoviesSlider from "../components/TopMoviesSlider/TopMoviesSlider";
+import useFetch from "../hooks/useFetch";
 
 export default function MovieCardsList() {
   const [movieData, setMovieData] = useState(dummy.results);
 
-  useEffect(, [])
+  useFetch();
 
   return (
     <>
