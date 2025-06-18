@@ -5,6 +5,7 @@ import TopMoviesSlider from "../components/TopMoviesSlider/TopMoviesSlider";
 import useFetch from "../hooks/useFetch";
 import { POPULAR_MOVIES_DATA_URL } from "../constants/tmdbUrl";
 import { TMDB_API_OPTIONS } from "../constants/apiOptions";
+import MovieCardSkeleton from "../components/MovieCardSkeleton";
 
 export default function MovieCardsList() {
   const [movieData, setMovieData] = useState([]);
@@ -21,24 +22,25 @@ export default function MovieCardsList() {
     }
   }, [data]);
 
-  // TODO 예외처리 디벨롭, 로딩 ui
-  if (loading) return <p>로딩 중...</p>;
   if (error) return <p>에러 발생: {error.message}</p>;
 
   return (
     <>
       <TopMoviesSlider />
       <section className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-6 w-full max-w-[1800px] mx-auto mt-10 px-6">
-        {movieData &&
-          movieData.map((movie) => (
-            <Link to={`/details/${movie.id}`} key={movie.id}>
-              <MovieCard
-                poster={movie.poster_path}
-                title={movie.title}
-                score={Math.round(movie.vote_average * 10) / 10}
-              />
-            </Link>
-          ))}
+        {loading
+          ? Array.from({ length: 16 }).map((_, idx) => (
+              <MovieCardSkeleton key={idx} />
+            ))
+          : movieData.map((movie) => (
+              <Link to={`/details/${movie.id}`} key={movie.id}>
+                <MovieCard
+                  poster={movie.poster_path}
+                  title={movie.title}
+                  score={Math.round(movie.vote_average * 10) / 10}
+                />
+              </Link>
+            ))}
       </section>
     </>
   );
