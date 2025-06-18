@@ -21,7 +21,7 @@ export default function MovieCardsList() {
     }
   }, [data]);
 
-  // TODO 예외처리 디벨롭
+  // TODO 예외처리 디벨롭, 로딩 ui
   if (loading) return <p>로딩 중...</p>;
   if (error) return <p>에러 발생: {error.message}</p>;
 
