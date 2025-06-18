@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dummy from "../data/movieListData.json";
 import MovieCard from "../components/MovieCard";
 import { Link } from "react-router-dom";
 import TopMoviesSlider from "../components/TopMoviesSlider/TopMoviesSlider";
 
 export default function MovieCardsList() {
-  const [movieData, _] = useState(dummy.results);
+  const [movieData, setMovieData] = useState(dummy.results);
+
+  useEffect(, [])
+
   return (
     <>
       <TopMoviesSlider />
