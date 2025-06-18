@@ -1,9 +1,24 @@
-import { useState } from "react";
-import dummy from "../data/movieDetailData.json";
+import { useEffect, useState } from "react";
 import { TMDB_IMAGE_BASE_URL } from "../constants/imageBaseUrl";
+import useFetch from "../hooks/useFetch";
+import getMovieDetailsURL from "../utils/getMovieDetails";
+import { useParams } from "react-router-dom";
+import { TMDB_API_OPTIONS } from "../constants/apiOptions";
 
 export default function MovieDetail() {
-  const [detailData, _] = useState(dummy);
+  const params = useParams();
+  const [detailData, setDetailData] = useState({});
+
+  const url = getMovieDetailsURL(params.id);
+  const { loading, data, error } = useFetch(url, TMDB_API_OPTIONS);
+
+  useEffect(() => {
+    if (data) setDetailData(data);
+  }, [data]);
+
+  // TODO 예외처리 디벨롭, 로딩 ui
+  if (loading) return <p>로딩 중...</p>;
+  if (error) return <p>에러 발생: {error.message}</p>;
 
   return (
     <section className="flex justify-center items-start gap-10 w-full max-w-6xl mx-auto mt-24 p-8">
@@ -28,14 +43,15 @@ export default function MovieDetail() {
 
         {/* 장르 */}
         <div className="flex flex-wrap gap-2">
-          {detailData.genres.map((genre, idx) => (
-            <span
-              key={idx}
-              className="px-3 py-1 bg-(--line-color) text-sm rounded-full"
-            >
-              {genre.name}
-            </span>
-          ))}
+          {detailData.genres &&
+            detailData.genres.map((genre, idx) => (
+              <span
+                key={idx}
+                className="px-3 py-1 bg-(--line-color) text-sm rounded-full"
+              >
+                {genre.name}
+              </span>
+            ))}
         </div>
 
         {/* 줄거리 */}
