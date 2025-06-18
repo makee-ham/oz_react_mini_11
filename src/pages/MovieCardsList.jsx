@@ -1,14 +1,29 @@
 import { useEffect, useState } from "react";
-import dummy from "../data/movieListData.json";
 import MovieCard from "../components/MovieCard";
 import { Link } from "react-router-dom";
 import TopMoviesSlider from "../components/TopMoviesSlider/TopMoviesSlider";
 import useFetch from "../hooks/useFetch";
+import { POPULAR_MOVIES_DATA_URL } from "../constants/tmdbUrl";
+import { TMDB_API_OPTIONS } from "../constants/apiOptions";
 
 export default function MovieCardsList() {
-  const [movieData, setMovieData] = useState(dummy.results);
+  const [movieData, setMovieData] = useState([]);
 
-  useFetch();
+  const { loading, data, error } = useFetch(
+    POPULAR_MOVIES_DATA_URL,
+    TMDB_API_OPTIONS
+  );
+
+  useEffect(() => {
+    if (data && data.results) {
+      const filtered = data.results.filter((movie) => movie.adult === false);
+      setMovieData(filtered);
+    }
+  }, [data]);
+
+  // TODO 예외처리 디벨롭
+  if (loading) return <p>로딩 중...</p>;
+  if (error) return <p>에러 발생: {error.message}</p>;
 
   return (
     <>
