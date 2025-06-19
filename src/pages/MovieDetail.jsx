@@ -21,9 +21,9 @@ export default function MovieDetail() {
   if (error) return <p>에러 발생: {error.message}</p>;
 
   return (
-    <section className="flex justify-center items-start gap-10 w-full max-w-6xl mx-auto mt-24 p-8">
+    <section className="flex flex-col md:flex-row items-center md:items-start gap-10 w-full max-w-6xl mx-auto mt-24 px-4 md:px-8">
       {/* 왼쪽: 포스터 */}
-      <article className="w-[300px] aspect-[2/3] shrink-0 overflow-hidden rounded shadow-lg">
+      <article className="w-[70%] md:w-[300px] aspect-[2/3] shrink-0 overflow-hidden rounded shadow-lg">
         <img
           src={TMDB_IMAGE_BASE_URL + detailData.poster_path}
           alt={detailData.title}

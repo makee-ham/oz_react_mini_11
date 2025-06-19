@@ -1,4 +1,6 @@
-export function MovieCard({ poster, title, score }) {
+import { TMDB_IMAGE_BASE_URL } from "../constants/imageBaseUrl";
+
+export default function MovieCard({ poster, title, score }) {
   const getScoreColor = (score) => {
     if (score >= 8) return "#ff5f5f";
     if (score >= 6) return "#fb923c";
@@ -8,7 +10,11 @@ export function MovieCard({ poster, title, score }) {
   return (
     <div className="flex flex-col w-full max-w-[220px] h-84 rounded-lg overflow-hidden bg-(--bg-secondary) hover:shadow-[0_6px_20px_rgba(0,255,255,0.12)] transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015]">
       <div className="aspect-[2/3] w-full overflow-hidden">
-        <img className="w-full h-full object-cover" src={poster} alt={title} />
+        <img
+          className="w-full h-full object-cover"
+          src={TMDB_IMAGE_BASE_URL + poster}
+          alt={title}
+        />
       </div>
       <div className="flex flex-col justify-between h-18 p-2 bg-(--bg-secondary)">
         <h3 className="font-bold text-sm md:text-base line-clamp-1">{title}</h3>
