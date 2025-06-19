@@ -10,7 +10,7 @@ export default function NavBar() {
 
   // TODO 검색어 없으면 검색 페이지에서 안내하도록 (지금은 home으로 가게 해둠)
   useEffect(() => {
-    if (debouncedQuery.trim()) {
+    if (debouncedQuery.trim().replace(/(\s*)/g, "")) {
       navigate(`/search?query=${encodeURIComponent(debouncedQuery)}`);
     } else {
       navigate("/");
