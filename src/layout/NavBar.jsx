@@ -28,6 +28,7 @@ export default function NavBar() {
     }
   }, [debouncedQuery]);
 
+  // TODO 검색하다가 타이틀 누르거나 해서 홈 페이지 갔을 때 검색어 지워져야
   return (
     <header className="fixed top-0 left-0 w-full h-[80px] z-50 bg-(--bg-secondary)">
       <div className="flex items-center justify-between w-full h-full text-(--text-default) px-4 py-4">
