@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import MovieCard from "../components/MovieCard";
-import { Link } from "react-router-dom";
-import TopMoviesSlider from "../components/TopMoviesSlider/TopMoviesSlider";
+import { Link, useSearchParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import { POPULAR_MOVIES_DATA_URL } from "../constants/tmdbUrl";
 import { TMDB_API_OPTIONS } from "../constants/apiOptions";
@@ -9,6 +8,9 @@ import MovieCardSkeleton from "../components/skeletons/MovieCardSkeleton";
 
 export default function SearchResults() {
   const [movieData, setMovieData] = useState([]);
+  const [searchParams] = useSearchParams();
+
+  searchParams.get("query");
 
   const { loading, data, error } = useFetch(
     POPULAR_MOVIES_DATA_URL,
@@ -26,8 +28,7 @@ export default function SearchResults() {
 
   return (
     <>
-      <TopMoviesSlider />
-      <section className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-6 w-full max-w-[1800px] mx-auto mt-10 px-6">
+      <section className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-6 w-full max-w-[1800px] mx-auto mt-30 px-6">
         {loading
           ? Array.from({ length: 16 }).map((_, idx) => (
               <MovieCardSkeleton key={idx} />
