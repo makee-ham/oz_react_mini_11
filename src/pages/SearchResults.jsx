@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import MovieCard from "../components/MovieCard";
 import { Link, useSearchParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
-import { POPULAR_MOVIES_DATA_URL } from "../constants/tmdbUrl";
 import { TMDB_API_OPTIONS } from "../constants/apiOptions";
 import MovieCardSkeleton from "../components/skeletons/MovieCardSkeleton";
 import getSearchURL from "../utils/getSearchURL";
