@@ -1,6 +1,19 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import useDebounce from "../hooks/useDebounce";
 
 export default function NavBar() {
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+
+  const debouncedQuery = useDebounce(query);
+
+  useEffect(() => {
+    if (debouncedQuery.trim()) {
+      navigate(`/search?query=${debouncedQuery}`);
+    }
+  }, [debouncedQuery]);
+
   return (
     <header className="fixed top-0 left-0 w-full h-[80px] z-50 bg-(--bg-secondary)">
       <div className="flex items-center justify-between w-full h-full text-(--text-default) px-8 py-4">
@@ -12,6 +25,8 @@ export default function NavBar() {
         <div className="flex-1 max-w-5xl mx-20">
           <input
             type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
             className="w-full max-w-5xl rounded-full px-4 py-2 bg-(--text-default) outline-none text-[#333] text-sm focus:ring-2 focus:ring-(--point-color) transition"
           />
         </div>
