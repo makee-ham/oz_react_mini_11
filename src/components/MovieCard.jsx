@@ -8,7 +8,7 @@ export default function MovieCard({ poster, title, score }) {
   };
 
   return (
-    <div className="flex flex-col w-full max-w-[220px] h-84 rounded-lg overflow-hidden bg-(--bg-secondary) hover:shadow-[0_6px_20px_rgba(0,255,255,0.12)] transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015]">
+    <div className="flex flex-col w-full max-w-[220px] h-84 rounded-lg overflow-hidden bg-(--bg-secondary) hover:shadow-[0_6px_20px_rgba(0,255,255,0.22)] transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015]">
       <div className="aspect-[2/3] w-full overflow-hidden">
         <img
           className="w-full h-full object-cover"

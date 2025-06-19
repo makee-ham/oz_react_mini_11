@@ -31,6 +31,10 @@
   --line-color: #2e2e2e;
   --font-default: "Minguk-Regular", "sans-serif";
   --font-logo: "Megrim", "sans-serif";
+
+  --skeleton-bg-primary: #1f2937;
+  --skeleton-bg-secondary: #374151;
+  --skeleton-bg-accent: #4b5563;
 }
 
 .light {
@@ -41,6 +45,10 @@
   --point-color: #00ffff;
   --point-sub-color: #ff5f5f;
   --line-color: #e5e7eb;
+
+  --skeleton-bg-primary: #e5e7eb;
+  --skeleton-bg-secondary: #d1d5db;
+  --skeleton-bg-accent: #cbd5e1;
 }
 
 html,

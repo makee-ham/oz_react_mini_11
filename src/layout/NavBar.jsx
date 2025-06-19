@@ -1,10 +1,21 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useDebounce from "../hooks/useDebounce";
+import toggleTheme from "../utils/toggleTheme";
 
 export default function NavBar() {
   const [query, setQuery] = useState("");
+  const [theme, setTheme] = useState("라이트모드");
   const navigate = useNavigate();
+
+  const handleTheme = () => {
+    toggleTheme();
+    if (document.documentElement.classList.contains("light")) {
+      setTheme("다크모드");
+    } else {
+      setTheme("라이트모드");
+    }
+  };
 
   const debouncedQuery = useDebounce(query);
 
@@ -30,19 +41,21 @@ export default function NavBar() {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full max-w-5xl rounded-full px-4 py-2 bg-(--text-default) outline-none text-[#333] text-sm focus:ring-2 focus:ring-(--point-color) transition"
+            className="w-full max-w-5xl rounded-full px-4 py-2 bg-(--text-default) outline-none text-(--bg-secondary) text-sm focus:ring-2 focus:ring-(--point-color) transition"
           />
         </div>
+        <button onClick={handleTheme}>{theme}</button>
         <div className="flex gap-2">
+          {/* 로그인 텍스트 호버시 검은계열 */}
           <button
             type="button"
-            className="px-3 py-1 rounded text-sm text-(--text-default) hover:bg-(--point-color) hover:text-(--bg-primary) transition duration-200"
+            className="px-3 py-1 rounded text-sm text-(--text-default) hover:bg-(--point-color) hover:text-[#333] transition duration-200"
           >
             로그인
           </button>
           <button
             type="button"
-            className="px-3 py-1 rounded text-sm text-(--text-default) hover:bg-(--point-color) hover:text-(--bg-primary) transition duration-200"
+            className="px-3 py-1 rounded text-sm text-(--text-default) hover:bg-(--point-color) hover:text-[#333] transition duration-200"
           >
             회원가입
           </button>
