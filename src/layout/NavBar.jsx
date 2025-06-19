@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useDebounce from "../hooks/useDebounce";
 import toggleTheme from "../utils/toggleTheme";
+import Dark from "../assets/Dark";
+import Light from "../assets/Light";
 
 export default function NavBar() {
   const [query, setQuery] = useState("");
-  const [theme, setTheme] = useState("라이트모드");
+  const [_, setTheme] = useState("라이트모드");
   const navigate = useNavigate();
 
   const handleTheme = () => {
@@ -45,7 +47,13 @@ export default function NavBar() {
             className="w-full max-w-5xl rounded-full px-4 py-2 bg-(--text-default) outline-none text-(--bg-secondary) text-sm focus:ring-2 focus:ring-(--point-color) transition"
           />
         </div>
-        <button onClick={handleTheme}>{theme}</button>
+        <button onClick={handleTheme}>
+          {document.documentElement.classList.contains("light") ? (
+            <Dark />
+          ) : (
+            <Light />
+          )}
+        </button>
         <div className="flex gap-2">
           {/* 로그인 텍스트 호버시 검은계열 */}
           <button
