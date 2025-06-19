@@ -10,7 +10,7 @@ export default function NavBar() {
 
   useEffect(() => {
     if (debouncedQuery.trim()) {
-      navigate(`/search?query=${debouncedQuery}`);
+      navigate(`/search?query=${encodeURIComponent(debouncedQuery)}`);
     }
   }, [debouncedQuery]);
 
