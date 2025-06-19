@@ -33,6 +33,16 @@
   --font-logo: "Megrim", "sans-serif";
 }
 
+.light {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f4f4f5;
+  --text-default: #1f2937;
+  --text-sub: #6b7280;
+  --point-color: #00ffff;
+  --point-sub-color: #ff5f5f;
+  --line-color: #e5e7eb;
+}
+
 html,
 body,
 #root {

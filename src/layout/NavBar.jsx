@@ -19,7 +19,7 @@ export default function NavBar() {
 
   return (
     <header className="fixed top-0 left-0 w-full h-[80px] z-50 bg-(--bg-secondary)">
-      <div className="flex items-center justify-between w-full h-full text-(--text-default) px-8 py-4">
+      <div className="flex items-center justify-between w-full h-full text-(--text-default) px-4 py-4">
         <Link to="/">
           <h1 className="text-3xl font-logo tracking-wider">
             Cine<span className="text-(--point-color) text-4xl">V</span>isor
