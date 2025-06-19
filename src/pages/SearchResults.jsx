@@ -5,22 +5,20 @@ import useFetch from "../hooks/useFetch";
 import { POPULAR_MOVIES_DATA_URL } from "../constants/tmdbUrl";
 import { TMDB_API_OPTIONS } from "../constants/apiOptions";
 import MovieCardSkeleton from "../components/skeletons/MovieCardSkeleton";
+import getSearchURL from "../utils/getSearchURL";
 
 export default function SearchResults() {
   const [movieData, setMovieData] = useState([]);
   const [searchParams] = useSearchParams();
 
-  searchParams.get("query");
+  const query = searchParams.get("query");
+  const searchURL = getSearchURL(query);
 
-  const { loading, data, error } = useFetch(
-    POPULAR_MOVIES_DATA_URL,
-    TMDB_API_OPTIONS
-  );
+  const { loading, data, error } = useFetch(searchURL, TMDB_API_OPTIONS);
 
   useEffect(() => {
     if (data && data.results) {
-      const filtered = data.results.filter((movie) => movie.adult === false);
-      setMovieData(filtered);
+      setMovieData(data.results);
     }
   }, [data]);
 
@@ -29,19 +27,27 @@ export default function SearchResults() {
   return (
     <>
       <section className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-6 w-full max-w-[1800px] mx-auto mt-30 px-6">
-        {loading
-          ? Array.from({ length: 16 }).map((_, idx) => (
-              <MovieCardSkeleton key={idx} />
-            ))
-          : movieData.map((movie) => (
-              <Link to={`/details/${movie.id}`} key={movie.id}>
-                <MovieCard
-                  poster={movie.poster_path}
-                  title={movie.title}
-                  score={Math.round(movie.vote_average * 10) / 10}
-                />
-              </Link>
-            ))}
+        {loading ? (
+          Array.from({ length: 16 }).map((_, idx) => (
+            <MovieCardSkeleton key={idx} />
+          ))
+        ) : movieData.length === 0 ? (
+          <p className="col-span-full text-center text-lg text-(--text-sub) mt-20">
+            찾으시는 영화가 없습니다.
+            <br />
+            검색어를 다시 입력해보세요.
+          </p>
+        ) : (
+          movieData.map((movie) => (
+            <Link to={`/details/${movie.id}`} key={movie.id}>
+              <MovieCard
+                poster={movie.poster_path}
+                title={movie.title}
+                score={Math.round(movie.vote_average * 10) / 10}
+              />
+            </Link>
+          ))
+        )}
       </section>
     </>
   );

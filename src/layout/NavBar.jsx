@@ -8,10 +8,12 @@ export default function NavBar() {
 
   const debouncedQuery = useDebounce(query);
 
-  // TODO 검색어 없으면 검색 페이지에서 안내하거나 홈으로 가도록
+  // TODO 검색어 없으면 검색 페이지에서 안내하도록 (지금은 home으로 가게 해둠)
   useEffect(() => {
     if (debouncedQuery.trim()) {
       navigate(`/search?query=${encodeURIComponent(debouncedQuery)}`);
+    } else {
+      navigate("/");
     }
   }, [debouncedQuery]);
 
