@@ -1,7 +1,3 @@
-// 평점순(vote_average) Top 20, 페이지네이션
-// 마우스 드래그, 터치 스와이프 가능
-// 좌우 Arrows 구현 (호버 시 보이고 아니면 숨겨짐)
-
 import { useEffect, useMemo, useState } from "react";
 import getTopRatedMovies from "../../utils/getTopRatedMovies";
 import TopMovieCard from "./TopMovieCard";
@@ -31,34 +27,67 @@ export default function TopMoviesSlider() {
 
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [dimensions, setDimensions] = useState({
+    cardWidth: 220,
+    gap: 24,
+    containerPadding: 40, // 양옆에 카드가 살짝 보이도록 하는 패딩
+  });
 
-  const CARD_WIDTH = 220;
-  const GAP = 24;
+  // 반응형 설정 업데이트
+  const updateResponsiveSettings = () => {
+    const screenWidth = window.innerWidth;
+    let newItemsPerPage, newCardWidth, newGap, newContainerPadding;
 
-  // 슬라이드 이동 거리를 카드 한 페이지 전체 너비와 일치하게 둠으로써
-  // currentPage 증가 시 딱 그만큼 묶음을 이동시켜
-  // 맨 앞 카드가, 예를 들어 itemsPerPage가 5라면 1, 6, 11,... 처럼 인덱스 고정
+    if (screenWidth >= 1200) {
+      // PC
+      newItemsPerPage = 5;
+      newCardWidth = 220;
+      newGap = 24;
+      newContainerPadding = 60;
+    } else if (screenWidth >= 900) {
+      // 태블릿 (큰)
+      newItemsPerPage = 4;
+      newCardWidth = 200;
+      newGap = 20;
+      newContainerPadding = 50;
+    } else if (screenWidth >= 600) {
+      // 태블릿 (작은)
+      newItemsPerPage = 3;
+      newCardWidth = 180;
+      newGap = 16;
+      newContainerPadding = 40;
+    } else {
+      // 모바일
+      newItemsPerPage = 2;
+      newCardWidth = 150;
+      newGap = 12;
+      newContainerPadding = 30;
+    }
+
+    setItemsPerPage(newItemsPerPage);
+    setDimensions({
+      cardWidth: newCardWidth,
+      gap: newGap,
+      containerPadding: newContainerPadding,
+    });
+  };
+
+  const throttledResizeHandler = useThrottle(updateResponsiveSettings, 300);
+
+  useEffect(() => {
+    updateResponsiveSettings();
+    window.addEventListener("resize", throttledResizeHandler);
+    return () => window.removeEventListener("resize", throttledResizeHandler);
+  }, []);
+
+  // 슬라이드 계산
   const totalPages = useMemo(
     () => Math.ceil(topMovies.length / itemsPerPage),
     [topMovies, itemsPerPage]
   );
-  const SLIDE_UNIT = (CARD_WIDTH + GAP) * itemsPerPage;
 
-  const updateItemsPerPage = () => {
-    const screenWidth = window.innerWidth;
-    if (screenWidth >= 1200) setItemsPerPage(5);
-    else if (screenWidth >= 900) setItemsPerPage(4);
-    else if (screenWidth >= 600) setItemsPerPage(3);
-    else setItemsPerPage(2);
-  };
-
-  const throttledResizeHandler = useThrottle(updateItemsPerPage, 300);
-
-  useEffect(() => {
-    updateItemsPerPage();
-    window.addEventListener("resize", throttledResizeHandler);
-    return () => window.removeEventListener("resize", throttledResizeHandler);
-  }, []);
+  // 한 페이지 전체 너비 (카드들 + 갭들)
+  const SLIDE_UNIT = (dimensions.cardWidth + dimensions.gap) * itemsPerPage;
 
   const { bindDrag, offsetX, isDragging, isClickPrevented } = useSliderDrag(
     currentPage,
@@ -81,48 +110,74 @@ export default function TopMoviesSlider() {
         className="flex flex-col gap-8 overflow-hidden select-none w-full"
         onDragStart={(e) => e.preventDefault()}
       >
-        <div className="relative group w-full overflow-hidden px-6 md:px-10">
-          <div className="absolute -left-6 top-0 h-full w-16 rounded-r-full bg-gradient-to-r from-[#00ffff]/20 to-transparent z-1 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm" />
-          <div className="absolute -right-6 top-0 h-full w-16 rounded-l-full bg-gradient-to-l from-[#00ffff]/20 to-transparent z-1 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm" />
-          <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
-            className="flex justify-center items-center absolute left-2 top-1/2 -translate-y-1/2 w-6 h-full opacity-0 group-hover:opacity-100 transition duration-300 z-10"
-          >
-            <ChevronLeft />
-          </button>
-          <button
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))
-            }
-            className="flex justify-center items-center absolute right-2 top-1/2 -translate-y-1/2 w-6 h-full opacity-0 group-hover:opacity-100 transition duration-300 z-10"
-          >
-            <ChevronRight />
-          </button>
+        <div className="relative group w-full overflow-hidden">
+          {/* 좌측 그라데이션 오버레이 */}
+          <div className="absolute left-0 top-0 h-full w-16 rounded-r-full bg-gradient-to-r from-[#00ffff]/20 to-transparent z-20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm" />
 
+          {/* 우측 그라데이션 오버레이 */}
+          <div className="absolute right-0 top-0 h-full w-16 rounded-l-full bg-gradient-to-l from-[#00ffff]/20 to-transparent z-20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-sm" />
+
+          {/* 좌측 화살표 */}
+          {currentPage > 0 && (
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
+              className="flex justify-center items-center absolute left-4 top-1/2 -translate-y-1/2 w-8 h-full opacity-0 group-hover:opacity-100 transition duration-300 z-30"
+            >
+              <ChevronLeft />
+            </button>
+          )}
+
+          {/* 우측 화살표 */}
+          {currentPage < totalPages - 1 && (
+            <button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))
+              }
+              className="flex justify-center items-center absolute right-4 top-1/2 -translate-y-1/2 w-8 h-full opacity-0 group-hover:opacity-100 transition duration-300 z-30"
+            >
+              <ChevronRight />
+            </button>
+          )}
+
+          {/* 슬라이더 컨테이너 */}
           <div
-            className={`flex gap-6 transition-transform ${
-              isDragging ? "cursor-grabbing" : "cursor-grab"
-            } ${offsetX !== 0 ? "duration-300 ease-out" : "duration-500 ease-in-out"}`}
+            className="overflow-hidden"
             style={{
-              transform: `translateX(calc(-${SLIDE_UNIT * currentPage}px + ${offsetX}px))`,
+              paddingLeft: `${dimensions.containerPadding}px`,
+              paddingRight: `${dimensions.containerPadding}px`,
             }}
-            {...bindDrag}
           >
-            {loading
-              ? Array.from({ length: 20 }).map((_, idx) => (
-                  <TopMovieCardSkeleton key={idx} />
-                ))
-              : topMovies.map((movie, idx) => (
-                  <TopMovieCard
-                    key={movie.id}
-                    data={movie}
-                    ranking={idx + 1}
-                    isClickPrevented={isClickPrevented}
-                  />
-                ))}
+            <div
+              className={`flex transition-transform ${
+                isDragging ? "cursor-grabbing" : "cursor-grab"
+              } ${offsetX !== 0 ? "duration-300 ease-out" : "duration-500 ease-in-out"}`}
+              style={{
+                gap: `${dimensions.gap}px`,
+                transform: `translateX(calc(-${SLIDE_UNIT * currentPage}px + ${offsetX}px))`,
+              }}
+              {...bindDrag}
+            >
+              {loading
+                ? Array.from({ length: 20 }).map((_, idx) => (
+                    <TopMovieCardSkeleton
+                      key={idx}
+                      width={dimensions.cardWidth}
+                    />
+                  ))
+                : topMovies.map((movie, idx) => (
+                    <TopMovieCard
+                      key={movie.id}
+                      data={movie}
+                      ranking={idx + 1}
+                      isClickPrevented={isClickPrevented}
+                      width={dimensions.cardWidth}
+                    />
+                  ))}
+            </div>
           </div>
         </div>
 
+        {/* 페이지네이션 인디케이터 */}
         <div className="flex justify-center gap-2">
           {Array.from({ length: totalPages }).map((_, idx) => (
             <div
