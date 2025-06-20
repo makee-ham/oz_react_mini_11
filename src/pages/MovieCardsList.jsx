@@ -9,30 +9,35 @@ import MovieCardSkeleton from "../components/skeletons/MovieCardSkeleton";
 
 export default function MovieCardsList() {
   const [movieData, setMovieData] = useState([]);
-  const [page, setPage] = useState(1);
-  const [isFetching, setIsFetching] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
+  // const [page, setPage] = useState(1);
+  // const [isFetching, setIsFetching] = useState(false);
+  // const [hasMore, setHasMore] = useState(true);
 
-  const fetchMovies = async (page) => {
-    setIsFetching(true);
+  // const fetchMovies = async (page) => {
+  //   setIsFetching(true);
 
-    try {
-      const response = await fetch(
-        `${POPULAR_MOVIES_DATA_URL}&page=${page}`,
-        TMDB_API_OPTIONS
-      );
-      const data = await response.json();
-      const filtered = data.results.filter((movie) => movie.adult === false);
+  //   try {
+  //     const response = await fetch(
+  //       `${POPULAR_MOVIES_DATA_URL}&page=${page}`,
+  //       TMDB_API_OPTIONS
+  //     );
+  //     const data = await response.json();
+  //     const filtered = data.results.filter((movie) => movie.adult === false);
 
-      setMovieData((prev) => [...prev, ...filtered]);
+  //     setMovieData((prev) => [...prev, ...filtered]);
 
-      if (page >= data.total_pages) setHasMore(false);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsFetching(false);
-    }
-  };
+  //     if (page >= data.total_pages) setHasMore(false);
+  //   } catch (err) {
+  //     console.error(err);
+  //   } finally {
+  //     setIsFetching(false);
+  //   }
+  // };
+
+  const { loading, data, error } = useFetch(
+    POPULAR_MOVIES_DATA_URL,
+    TMDB_API_OPTIONS
+  );
 
   useEffect(() => {
     if (data && data.results) {
