@@ -33,7 +33,7 @@ export default function NavBar() {
   const debouncedQuery = useDebounce(query);
 
   // TODO 검색어 없으면 검색 페이지에서 안내하도록 (지금은 home으로 가게 해둠)
-  // TODO 왓챠처럼, 모바일과 태블릿에선 검색 페이지로 검색 버튼 누르면 아예 넘어가게 - handleSearchClick에서 navigate("/search"); 하게 하고 페이지 만들고
+  // TODO 왓챠처럼, 검색 페이지로 검색 버튼 누르면 아예 넘어가게 - handleSearchClick에서 navigate("/search"); 하게 하고 페이지 만들고
   // TODO 이건 진짜 하고싶음 하는 건데 모바일 버전 넘어가선 아예 맨 밑에 네비게이션 고정
   useEffect(() => {
     if (debouncedQuery.trim().replace(/(\s*)/g, "")) {
@@ -122,7 +122,7 @@ export default function NavBar() {
         </div>
       </div>
 
-      {/* TODO 모바일 메뉴 드롭다운 자연스럽게, 아래로 내려오는 애니메이션 */}
+      {/*  모바일 메뉴 드롭다운 자연스럽게, 아래로 내려오는 애니메이션 */}
       {isMenuOpen && (
         <div className="md:hidden absolute top-20 right-4 w-48 bg-(--text-default) text-(--bg-secondary) rounded shadow p-4 z-50 transition-all duration-300">
           <button
