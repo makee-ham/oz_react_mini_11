@@ -53,7 +53,7 @@ export default function NavBar() {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="검색어를 입력하세요"
+            placeholder="영화 제목을 입력해보세요"
             className="flex-1 rounded-full px-4 py-2 bg-(--text-default) text-(--bg-secondary) text-sm focus:ring-2 focus:ring-[var(--point-color)] transition"
           />
           <button
@@ -63,7 +63,7 @@ export default function NavBar() {
             }}
             className="text-xl"
           >
-            ❌
+            {/* TODO 여기 버튼.. svg..로 */}❌
           </button>
         </div>
       )}
