@@ -75,7 +75,7 @@ export default function MovieCardsList() {
           </Link>
         ))}
         {isFetching &&
-          Array.from({ length: 8 }).map((_, idx) => (
+          Array.from({ length: 20 }).map((_, idx) => (
             <MovieCardSkeleton key={`skeleton-${idx}`} />
           ))}
       </section>
