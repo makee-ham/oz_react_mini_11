@@ -27,8 +27,7 @@ export default function MovieCardsList() {
   return (
     <>
       <TopMoviesSlider />
-      {/* TODO 반응형 중단점에 따라 그리드/카드 크기 혹은 개수, 위치 조정 */}
-      <section className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-6 w-full max-w-[1800px] mx-auto mt-10 px-6">
+      <section className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-6 w-full max-w-[1800px] mx-auto mt-10 px-6">
         {loading
           ? Array.from({ length: 16 }).map((_, idx) => (
               <MovieCardSkeleton key={idx} />

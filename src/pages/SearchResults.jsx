@@ -25,7 +25,7 @@ export default function SearchResults() {
 
   return (
     <>
-      <section className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-6 w-full max-w-[1800px] mx-auto mt-30 px-6">
+      <section className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-6 w-full max-w-[1800px] mx-auto mt-30 px-6">
         {loading ? (
           Array.from({ length: 16 }).map((_, idx) => (
             <MovieCardSkeleton key={idx} />
