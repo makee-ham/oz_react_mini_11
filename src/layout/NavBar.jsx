@@ -30,6 +30,9 @@ export default function NavBar() {
     setIsMenuOpen((prev) => !prev);
   };
 
+  const clickedLogIn = () => navigate("/login");
+  const clickedSignUp = () => navigate("/signup");
+
   // TODO 검색어 없으면 검색 페이지에서 안내하도록 (지금은 home으로 가게 해둠)
   // TODO 왓챠처럼, 검색 페이지로 검색 버튼 누르면 아예 넘어가게 - handleSearchClick에서 navigate("/search"); 하게 하고 페이지 만들고
   // TODO 이건 진짜 하고싶음 하는 건데 모바일 버전 넘어가선 아예 맨 밑에 네비게이션 고정
@@ -94,10 +97,11 @@ export default function NavBar() {
         {/* TODO 검색 버튼 svg 테마따라 만들기 */}
         {/* TODO 햄버거 진짜 햄버거 메뉴로 만들기 (...) */}
         <div className="flex md:hidden items-center gap-3 ml-auto">
-          <button onClick={handleSearchClick} className="text-xl">
+          <button type="button" onClick={handleSearchClick} className="text-xl">
             🔍
           </button>
           <button
+            type="button"
             onClick={handleMenuToggle}
             className={`text-xl transition-transform duration-300 ${
               isMenuOpen ? "rotate-90" : "rotate-0"
@@ -109,13 +113,21 @@ export default function NavBar() {
 
         {/* PC: 로그인/회원가입 + 테마 */}
         <div className="hidden md:flex gap-2">
-          <button className="px-3 py-1 text-sm hover:bg-(--point-color) hover:text-[#333] transition duration-200 rounded">
+          <button
+            type="button"
+            onClick={clickedLogIn}
+            className="px-3 py-1 text-sm hover:bg-(--point-color) hover:text-[#333] transition duration-200 rounded"
+          >
             로그인
           </button>
-          <button className="px-3 py-1 text-sm hover:bg-(--point-color) hover:text-[#333] transition duration-200 rounded">
+          <button
+            type="button"
+            onClick={clickedSignUp}
+            className="px-3 py-1 text-sm hover:bg-(--point-color) hover:text-[#333] transition duration-200 rounded"
+          >
             회원가입
           </button>
-          <button onClick={handleTheme}>
+          <button type="button" onClick={handleTheme}>
             {document.documentElement.classList.contains("light") ? (
               <Dark />
             ) : (
@@ -129,6 +141,7 @@ export default function NavBar() {
       {isMenuOpen && (
         <div className="md:hidden absolute top-20 right-4 w-48 bg-(--text-default) text-(--bg-secondary) rounded shadow p-4 z-50 transition-all duration-300">
           <button
+            type="button"
             className="block w-full text-left mb-2 hover:text-blue-500"
             onClick={() => {
               navigate("/login");
@@ -138,6 +151,7 @@ export default function NavBar() {
             로그인
           </button>
           <button
+            type="button"
             className="block w-full text-left mb-2 hover:text-blue-500"
             onClick={() => {
               navigate("/signup");
@@ -147,6 +161,7 @@ export default function NavBar() {
             회원가입
           </button>
           <button
+            type="button"
             className="flex items-center gap-2 hover:text-blue-500"
             onClick={() => {
               handleTheme();
