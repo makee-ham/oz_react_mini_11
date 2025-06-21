@@ -4,6 +4,7 @@ import useDebounce from "../hooks/useDebounce";
 import toggleTheme from "../utils/toggleTheme";
 import Dark from "../assets/Dark";
 import Light from "../assets/Light";
+import Close from "../assets/Close";
 
 export default function NavBar() {
   const [query, setQuery] = useState("");
@@ -69,7 +70,9 @@ export default function NavBar() {
             }}
             className="text-xl"
           >
-            {/* TODO 여기 버튼.. svg..로 */}❌
+            <div className="text-(--text-default)">
+              <Close />
+            </div>
           </button>
         </div>
       )}
