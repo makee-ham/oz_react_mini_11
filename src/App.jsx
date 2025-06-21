@@ -3,6 +3,8 @@ import MovieCardsList from "./pages/MovieCardsList";
 import MovieDetail from "./pages/MovieDetail";
 import Layout from "./layout/Layout";
 import SearchResults from "./pages/SearchResults";
+import SignUp from "./pages/SignUp";
+import LogIn from "./pages/LogIn";
 
 function App() {
   return (
@@ -11,6 +13,8 @@ function App() {
         <Route path="/" element={<MovieCardsList />} />
         <Route path="/search" element={<SearchResults />} />
         <Route path="/details/:id" element={<MovieDetail />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<LogIn />} />
       </Route>
     </Routes>
   );
