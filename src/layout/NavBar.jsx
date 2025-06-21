@@ -30,11 +30,14 @@ export default function NavBar() {
     setIsMenuOpen((prev) => !prev);
   };
 
-  const debouncedQuery = useDebounce(query);
-
   // TODO 검색어 없으면 검색 페이지에서 안내하도록 (지금은 home으로 가게 해둠)
   // TODO 왓챠처럼, 검색 페이지로 검색 버튼 누르면 아예 넘어가게 - handleSearchClick에서 navigate("/search"); 하게 하고 페이지 만들고
   // TODO 이건 진짜 하고싶음 하는 건데 모바일 버전 넘어가선 아예 맨 밑에 네비게이션 고정
+
+  // TODO FIXME 문제 상황 예시: 검색창에 ㅇ 만 입력 후 ㅔ도 입력해서 에가 됐을 때 결과 업데이트가 안 되는 오류 해결 필요
+
+  const debouncedQuery = useDebounce(query);
+
   useEffect(() => {
     if (debouncedQuery.trim().replace(/(\s*)/g, "")) {
       navigate(`/search?query=${encodeURIComponent(debouncedQuery)}`);
