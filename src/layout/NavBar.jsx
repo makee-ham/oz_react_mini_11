@@ -5,6 +5,8 @@ import toggleTheme from "../utils/toggleTheme";
 import Dark from "../assets/Dark";
 import Light from "../assets/Light";
 import Close from "../assets/Close";
+import SearchIcon from "../assets/SearchIcon";
+import Hamburger from "../assets/Hamburger";
 
 export default function NavBar() {
   const [query, setQuery] = useState("");
@@ -97,20 +99,22 @@ export default function NavBar() {
         </div>
 
         {/* 모바일: 검색 + 메뉴 버튼 */}
-        {/* TODO 검색 버튼 svg 테마따라 만들기 */}
-        {/* TODO 햄버거 진짜 햄버거 메뉴로 만들기 (...) */}
         <div className="flex md:hidden items-center gap-3 ml-auto">
-          <button type="button" onClick={handleSearchClick} className="text-xl">
-            🔍
+          <button
+            type="button"
+            onClick={handleSearchClick}
+            className="text-xl text-(--text-default)"
+          >
+            <SearchIcon />
           </button>
           <button
             type="button"
             onClick={handleMenuToggle}
-            className={`text-xl transition-transform duration-300 ${
-              isMenuOpen ? "rotate-90" : "rotate-0"
+            className={`text-xl text-(--text-default) transition-transform duration-300 ${
+              isMenuOpen ? "-rotate-90" : "rotate-0"
             }`}
           >
-            🍔
+            <Hamburger />
           </button>
         </div>
 
