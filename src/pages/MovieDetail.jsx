@@ -41,6 +41,7 @@ export default function MovieDetail() {
           </span>
         </div>
 
+        {/* TODO (선택) 장르 클릭 시 카테고리 필터된 목록 이동 */}
         {/* 장르 */}
         <div className="flex flex-wrap gap-2">
           {detailData.genres &&
