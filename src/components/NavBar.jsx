@@ -112,15 +112,20 @@ export default function NavBar() {
           >
             <SearchIcon />
           </button>
-          <button
-            type="button"
-            onClick={handleMenuToggle}
-            className={`text-xl text-(--text-default) transition-transform duration-300 ${
-              isMenuOpen ? "-rotate-90" : "rotate-0"
-            }`}
-          >
-            {isLogin ? <UserThumbnail /> : <Hamburger />}
-          </button>
+
+          {isLogin ? (
+            <UserThumbnail onClick={handleMenuToggle} />
+          ) : (
+            <button
+              type="button"
+              onClick={handleMenuToggle}
+              className={`text-xl text-(--text-default) transition-transform duration-300 ${
+                isMenuOpen ? "-rotate-90" : "rotate-0"
+              }`}
+            >
+              <Hamburger />
+            </button>
+          )}
         </div>
 
         {/* PC: 로그인/회원가입 + 테마 */}
@@ -129,7 +134,7 @@ export default function NavBar() {
             {theme === "light" ? <Dark /> : <Light />}
           </button>
           {isLogin ? (
-            <UserThumbnail />
+            <UserThumbnail onClick={handleMenuToggle} />
           ) : (
             <>
               <button
@@ -152,63 +157,62 @@ export default function NavBar() {
       </div>
 
       {/*  TODO 모바일 메뉴 드롭다운 자연스럽게, 아래로 내려오는 애니메이션 */}
-      {isMenuOpen && isLogin ? (
-        <div className="md:hidden absolute top-20 right-4 w-48 bg-(--text-default) text-(--bg-secondary) rounded shadow p-4 z-50 transition-all duration-300">
-          <button
-            type="button"
-            className="block w-full text-left mb-2 hover:text-blue-500"
-            onClick={() => {
-              navigate("/mypick");
-              setIsMenuOpen(false);
-            }}
-          >
-            관심목록
-          </button>
-          <button
-            type="button"
-            className="block w-full text-left mb-2 hover:text-blue-500"
-            onClick={() => {
-              navigate("/");
-              setIsMenuOpen(false);
-              setIsLogin(false);
-            }}
-          >
-            로그아웃
-          </button>
-          <button
-            type="button"
-            className="flex items-center gap-2 hover:text-blue-500"
-            onClick={() => {
-              handleTheme();
-              setIsMenuOpen(false);
-            }}
-          >
-            테마 변경
-            {theme === "light" ? <Dark /> : <Light />}
-          </button>
-        </div>
-      ) : (
-        <div className="md:hidden absolute top-20 right-4 w-48 bg-(--text-default) text-(--bg-secondary) rounded shadow p-4 z-50 transition-all duration-300">
-          <button
-            type="button"
-            className="block w-full text-left mb-2 hover:text-blue-500"
-            onClick={() => {
-              navigate("/login");
-              setIsMenuOpen(false);
-            }}
-          >
-            로그인
-          </button>
-          <button
-            type="button"
-            className="block w-full text-left mb-2 hover:text-blue-500"
-            onClick={() => {
-              navigate("/signup");
-              setIsMenuOpen(false);
-            }}
-          >
-            회원가입
-          </button>
+      {isMenuOpen && (
+        <div
+          className={`${isLogin ? null : "md:hidden"} absolute top-20 right-4 w-48 bg-(--text-default) text-(--bg-secondary) rounded shadow p-4 z-50 transition-all duration-300 ${
+            isMenuOpen
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 -translate-y-2 pointer-events-none"
+          }`}
+        >
+          {isLogin ? (
+            <>
+              <button
+                type="button"
+                className="block w-full text-left mb-2 hover:text-blue-500"
+                onClick={() => {
+                  navigate("/mypick");
+                  setIsMenuOpen(false);
+                }}
+              >
+                관심목록
+              </button>
+              <button
+                type="button"
+                className="block w-full text-left mb-2 hover:text-blue-500"
+                onClick={() => {
+                  navigate("/");
+                  setIsMenuOpen(false);
+                  setIsLogin(false);
+                }}
+              >
+                로그아웃
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                type="button"
+                className="block w-full text-left mb-2 hover:text-blue-500"
+                onClick={() => {
+                  navigate("/login");
+                  setIsMenuOpen(false);
+                }}
+              >
+                로그인
+              </button>
+              <button
+                type="button"
+                className="block w-full text-left mb-2 hover:text-blue-500"
+                onClick={() => {
+                  navigate("/signup");
+                  setIsMenuOpen(false);
+                }}
+              >
+                회원가입
+              </button>
+            </>
+          )}
           <button
             type="button"
             className="flex items-center gap-2 hover:text-blue-500"
