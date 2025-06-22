@@ -1,6 +1,4 @@
-import GoogleLogo from "../../assets/GoogleLogo";
-
-export default function GoogleBtn({ onClick }) {
+export default function GoogleBtn({ onClick, label }) {
   return (
     <button
       onClick={onClick}
@@ -11,9 +9,7 @@ export default function GoogleBtn({ onClick }) {
         alt="Google Logo"
         className="w-5 h-5"
       />
-      <span className="font-roboto font-medium text-[#1F1F1F]">
-        Sign in with Google
-      </span>
+      <span className="font-roboto font-medium text-[#1F1F1F]">{label}</span>
     </button>
   );
 }

@@ -94,8 +94,6 @@ export default function LogIn() {
           </h1>
         </Link>
 
-        <h2 className="text-xl text-center font-semibold">로그인</h2>
-
         <FormInput
           label="이메일"
           type="email"
@@ -136,8 +134,8 @@ export default function LogIn() {
           <hr className="flex-grow border-t border-[#aaaaaa]/45" />
         </div>
 
-        <KakaoBtn />
-        <GoogleBtn />
+        <KakaoBtn label="Sign in with Kakao" />
+        <GoogleBtn label="Sign in with Google" />
       </div>
     </section>
   );

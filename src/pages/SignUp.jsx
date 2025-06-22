@@ -9,6 +9,8 @@ import {
   passwordsMatch,
 } from "../utils/validation";
 import { useSupabaseAuth } from "../supabase";
+import KakaoBtn from "../components/signBtns/KakaoBtn";
+import GoogleBtn from "../components/signBtns/GoogleBtn";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -115,8 +117,6 @@ export default function SignUp() {
           </h1>
         </Link>
 
-        <h2 className="text-xl text-center font-semibold">회원가입</h2>
-
         <FormInput
           label="이메일"
           type="email"
@@ -166,6 +166,15 @@ export default function SignUp() {
             로그인하기
           </Link>
         </div>
+
+        <div className="flex items-center gap-4 text-sm text-[#aaaaaa]/70 my-4">
+          <hr className="flex-grow border-t border-[#aaaaaa]/45" />
+          <span>또는</span>
+          <hr className="flex-grow border-t border-[#aaaaaa]/45" />
+        </div>
+
+        <KakaoBtn label="Sign up with Kakao" />
+        <GoogleBtn label="Sign up with Google" />
       </div>
     </section>
   );
