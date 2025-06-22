@@ -1,24 +1,44 @@
 import { Link } from "react-router-dom";
 import FormInput from "../components/FormInput";
+import bg from "../assets/formbg.webp";
 
 export default function LogIn() {
   return (
-    <section>
-      <div>
-        <Link to="/">
-          <h1 className="text-2xl sm:text-3xl font-logo tracking-wider">
+    <section className="relative w-full h-screen flex justify-center items-center overflow-hidden bg-[--bg-primary] text-[--text-default]">
+      {/* 배경 이미지 */}
+      <div
+        className="absolute inset-0 bg-cover bg-center blur-sm opacity-60"
+        style={{ backgroundImage: `url(${bg})` }}
+      ></div>
+
+      {/* 로그인 카드 */}
+      <div className="relative z-10 flex flex-col gap-6 p-8 rounded-2xl bg-[#0f0f0f]/70 backdrop-blur-md shadow-lg w-[90%] max-w-sm">
+        <Link to="/" className="self-center">
+          <h1 className="text-3xl sm:text-4xl font-logo tracking-widest">
             Cine
-            <span className="text-(--point-color) text-3xl sm:text-4xl">V</span>
+            <span className="text-[#00ffff] text-4xl sm:text-5xl ml-1">V</span>
             isor
           </h1>
         </Link>
 
-        <h2>로그인</h2>
+        <h2 className="text-xl text-center font-semibold">로그인</h2>
+
         <FormInput />
         <FormInput />
-        <button>로그인</button>
-        <p>아직 계정이 없으신가요?</p>
-        <Link to="/signup">간편 가입하기</Link>
+
+        <button className="bg-linear-to-r from-cyan-500 to-blue-500 text-black font-bold py-2 rounded hover:opacity-90 transition">
+          로그인
+        </button>
+
+        <div className="text-sm text-center text-[--text-sub]">
+          아직 계정이 없으신가요?{" "}
+          <Link
+            to="/signup"
+            className="text-[#ff5f5f] font-semibold hover:underline"
+          >
+            간편 가입하기
+          </Link>
+        </div>
       </div>
     </section>
   );
