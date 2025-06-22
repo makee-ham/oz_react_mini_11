@@ -7,6 +7,7 @@ import SignUp from "./pages/SignUp";
 import LogIn from "./pages/LogIn";
 import { useSupabaseAuth } from "./supabase";
 import { useEffect } from "react";
+import OAuthKakaoCallback from "./pages/OAuthKakaoCallback";
 
 function App() {
   const { getUserInfo } = useSupabaseAuth();
@@ -25,6 +26,8 @@ function App() {
 
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<LogIn />} />
+
+      <Route path="/oauth/kakao" element={<OAuthKakaoCallback />} />
     </Routes>
   );
 }

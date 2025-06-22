@@ -167,7 +167,7 @@ export default function SignUp() {
           </Link>
         </div>
 
-        <div className="flex items-center gap-4 text-sm text-[#aaaaaa]/70 my-4">
+        <div className="flex items-center gap-4 text-xs text-[#aaaaaa]/70 my-4">
           <hr className="flex-grow border-t border-[#aaaaaa]/45" />
           <span>또는</span>
           <hr className="flex-grow border-t border-[#aaaaaa]/45" />

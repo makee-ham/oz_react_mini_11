@@ -10,6 +10,7 @@ import Hamburger from "../assets/Hamburger";
 import { useIsLogin } from "../contexts/IsLoginContext";
 import UserThumbnail from "./UserTumbnail";
 import { useSupabaseAuth } from "../supabase";
+import { useUserInfo } from "../contexts/UserInfoContext";
 
 export default function NavBar() {
   const [query, setQuery] = useState("");
@@ -18,6 +19,7 @@ export default function NavBar() {
   const navigate = useNavigate();
   const [theme, setTheme] = useState("light");
   const [isLogin, setIsLogin] = useIsLogin();
+  const [userInfo] = useUserInfo();
 
   const { logout } = useSupabaseAuth();
 
@@ -123,7 +125,10 @@ export default function NavBar() {
           </button>
 
           {isLogin ? (
-            <UserThumbnail onClick={handleMenuToggle} />
+            <UserThumbnail
+              onClick={handleMenuToggle}
+              thumbnail={userInfo.profileImageUrl}
+            />
           ) : (
             <button
               type="button"
@@ -143,7 +148,10 @@ export default function NavBar() {
             {theme === "light" ? <Dark /> : <Light />}
           </button>
           {isLogin ? (
-            <UserThumbnail onClick={handleMenuToggle} />
+            <UserThumbnail
+              onClick={handleMenuToggle}
+              thumbnail={userInfo.profileImageUrl}
+            />
           ) : (
             <>
               <button
