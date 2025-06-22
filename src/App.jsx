@@ -13,9 +13,10 @@ function App() {
         <Route path="/" element={<MovieCardsList />} />
         <Route path="/search" element={<SearchResults />} />
         <Route path="/details/:id" element={<MovieDetail />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<LogIn />} />
       </Route>
+
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/login" element={<LogIn />} />
     </Routes>
   );
 }
