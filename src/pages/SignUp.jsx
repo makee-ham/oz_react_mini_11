@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import bg from "../assets/formbg.webp";
 import { useRef, useState } from "react";
@@ -8,8 +8,12 @@ import {
   validatePassword,
   passwordsMatch,
 } from "../utils/validation";
+import { useSupabaseAuth } from "../supabase";
 
 export default function SignUp() {
+  const navigate = useNavigate();
+  const { signUp } = useSupabaseAuth();
+
   const nameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -22,14 +26,14 @@ export default function SignUp() {
     confirm: "",
   });
 
-  const handleSubmit = () => {
-    const name = nameRef.current.value.trim();
+  const handleSubmit = async () => {
+    const userName = nameRef.current.value.trim();
     const email = emailRef.current.value.trim();
     const password = passwordRef.current.value.trim();
     const confirm = confirmRef.current.value.trim();
 
     const newErrors = {
-      name: "",
+      userName: "",
       email: "",
       password: "",
       confirm: "",
@@ -37,11 +41,11 @@ export default function SignUp() {
 
     let valid = true;
 
-    if (!name) {
-      newErrors.name = "이름을 입력해주세요.";
+    if (!userName) {
+      newErrors.userName = "이름을 입력해주세요.";
       valid = false;
-    } else if (!validateName(name)) {
-      newErrors.name = "2~8자 숫자/한글/영어만 사용 가능합니다.";
+    } else if (!validateName(userName)) {
+      newErrors.userName = "2~8자 숫자/한글/영어만 사용 가능합니다.";
       valid = false;
     }
 
@@ -71,9 +75,16 @@ export default function SignUp() {
 
     setErrors(newErrors);
 
-    // valid함. 회원가입 요청 및 가입 가능한 데이터인지 보내기.
+    // 회원가입 요청
     if (valid) {
-      // 회원가입 요청- API 요청 or 상태 업데이트(정보 유효 여부 등)
+      try {
+        const result = await signUp({ email, password, userName });
+        alert("회원가입이 정상적으로 완료되었습니다!");
+        navigate("/login");
+      } catch (err) {
+        console.error("회원가입 실패", err);
+        alert("회원가입 중 오류가 발생했어요: " + err.message);
+      }
     }
   };
 

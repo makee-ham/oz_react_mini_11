@@ -5,6 +5,7 @@ import {
   localStorageUtils,
   USER_INFO_KEY,
 } from "../utilities";
+import userImg from "../../assets/user.webp";
 
 export const useEmailAuth = () => {
   const supabase = useSupabase();
@@ -17,8 +18,7 @@ export const useEmailAuth = () => {
         password,
         options: {
           data: {
-            avatar_url:
-              "https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295396_1280.png",
+            avatar_url: userImg,
             ...userData,
           },
         },
