@@ -5,8 +5,16 @@ import Layout from "./layout/Layout";
 import SearchResults from "./pages/SearchResults";
 import SignUp from "./pages/SignUp";
 import LogIn from "./pages/LogIn";
+import { useSupabaseAuth } from "./supabase";
+import { useEffect } from "react";
 
 function App() {
+  const { getUserInfo } = useSupabaseAuth();
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
   return (
     <Routes>
       <Route element={<Layout />}>
