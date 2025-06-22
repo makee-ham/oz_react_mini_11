@@ -1,8 +1,14 @@
 import { Link } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import bg from "../assets/formbg.webp";
+import { useRef, useState } from "react";
 
 export default function LogIn() {
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
   return (
     <section className="relative w-full h-screen flex justify-center items-center overflow-hidden bg-[#0f0f0f] text-[#f1f1f1]">
       {/* 배경 이미지 */}
@@ -38,7 +44,7 @@ export default function LogIn() {
           로그인
         </button>
 
-        <div className="text-sm text-center text-[--text-sub]">
+        <div className="text-sm text-center text-[#aaaaaa]">
           아직 계정이 없으신가요?{" "}
           <Link
             to="/signup"

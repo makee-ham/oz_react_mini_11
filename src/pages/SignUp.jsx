@@ -32,7 +32,7 @@ export default function SignUp() {
         <FormInput
           label="비밀번호"
           type="password"
-          placeholder="영어 대문자/소문자 + 숫자의 조합 사용"
+          placeholder="영어 대문자/소문자 + 숫자 각 1개 이상, 총 8자 이상"
         />
         <FormInput
           label="비밀번호 확인"
@@ -44,7 +44,7 @@ export default function SignUp() {
           회원가입
         </button>
 
-        <div className="text-sm text-center text-[--text-sub]">
+        <div className="text-sm text-center text-[#aaaaaa]">
           이미 가입하셨나요?{" "}
           <Link
             to="/login"
