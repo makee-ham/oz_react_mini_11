@@ -24,7 +24,6 @@ export default function NavBar() {
   useEffect(() => {
     const isLight = document.documentElement.classList.contains("light");
     setTheme(isLight ? "light" : "dark");
-    // setIsLogin(true); // 테스트용
   }, []);
 
   const handleTheme = () => {

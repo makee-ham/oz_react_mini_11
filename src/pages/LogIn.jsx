@@ -5,12 +5,15 @@ import { validateEmail, validatePassword } from "../utils/validation";
 import bg from "../assets/formbg.webp";
 import { useSupabaseAuth } from "../supabase";
 import { useUserInfo } from "../contexts/UserInfoContext";
+import { useIsLogin } from "../contexts/IsLoginContext";
 
 export default function LogIn() {
   const navigate = useNavigate();
   const { login } = useSupabaseAuth();
   const [_, setUserInfo] = useUserInfo();
   const { getUserInfo } = useSupabaseAuth();
+
+  const [__, setIsLogin] = useIsLogin();
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -62,6 +65,7 @@ export default function LogIn() {
         const result = await login({ email, password });
         const localUserData = await getUserInfo();
         setUserInfo(localUserData.user);
+        setIsLogin(true);
 
         alert(`환영합니다, ${result.user.userName} 님!`);
         navigate("/");
