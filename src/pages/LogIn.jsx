@@ -1,10 +1,14 @@
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import { validateEmail, validatePassword } from "../utils/validation";
 import bg from "../assets/formbg.webp";
+import { useSupabaseAuth } from "../supabase";
 
 export default function LogIn() {
+  const navigate = useNavigate();
+  const { login } = useSupabaseAuth();
+
   const emailRef = useRef();
   const passwordRef = useRef();
 
@@ -20,7 +24,7 @@ export default function LogIn() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const email = emailRef.current.value.trim();
     const password = passwordRef.current.value.trim();
 
@@ -49,9 +53,16 @@ export default function LogIn() {
 
     setErrors(newErrors);
 
-    // 로그인 요청, 로그인 가능한지 등등
+    // 로그인 요청
     if (isValid) {
-      // 실제 로그인 API 호출
+      try {
+        const result = await login({ email, password });
+        alert(`환영합니다, ${result.user.userName} 님!`);
+        navigate("/");
+      } catch (err) {
+        console.error("로그인 실패", err);
+        alert("로그인 중 오류가 발생했어요: " + err.message);
+      }
     }
   };
 

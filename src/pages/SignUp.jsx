@@ -79,7 +79,9 @@ export default function SignUp() {
     if (valid) {
       try {
         const result = await signUp({ email, password, userName });
-        alert("회원가입이 정상적으로 완료되었습니다!");
+        alert(
+          `${result.user.userName} 님의 회원가입이 정상적으로 완료되었습니다!`
+        );
         navigate("/login");
       } catch (err) {
         console.error("회원가입 실패", err);
