@@ -8,6 +8,7 @@ export default function Layout() {
       <NavBar />
       <main>
         <Outlet />
+        {/* TODO 맨 위로 가기 버튼 */}
       </main>
     </>
   );
