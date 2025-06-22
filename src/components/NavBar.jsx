@@ -7,7 +7,7 @@ import Light from "../assets/Light";
 import Close from "../assets/Close";
 import SearchIcon from "../assets/SearchIcon";
 import Hamburger from "../assets/Hamburger";
-import { useIsLogin } from "../contexts/isLoginContext";
+import { useIsLogin } from "../contexts/IsLoginContext";
 import UserThumbnail from "./UserTumbnail";
 import { useSupabaseAuth } from "../supabase";
 
