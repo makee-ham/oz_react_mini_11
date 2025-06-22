@@ -12,9 +12,7 @@ const SUPABASE = createContext(null);
 
 // supabase client를 사용하기 위한 provider 생성
 export const SupabaseProvider = ({ children }) => {
-  return (
-    <SUPABASE.Provider value={supabaseClient}>{children}</SUPABASE.Provider>
-  );
+  return <SUPABASE value={supabaseClient}>{children}</SUPABASE>;
 };
 
 export const useSupabase = () => {
