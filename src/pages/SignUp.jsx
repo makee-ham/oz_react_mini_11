@@ -148,7 +148,7 @@ export default function SignUp() {
           이미 가입하셨나요?{" "}
           <Link
             to="/login"
-            className="text-[#ff5f5f] font-semibold hover:underline"
+            className="text-[#00ffff] font-semibold hover:underline"
           >
             로그인하기
           </Link>

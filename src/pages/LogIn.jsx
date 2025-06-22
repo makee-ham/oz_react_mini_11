@@ -1,23 +1,67 @@
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import FormInput from "../components/FormInput";
+import { validateEmail, validatePassword } from "../utils/validation";
 import bg from "../assets/formbg.webp";
-import { useRef, useState } from "react";
 
 export default function LogIn() {
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const emailRef = useRef();
+  const passwordRef = useRef();
+
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+  });
+
+  // 경고 후 입력 시 에러 메시지 등 제거
+  const handleInput = (field) => {
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: "" }));
+    }
+  };
+
+  const handleSubmit = () => {
+    const email = emailRef.current.value.trim();
+    const password = passwordRef.current.value.trim();
+
+    const newErrors = {
+      email: "",
+      password: "",
+    };
+
+    let isValid = true;
+
+    if (!email) {
+      newErrors.email = "이메일을 입력해주세요.";
+      isValid = false;
+    } else if (!validateEmail(email)) {
+      newErrors.email = "올바른 이메일 형식이 아닙니다.";
+      isValid = false;
+    }
+
+    if (!password) {
+      newErrors.password = "비밀번호를 입력해주세요.";
+      isValid = false;
+    } else if (!validatePassword(password)) {
+      newErrors.password = "영문 대소문자 + 숫자 조합 8자 이상이어야 합니다.";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+
+    // 로그인 요청, 로그인 가능한지 등등
+    if (isValid) {
+      // 실제 로그인 API 호출
+    }
+  };
 
   return (
     <section className="relative w-full h-screen flex justify-center items-center overflow-hidden bg-[#0f0f0f] text-[#f1f1f1]">
-      {/* 배경 이미지 */}
       <div
         className="absolute inset-0 bg-cover bg-center blur-sm opacity-60"
         style={{ backgroundImage: `url(${bg})` }}
       ></div>
 
-      {/* 로그인 카드 */}
       <div className="relative z-10 flex flex-col gap-5 p-8 rounded-2xl bg-[#0f0f0f]/70 backdrop-blur-md shadow-lg w-[90%] max-w-sm">
         <Link to="/" className="self-center">
           <h1 className="text-3xl sm:text-4xl font-logo tracking-widest">
@@ -33,14 +77,23 @@ export default function LogIn() {
           label="이메일"
           type="email"
           placeholder="이메일을 입력해주세요"
+          inputRef={emailRef}
+          validation={errors.email}
+          onInput={() => handleInput("email")}
         />
         <FormInput
           label="비밀번호"
           type="password"
           placeholder="비밀번호를 입력해주세요"
+          inputRef={passwordRef}
+          validation={errors.password}
+          onInput={() => handleInput("password")}
         />
 
-        <button className="bg-linear-to-r from-cyan-500 to-blue-500 text-black font-bold py-2 rounded hover:opacity-90 transition">
+        <button
+          onClick={handleSubmit}
+          className="bg-gradient-to-r from-cyan-500 to-blue-500 text-black font-bold py-2 rounded hover:opacity-90 transition"
+        >
           로그인
         </button>
 
@@ -48,7 +101,7 @@ export default function LogIn() {
           아직 계정이 없으신가요?{" "}
           <Link
             to="/signup"
-            className="text-[#ff5f5f] font-semibold hover:underline"
+            className="text-[#00ffff] font-semibold hover:underline"
           >
             간편 가입하기
           </Link>

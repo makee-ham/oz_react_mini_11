@@ -6,7 +6,7 @@ export default function FormInput({
   validation,
   onInput,
 }) {
-  const isInvalid = !!validation;
+  const isInvalid = !!validation; // 에러 문구 여부 체크
 
   return (
     <div className="flex flex-col gap-1">
