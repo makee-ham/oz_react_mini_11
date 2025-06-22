@@ -1,15 +1,15 @@
 import { createContext, useContext, useState } from "react";
 
-const isLoginContext = createContext();
+const IsLoginContext = createContext();
 
 export function IsLoginProvider({ children }) {
   const [isLogin, setIsLogin] = useState(false);
 
   return (
-    <isLoginContext value={[isLogin, setIsLogin]}>{children}</isLoginContext>
+    <IsLoginContext value={[isLogin, setIsLogin]}>{children}</IsLoginContext>
   );
 }
 
 export function useIsLogin() {
-  return useContext(isLoginContext);
+  return useContext(IsLoginContext);
 }

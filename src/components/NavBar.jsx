@@ -7,6 +7,8 @@ import Light from "../assets/Light";
 import Close from "../assets/Close";
 import SearchIcon from "../assets/SearchIcon";
 import Hamburger from "../assets/Hamburger";
+import { useIsLogin } from "../contexts/isLoginContext";
+import UserThumbnail from "./UserTumbnail";
 
 export default function NavBar() {
   const [query, setQuery] = useState("");
@@ -14,10 +16,12 @@ export default function NavBar() {
   const [isSearchActive, setIsSearchActive] = useState(false);
   const navigate = useNavigate();
   const [theme, setTheme] = useState("light");
+  const [isLogin, setIsLogin] = useIsLogin();
 
   useEffect(() => {
     const isLight = document.documentElement.classList.contains("light");
     setTheme(isLight ? "light" : "dark");
+    setIsLogin(true); // 테스트용
   }, []);
 
   const handleTheme = () => {
@@ -39,7 +43,7 @@ export default function NavBar() {
 
   // TODO 검색어 없으면 검색 페이지에서 안내하도록 (지금은 home으로 가게 해둠)
   // TODO 왓챠처럼, 검색 페이지로 검색 버튼 누르면 아예 넘어가게 - handleSearchClick에서 navigate("/search"); 하게 하고 페이지 만들고
-  // TODO 이건 진짜 하고싶음 하는 건데 모바일 버전 넘어가선 아예 맨 밑에 네비게이션 고정
+  // TODO 이건 진짜 하고싶음 하는 건데 모바일 버전 넘어가선 아예 맨 밑에.. 하단에 내비게이션 고정 (진짜 앱처럼...)
 
   // TODO FIXME 문제 상황 예시: 검색창에 ㅇ 만 입력 후 ㅔ도 입력해서 에가 됐을 때 결과 업데이트가 안 되는 오류 해결 필요
 
@@ -115,7 +119,7 @@ export default function NavBar() {
               isMenuOpen ? "-rotate-90" : "rotate-0"
             }`}
           >
-            <Hamburger />
+            {isLogin ? <UserThumbnail /> : <Hamburger />}
           </button>
         </div>
 
@@ -124,25 +128,66 @@ export default function NavBar() {
           <button type="button" onClick={handleTheme}>
             {theme === "light" ? <Dark /> : <Light />}
           </button>
-          <button
-            type="button"
-            onClick={clickedLogIn}
-            className="px-3 py-1 text-sm hover:bg-(--point-color) hover:text-[#333] transition duration-200 rounded"
-          >
-            로그인
-          </button>
-          <button
-            type="button"
-            onClick={clickedSignUp}
-            className="px-3 py-1 text-sm hover:bg-(--point-color) hover:text-[#333] transition duration-200 rounded"
-          >
-            회원가입
-          </button>
+          {isLogin ? (
+            <UserThumbnail />
+          ) : (
+            <>
+              <button
+                type="button"
+                onClick={clickedLogIn}
+                className="px-3 py-1 text-sm hover:bg-(--point-color) hover:text-[#333] transition duration-200 rounded"
+              >
+                로그인
+              </button>
+              <button
+                type="button"
+                onClick={clickedSignUp}
+                className="px-3 py-1 text-sm hover:bg-(--point-color) hover:text-[#333] transition duration-200 rounded"
+              >
+                회원가입
+              </button>
+            </>
+          )}
         </div>
       </div>
 
-      {/*  모바일 메뉴 드롭다운 자연스럽게, 아래로 내려오는 애니메이션 */}
-      {isMenuOpen && (
+      {/*  TODO 모바일 메뉴 드롭다운 자연스럽게, 아래로 내려오는 애니메이션 */}
+      {isMenuOpen && isLogin ? (
+        <div className="md:hidden absolute top-20 right-4 w-48 bg-(--text-default) text-(--bg-secondary) rounded shadow p-4 z-50 transition-all duration-300">
+          <button
+            type="button"
+            className="block w-full text-left mb-2 hover:text-blue-500"
+            onClick={() => {
+              navigate("/mypick");
+              setIsMenuOpen(false);
+            }}
+          >
+            관심목록
+          </button>
+          <button
+            type="button"
+            className="block w-full text-left mb-2 hover:text-blue-500"
+            onClick={() => {
+              navigate("/");
+              setIsMenuOpen(false);
+              setIsLogin(false);
+            }}
+          >
+            로그아웃
+          </button>
+          <button
+            type="button"
+            className="flex items-center gap-2 hover:text-blue-500"
+            onClick={() => {
+              handleTheme();
+              setIsMenuOpen(false);
+            }}
+          >
+            테마 변경
+            {theme === "light" ? <Dark /> : <Light />}
+          </button>
+        </div>
+      ) : (
         <div className="md:hidden absolute top-20 right-4 w-48 bg-(--text-default) text-(--bg-secondary) rounded shadow p-4 z-50 transition-all duration-300">
           <button
             type="button"
