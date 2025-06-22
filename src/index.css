@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Megrim&display=swap");
 @import "tailwindcss";
 
@@ -19,6 +20,7 @@
   --line-color: "#2E2E2E";
   --font-default: "Minguk-Regular", "sans-serif";
   --font-logo: "Megrim", "sans-serif";
+  --font-roboto: "Roboto", sans-serif;
 }
 
 :root {
@@ -31,6 +33,7 @@
   --line-color: #2e2e2e;
   --font-default: "Minguk-Regular", "sans-serif";
   --font-logo: "Megrim", "sans-serif";
+  --font-roboto: "Roboto", sans-serif;
 
   --skeleton-bg-primary: #1f2937;
   --skeleton-bg-secondary: #374151;

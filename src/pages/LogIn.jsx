@@ -6,6 +6,8 @@ import bg from "../assets/formbg.webp";
 import { useSupabaseAuth } from "../supabase";
 import { useUserInfo } from "../contexts/UserInfoContext";
 import { useIsLogin } from "../contexts/IsLoginContext";
+import KakaoBtn from "../components/signBtns/KakaoBtn";
+import GoogleBtn from "../components/signBtns/GoogleBtn";
 
 export default function LogIn() {
   const navigate = useNavigate();
@@ -127,6 +129,15 @@ export default function LogIn() {
             간편 가입하기
           </Link>
         </div>
+
+        <div className="flex items-center gap-4 text-sm text-[#aaaaaa]/70 my-4">
+          <hr className="flex-grow border-t border-[#aaaaaa]/45" />
+          <span>또는</span>
+          <hr className="flex-grow border-t border-[#aaaaaa]/45" />
+        </div>
+
+        <KakaoBtn />
+        <GoogleBtn />
       </div>
     </section>
   );

@@ -3,14 +3,14 @@ export default function KakaoLogo() {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.2"
-      viewBox="0 0 25 24"
-      width="25"
-      height="24"
+      viewBox="0 0 18 17"
+      width="18"
+      height="17"
     >
       <path
         fill-rule="evenodd"
         class="a"
-        d="m18 0c-9.9 0-18 6.2-18 13.9 0 4.8 3.1 9.1 7.9 11.6l-2 7.3c-0.2 0.7 0.5 1.2 1.1 0.8l8.7-5.8q1.2 0.1 2.3 0.1c9.9 0 18-6.2 18-14 0-7.7-8.1-13.9-18-13.9"
+        d="m9-0.1c-5 0-9 3.2-9 7 0 2.4 1.6 4.6 3.9 5.8l-1 3.7c-0.1 0.3 0.3 0.6 0.6 0.4l4.4-2.9q0.5 0 1.1 0c5 0 9-3.1 9-7 0-3.8-4-7-9-7"
       />
     </svg>
   );
