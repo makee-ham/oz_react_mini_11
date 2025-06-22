@@ -9,6 +9,7 @@ import SearchIcon from "../assets/SearchIcon";
 import Hamburger from "../assets/Hamburger";
 import { useIsLogin } from "../contexts/isLoginContext";
 import UserThumbnail from "./UserTumbnail";
+import { useSupabaseAuth } from "../supabase";
 
 export default function NavBar() {
   const [query, setQuery] = useState("");
@@ -17,6 +18,8 @@ export default function NavBar() {
   const navigate = useNavigate();
   const [theme, setTheme] = useState("light");
   const [isLogin, setIsLogin] = useIsLogin();
+
+  const { logout } = useSupabaseAuth();
 
   useEffect(() => {
     const isLight = document.documentElement.classList.contains("light");
@@ -40,6 +43,13 @@ export default function NavBar() {
 
   const clickedLogIn = () => navigate("/login");
   const clickedSignUp = () => navigate("/signup");
+
+  const handleLogout = async () => {
+    await logout();
+    setIsLogin(false);
+    navigate("/");
+    setIsMenuOpen(false);
+  };
 
   // TODO 검색어 없으면 검색 페이지에서 안내하도록 (지금은 home으로 가게 해둠)
   // TODO 왓챠처럼, 검색 페이지로 검색 버튼 누르면 아예 넘어가게 - handleSearchClick에서 navigate("/search"); 하게 하고 페이지 만들고
@@ -180,11 +190,7 @@ export default function NavBar() {
               <button
                 type="button"
                 className="block w-full text-left mb-2 hover:text-blue-500"
-                onClick={() => {
-                  navigate("/");
-                  setIsMenuOpen(false);
-                  setIsLogin(false);
-                }}
+                onClick={handleLogout}
               >
                 로그아웃
               </button>
