@@ -4,7 +4,7 @@ import bg from "../assets/formbg.webp";
 
 export default function LogIn() {
   return (
-    <section className="relative w-full h-screen flex justify-center items-center overflow-hidden bg-[--bg-primary] text-[--text-default]">
+    <section className="relative w-full h-screen flex justify-center items-center overflow-hidden bg-[#0f0f0f] text-[#f1f1f1]">
       {/* 배경 이미지 */}
       <div
         className="absolute inset-0 bg-cover bg-center blur-sm opacity-60"
@@ -12,7 +12,7 @@ export default function LogIn() {
       ></div>
 
       {/* 로그인 카드 */}
-      <div className="relative z-10 flex flex-col gap-6 p-8 rounded-2xl bg-[#0f0f0f]/70 backdrop-blur-md shadow-lg w-[90%] max-w-sm">
+      <div className="relative z-10 flex flex-col gap-5 p-8 rounded-2xl bg-[#0f0f0f]/70 backdrop-blur-md shadow-lg w-[90%] max-w-sm">
         <Link to="/" className="self-center">
           <h1 className="text-3xl sm:text-4xl font-logo tracking-widest">
             Cine
@@ -23,8 +23,16 @@ export default function LogIn() {
 
         <h2 className="text-xl text-center font-semibold">로그인</h2>
 
-        <FormInput />
-        <FormInput />
+        <FormInput
+          label="이메일"
+          type="email"
+          placeholder="이메일을 입력해주세요"
+        />
+        <FormInput
+          label="비밀번호"
+          type="password"
+          placeholder="비밀번호를 입력해주세요"
+        />
 
         <button className="bg-linear-to-r from-cyan-500 to-blue-500 text-black font-bold py-2 rounded hover:opacity-90 transition">
           로그인
