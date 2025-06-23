@@ -1,4 +1,5 @@
 import { TMDB_IMAGE_BASE_URL } from "../constants/imageBaseUrl";
+import noPoster from "../assets/no-poster.webp";
 
 export default function MovieCard({ poster, title, score }) {
   const getScoreColor = (score) => {
@@ -12,7 +13,7 @@ export default function MovieCard({ poster, title, score }) {
       <div className="aspect-[2/3] w-full overflow-hidden">
         <img
           className="w-full h-full object-cover"
-          src={TMDB_IMAGE_BASE_URL + poster}
+          src={poster ? TMDB_IMAGE_BASE_URL + poster : noPoster}
           alt={title}
         />
       </div>
