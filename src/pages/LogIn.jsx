@@ -78,6 +78,7 @@ export default function LogIn() {
       } catch (err) {
         console.error("로그인 실패", err);
         alert("로그인 중 오류가 발생했어요: " + err.message);
+        navigate("/login");
       }
     }
   };
