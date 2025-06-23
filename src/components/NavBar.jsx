@@ -80,7 +80,7 @@ export default function NavBar() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="영화 제목을 입력해보세요"
-            className="flex-1 rounded-full px-4 py-2 bg-(--text-default) text-(--bg-secondary) text-sm focus:ring-2 focus:ring-[var(--point-color)] transition"
+            className="flex-1 rounded-full px-4 py-2 bg-(--text-default) text-(--bg-secondary) text-sm outline-none focus:ring-2 focus:ring-(--point-color) transition"
           />
           <button
             onClick={() => {
