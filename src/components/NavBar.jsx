@@ -48,8 +48,9 @@ export default function NavBar() {
 
   const handleLogout = async () => {
     await logout();
-    setIsLogin(false);
     navigate("/");
+    alert("로그아웃 되었습니다.");
+    setIsLogin(false);
     setIsMenuOpen(false);
   };
 
