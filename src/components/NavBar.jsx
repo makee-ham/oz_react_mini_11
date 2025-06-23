@@ -190,11 +190,11 @@ export default function NavBar() {
                 type="button"
                 className="block w-full text-left mb-2 hover:text-blue-500"
                 onClick={() => {
-                  navigate("/mypick");
+                  navigate("/mypage");
                   setIsMenuOpen(false);
                 }}
               >
-                관심목록
+                마이페이지
               </button>
               <button
                 type="button"
