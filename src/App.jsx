@@ -7,11 +7,10 @@ import SignUp from "./pages/SignUp";
 import LogIn from "./pages/LogIn";
 import { useSupabaseAuth } from "./supabase";
 import { useEffect } from "react";
-import OAuthKakaoCallback from "./pages/OAuthKakaoCallback";
-import OAuthGoogleCallback from "./pages/OAuthGoogleCallback";
 import { useUserInfo } from "./contexts/UserInfoContext";
 import { useIsLogin } from "./contexts/IsLoginContext";
 import MyPage from "./pages/MyPage";
+import OAuthCallback from "./pages/OAuthCallback";
 
 function App() {
   const { getUserInfo } = useSupabaseAuth();
@@ -44,8 +43,8 @@ function App() {
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<LogIn />} />
 
-      <Route path="/oauth/kakao" element={<OAuthKakaoCallback />} />
-      <Route path="/oauth/google" element={<OAuthGoogleCallback />} />
+      <Route path="/oauth/kakao" element={<OAuthCallback />} />
+      <Route path="/oauth/google" element={<OAuthCallback />} />
     </Routes>
   );
 }

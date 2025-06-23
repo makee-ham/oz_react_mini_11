@@ -4,7 +4,7 @@ import { useSupabaseAuth } from "../supabase";
 import { useUserInfo } from "../contexts/UserInfoContext";
 import { useIsLogin } from "../contexts/IsLoginContext";
 
-export default function OAuthGoogleCallback() {
+export default function OAuthCallback() {
   const navigate = useNavigate();
   const { getUserInfo } = useSupabaseAuth();
   const [_, setUserInfo] = useUserInfo();
