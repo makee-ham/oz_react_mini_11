@@ -1,13 +1,18 @@
 import { supabaseClient } from "../supabase/context";
 
 export async function addBookmark(userId, movie) {
-  return await supabaseClient.from("bookmarks").insert({
-    user_id: userId,
-    movie_id: movie.id,
-    title: movie.title,
-    poster_path: movie.poster_path,
-    vote_average: movie.vote_average,
-  });
+  return await supabaseClient.from("bookmarks").upsert(
+    {
+      user_id: userId,
+      movie_id: movie.id,
+      title: movie.title,
+      poster_path: movie.poster_path,
+      vote_average: movie.vote_average,
+    },
+    {
+      onConflict: ["user_id", "movie_id"],
+    }
+  );
 }
 
 export async function removeBookmark(userId, movieId) {

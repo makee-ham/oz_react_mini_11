@@ -5,10 +5,20 @@ import getMovieDetailsURL from "../utils/getMovieDetails";
 import { useParams } from "react-router-dom";
 import { TMDB_API_OPTIONS } from "../constants/apiOptions";
 import MovieDetailSkeleton from "../components/skeletons/MovieDetailSkeleton";
+import {
+  addBookmark,
+  removeBookmark,
+  isBookmarked,
+} from "../utils/bookmarkAPI";
+import { useSupabaseAuth } from "../supabase";
 
 export default function MovieDetail() {
   const params = useParams();
   const [detailData, setDetailData] = useState({});
+  const [bookmarked, setBookmarked] = useState(false);
+  const [userId, setUserId] = useState(null);
+
+  const { getUserInfo } = useSupabaseAuth();
 
   const url = getMovieDetailsURL(params.id);
   const { loading, data, error } = useFetch(url, TMDB_API_OPTIONS);
@@ -16,6 +26,34 @@ export default function MovieDetail() {
   useEffect(() => {
     if (data) setDetailData(data);
   }, [data]);
+
+  useEffect(() => {
+    (async () => {
+      const user = await getUserInfo();
+      if (!user?.user?.id) return;
+      setUserId(user.user.id);
+
+      const exists = await isBookmarked(user.user.id, Number(params.id));
+      setBookmarked(exists);
+    })();
+  }, [params.id]);
+
+  const handleBookmarkToggle = async () => {
+    if (!userId || !detailData.id) return;
+
+    if (bookmarked) {
+      await removeBookmark(userId, detailData.id);
+      setBookmarked(false);
+    } else {
+      await addBookmark(userId, {
+        id: detailData.id,
+        title: detailData.title,
+        poster_path: detailData.poster_path,
+        vote_average: detailData.vote_average,
+      });
+      setBookmarked(true);
+    }
+  };
 
   if (loading) return <MovieDetailSkeleton />;
   if (error) return <p>에러 발생: {error.message}</p>;
@@ -42,10 +80,11 @@ export default function MovieDetail() {
         </div>
 
         {/* TODO (선택) 장르 클릭 시 카테고리 필터된 목록 이동 */}
-        {/* 장르 */}
-        <div className="flex flex-wrap gap-2">
-          {detailData.genres &&
-            detailData.genres.map((genre, idx) => (
+        {/* 장르 + 하트 */}
+        <div className="flex justify-between items-center">
+          {/* 장르들 */}
+          <div className="flex flex-wrap gap-2">
+            {detailData.genres?.map((genre, idx) => (
               <span
                 key={idx}
                 className="px-3 py-1 bg-(--line-color) text-sm rounded-full"
@@ -53,6 +92,12 @@ export default function MovieDetail() {
                 {genre.name}
               </span>
             ))}
+          </div>
+
+          {/* 북마크 하트 */}
+          <button onClick={handleBookmarkToggle} className="text-2xl shrink-0">
+            {bookmarked ? "❤️" : "🤍"}
+          </button>
         </div>
 
         {/* 줄거리 */}
