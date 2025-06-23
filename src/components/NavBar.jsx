@@ -229,7 +229,7 @@ export default function NavBar() {
           )}
           <button
             type="button"
-            className="flex items-center gap-2 hover:text-blue-500"
+            className="flex md:hidden items-center gap-2 hover:text-blue-500"
             onClick={() => {
               handleTheme();
               setIsMenuOpen(false);
