@@ -5,6 +5,17 @@ export const changeFromDto = ({ type, dto }) => {
   switch (type) {
     case DTO_TYPE.user:
       const user = dto?.user;
+
+      // 로컬스토리지에서 이미 커스텀된 구조라면, 그냥 반환 (그니까 프로필 수정한 거면)
+      if (
+        user?.id &&
+        user?.email &&
+        user?.userName &&
+        user?.profileImageUrl !== undefined
+      ) {
+        return { user }; // 재가공하지 않고 그대로 리턴
+      }
+
       const { user_metadata: userInfo } = user || {};
 
       // 로그인 방식에 따른 사용자 정보 추출

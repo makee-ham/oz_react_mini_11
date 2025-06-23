@@ -24,16 +24,9 @@ export const useAuth = () => {
   // user 정보 가져오기
   const getUserInfo = async () => {
     // 1. 먼저 로컬스토리지 확인
-    const local = getItemFromLocalStorage(USER_INFO_KEY.sbKey);
-    if (local) {
-      const userInfo = changeFromDto({
-        type: local.user ? DTO_TYPE.user : DTO_TYPE.error,
-        dto: local,
-      });
-      if (userInfo.user) {
-        setItemToLocalStorage(USER_INFO_KEY.customKey, userInfo);
-      }
-      return userInfo;
+    const local = getItemFromLocalStorage(USER_INFO_KEY.customKey);
+    if (local?.user) {
+      return local; // 여기선 그대로 return만! 다시 저장할 필요 없어
     }
 
     // 2. Supabase 세션 먼저 확인
@@ -45,7 +38,7 @@ export const useAuth = () => {
       return { user: null };
     }
 
-    // 3. 세션 유효 → 유저 정보 가져오기
+    // 3. 유저 정보 가져오기
     const { data: userData, error: userError } = await supabase.auth.getUser();
 
     if (userError || !userData?.user) {
@@ -58,6 +51,7 @@ export const useAuth = () => {
       dto: { user: userData.user },
     });
 
+    // Supabase에서 가져온 정보를 로컬에 저장
     if (userInfo.user) {
       setItemToLocalStorage(USER_INFO_KEY.customKey, userInfo);
     }

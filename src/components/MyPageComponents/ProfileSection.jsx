@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import defaultThumb from "../../assets/user.webp";
 import { useUserInfo } from "../../contexts/UserInfoContext";
 import { validateName } from "../../utils/validation";
+import { useSupabase } from "../../supabase";
+import { USER_INFO_KEY, localStorageUtils } from "../../supabase/utilities";
 
 export default function ProfileSection() {
   const [userInfo, setUserInfo] = useUserInfo();
@@ -13,6 +15,9 @@ export default function ProfileSection() {
   const [editMode, setEditMode] = useState(false);
   const [nicknameError, setNicknameError] = useState("");
   const inputFileRef = useRef(null);
+  const supabase = useSupabase();
+
+  const { setItemToLocalStorage } = localStorageUtils();
 
   useEffect(() => {
     setProfileImage(userInfo?.profileImageUrl || defaultThumb);
@@ -20,18 +25,60 @@ export default function ProfileSection() {
     setEmail(userInfo?.email || "");
   }, [userInfo]);
 
-  const handleImageUpload = (e) => {
+  const handleImageUpload = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfileImage(reader.result);
-        setUserInfo((prev) => ({ ...prev, profileImageUrl: reader.result }));
-      };
+    if (!file) return;
 
-      // TODO 지금은 base64 문자열 상태 -> 추후 배포 시 Supabase 서버에 업로드한 뒤 이미지 URL을 저장하는 방식으로 바꿀 것
-      reader.readAsDataURL(file);
+    const fileExt = file.name.split(".").pop();
+    const fileName = `${Date.now()}.${fileExt}`;
+    const filePath = `avatars/${fileName}`;
+
+    const { _, error: uploadError } = await supabase.storage
+      .from("profile")
+      .upload(filePath, file);
+
+    if (uploadError) {
+      alert("이미지 업로드에 실패했어요 🥲");
+      return;
     }
+
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from("profile").getPublicUrl(filePath);
+
+    const { error: updateError } = await supabase.auth.updateUser({
+      data: {
+        profileImageUrl: publicUrl,
+      },
+    });
+
+    if (updateError) {
+      alert("유저 정보 업데이트에 실패했어요 🥲");
+      return;
+    }
+
+    setProfileImage(publicUrl);
+    const updatedUserInfo = { ...userInfo, profileImageUrl: publicUrl };
+    setUserInfo(updatedUserInfo);
+    setItemToLocalStorage(USER_INFO_KEY.customKey, updatedUserInfo);
+  };
+
+  const handleImageReset = async () => {
+    const { error: updateError } = await supabase.auth.updateUser({
+      data: {
+        profileImageUrl: null,
+      },
+    });
+
+    if (updateError) {
+      alert("이미지를 초기화하는 데 실패했어요 🥲");
+      return;
+    }
+
+    setProfileImage(defaultThumb);
+    const updatedUserInfo = { ...userInfo, profileImageUrl: null };
+    setUserInfo(updatedUserInfo);
+    setItemToLocalStorage(USER_INFO_KEY.customKey, updatedUserInfo);
   };
 
   const handleNicknameChange = (e) => {
@@ -45,30 +92,55 @@ export default function ProfileSection() {
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!validateName(nickname)) {
       setNicknameError("닉네임 형식을 확인해주세요.");
       return;
     }
-    setUserInfo((prev) => ({ ...prev, userName: nickname }));
+
+    const { error } = await supabase.auth.updateUser({
+      data: {
+        userName: nickname,
+      },
+    });
+
+    if (error) {
+      alert("서버 저장에 실패했어요 🥲");
+      return;
+    }
+
+    const updatedUserInfo = { ...userInfo, userName: nickname };
+    setUserInfo(updatedUserInfo);
+    setItemToLocalStorage(USER_INFO_KEY.customKey, updatedUserInfo);
+
     alert(`닉네임이 "${nickname}"(으)로 저장되었습니다.`);
     setEditMode(false);
   };
 
   return (
     <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-12">
-      <div className="relative w-32 h-32 rounded-full overflow-hidden border-2 border-(--line-color)">
-        <img
-          src={profileImage}
-          alt="프로필 사진"
-          className="w-full h-full object-cover"
-        />
+      <div className="relative w-32 h-32">
+        <div className="w-full h-full rounded-full overflow-hidden border-2 border-(--line-color)">
+          <img
+            src={profileImage}
+            alt="프로필 사진"
+            className="w-full h-full object-cover"
+          />
+          <button
+            className="absolute inset-0 bg-black/60 flex items-center justify-center rounded-[50%] opacity-0 hover:opacity-100 transition"
+            onClick={() => inputFileRef.current.click()}
+          >
+            <span className="text-sm text-(--text-default)">이미지 변경</span>
+          </button>
+        </div>
+
         <button
-          className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 hover:opacity-100 transition"
-          onClick={() => inputFileRef.current.click()}
+          className="absolute -top-1 -right-1 w-6 h-6 bg-(--line-color)/70 text-(--text-default) text-sm rounded-full hover:bg-(--line-color)/50 transition flex items-center justify-center z-10 shadow-lg"
+          onClick={handleImageReset}
         >
-          <span className="text-sm text-(--text-default)">이미지 변경</span>
+          ×
         </button>
+
         <input
           ref={inputFileRef}
           type="file"
@@ -111,7 +183,11 @@ export default function ProfileSection() {
 
         <button
           onClick={editMode ? handleSave : () => setEditMode(true)}
-          className={`mt-2 px-4 py-2 w-fit ${editMode ? "bg-(--point-color) text-[#333]" : "bg-transparent text-(--text-default) border border-(--text-default)"}  rounded hover:opacity-90 transition text-sm`}
+          className={`mt-2 px-4 py-2 w-fit ${
+            editMode
+              ? "bg-(--point-color) text-[#333]"
+              : "bg-transparent text-(--text-default) border border-(--text-default)"
+          }  rounded hover:opacity-90 transition text-sm`}
         >
           {editMode ? "저장하기" : "수정하기"}
         </button>
