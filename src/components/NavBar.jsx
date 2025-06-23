@@ -130,7 +130,11 @@ export default function NavBar() {
           {isLogin ? (
             <UserThumbnail
               onClick={handleMenuToggle}
-              thumbnail={userInfo?.profileImageUrl ?? defaultThumb}
+              thumbnail={
+                userInfo?.profilepic ??
+                userInfo?.profileImageUrl ??
+                defaultThumb
+              }
             />
           ) : (
             <button
@@ -153,7 +157,11 @@ export default function NavBar() {
           {isLogin ? (
             <UserThumbnail
               onClick={handleMenuToggle}
-              thumbnail={userInfo?.profileImageUrl ?? defaultThumb}
+              thumbnail={
+                userInfo?.profilepic ??
+                userInfo?.profileImageUrl ??
+                defaultThumb
+              }
             />
           ) : (
             <>

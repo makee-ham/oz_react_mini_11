@@ -7,13 +7,13 @@ import { SupabaseProvider } from "./supabase/context/index.jsx";
 import { UserInfoProvider } from "./contexts/UserInfoContext.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
-    <SupabaseProvider>
+  <SupabaseProvider>
+    <BrowserRouter>
       <UserInfoProvider>
         <IsLoginProvider>
           <App />
         </IsLoginProvider>
       </UserInfoProvider>
-    </SupabaseProvider>
-  </BrowserRouter>
+    </BrowserRouter>
+  </SupabaseProvider>
 );

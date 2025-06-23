@@ -17,7 +17,9 @@ export default function OAuthGoogleCallback() {
         setUserInfo(userData.user);
         setIsLogin(true);
 
-        alert(`환영합니다, ${userData.user.userName} 님!`);
+        alert(
+          `환영합니다, ${userData.user?.nickname ?? userData.user?.userName ?? "사용자"} 님!`
+        );
         navigate("/");
       } catch (error) {
         console.error("OAuth 처리 실패", error);

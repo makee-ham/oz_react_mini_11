@@ -23,40 +23,49 @@ export const useAuth = () => {
 
   // user 정보 가져오기
   const getUserInfo = async () => {
-    // 1. 먼저 로컬스토리지 확인
+    // 1. 로컬스토리지 먼저 확인
     const local = getItemFromLocalStorage(USER_INFO_KEY.customKey);
-    if (local?.user) {
-      return local; // 여기선 그대로 return만! 다시 저장할 필요 없어
-    }
+    if (local?.user) return local;
 
-    // 2. Supabase 세션 먼저 확인
+    // 2. Supabase 세션 확인
     const { data: sessionData, error: sessionError } =
       await supabase.auth.getSession();
-
     if (sessionError || !sessionData.session) {
       console.warn("세션 없음, 로그아웃 상태입니다.");
       return { user: null };
     }
 
-    // 3. 유저 정보 가져오기
+    // 3. Supabase 유저 기본 정보 가져오기
     const { data: userData, error: userError } = await supabase.auth.getUser();
-
     if (userError || !userData?.user) {
       console.warn("유저 정보 없음");
       return { user: null };
     }
 
-    const userInfo = changeFromDto({
-      type: DTO_TYPE.user,
-      dto: { user: userData.user },
-    });
+    const authUser = userData.user;
 
-    // Supabase에서 가져온 정보를 로컬에 저장
-    if (userInfo.user) {
-      setItemToLocalStorage(USER_INFO_KEY.customKey, userInfo);
+    // 4. user-profile 테이블에서 추가 정보 조회
+    const { data: profileData, error: profileError } = await supabase
+      .from("user-profile")
+      .select("*")
+      .eq("uuid", authUser.id)
+      .maybeSingle();
+
+    if (profileError) {
+      console.warn("user-profile 테이블 조회 실패", profileError.message);
     }
 
-    return userInfo;
+    const userInfo = {
+      id: authUser.id,
+      email: authUser.email,
+      nickname: profileData?.nickname || authUser.email?.split("@")[0],
+      profilepic: profileData?.profilepic || null,
+    };
+
+    // 5. 로컬스토리지에 저장
+    setItemToLocalStorage(USER_INFO_KEY.customKey, { user: userInfo });
+
+    return { user: userInfo };
   };
   return { logout, getUserInfo };
 };

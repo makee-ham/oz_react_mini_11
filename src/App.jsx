@@ -21,7 +21,7 @@ function App() {
   useEffect(() => {
     const fetchUser = async () => {
       const data = await getUserInfo();
-      if (data) {
+      if (data?.user) {
         setUserInfo(data.user);
         setIsLogin(true);
       } else {

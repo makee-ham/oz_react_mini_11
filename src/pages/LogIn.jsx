@@ -73,7 +73,9 @@ export default function LogIn() {
         setItemToLocalStorage(USER_INFO_KEY.sbKey, { user: result.user });
         setIsLogin(true);
 
-        alert(`환영합니다, ${result.user.userName} 님!`);
+        alert(
+          `환영합니다, ${result.user?.nickname ?? result.user?.userName ?? "사용자"} 님!`
+        );
         navigate("/");
       } catch (err) {
         console.error("로그인 실패", err);

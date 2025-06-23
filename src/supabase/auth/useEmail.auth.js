@@ -24,18 +24,23 @@ export const useEmailAuth = () => {
         },
       });
 
-      const userInfo = changeFromDto({
-        type: !error ? DTO_TYPE.user : DTO_TYPE.error,
-        dto: { user: data.user, error },
-      });
-
-      if (userInfo.user) {
-        setItemToLocalStorage(USER_INFO_KEY.customKey, userInfo);
-      } else {
-        throw new Error(
-          `status: ${userInfo.error.status}, message: ${userInfo.error.message}`
-        );
+      if (error || !data?.user) {
+        throw new Error(error?.message || "회원가입 실패");
       }
+
+      const id = data.user.id;
+
+      const userInfo = {
+        user: {
+          id,
+          email: data.user.email,
+          userName: data.user.user_metadata?.userName ?? email.split("@")[0],
+          profileImageUrl: data.user.user_metadata?.avatar_url ?? userImg,
+        },
+      };
+
+      setItemToLocalStorage(USER_INFO_KEY.customKey, userInfo);
+
       return userInfo;
     } catch (error) {
       throw new Error(error);

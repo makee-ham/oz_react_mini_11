@@ -8,13 +8,14 @@ import {
   validatePassword,
   passwordsMatch,
 } from "../utils/validation";
-import { useSupabaseAuth } from "../supabase";
+import { useSupabase, useSupabaseAuth } from "../supabase";
 import KakaoBtn from "../components/signBtns/KakaoBtn";
 import GoogleBtn from "../components/signBtns/GoogleBtn";
 
 export default function SignUp() {
   const navigate = useNavigate();
   const { signUp } = useSupabaseAuth();
+  const supabase = useSupabase();
 
   const nameRef = useRef();
   const emailRef = useRef();
@@ -29,13 +30,13 @@ export default function SignUp() {
   });
 
   const handleSubmit = async () => {
-    const userName = nameRef.current.value.trim();
+    const name = nameRef.current.value.trim();
     const email = emailRef.current.value.trim();
     const password = passwordRef.current.value.trim();
     const confirm = confirmRef.current.value.trim();
 
     const newErrors = {
-      userName: "",
+      name: "",
       email: "",
       password: "",
       confirm: "",
@@ -43,11 +44,11 @@ export default function SignUp() {
 
     let valid = true;
 
-    if (!userName) {
-      newErrors.userName = "이름을 입력해주세요.";
+    if (!name) {
+      newErrors.name = "이름을 입력해주세요.";
       valid = false;
-    } else if (!validateName(userName)) {
-      newErrors.userName = "2~8자 숫자/한글/영어만 사용 가능합니다.";
+    } else if (!validateName(name)) {
+      newErrors.name = "2~8자 숫자/한글/영어만 사용 가능합니다.";
       valid = false;
     }
 
@@ -80,10 +81,25 @@ export default function SignUp() {
     // 회원가입 요청
     if (valid) {
       try {
-        const result = await signUp({ email, password, userName });
-        alert(
-          `${result.user.userName} 님의 회원가입이 정상적으로 완료되었습니다!`
+        const result = await signUp({ email, password, name });
+
+        const userId = result?.user?.id;
+        if (!userId) {
+          alert("사용자 정보가 정상적으로 생성되지 않았습니다.");
+          return;
+        }
+
+        await supabase.from("user-profile").upsert(
+          [
+            {
+              uuid: userId,
+              nickname: name,
+              profilepic: null,
+            },
+          ],
+          { onConflict: "uuid" }
         );
+        alert(`${name} 님의 회원가입이 정상적으로 완료되었습니다!`);
         navigate("/login");
       } catch (err) {
         console.error("회원가입 실패", err);
