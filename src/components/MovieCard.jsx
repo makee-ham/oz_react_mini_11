@@ -7,6 +7,7 @@ import {
   isBookmarked,
 } from "../utils/bookmarkAPI";
 import { useSupabaseAuth } from "../supabase"; // 경로 필요하면 조정!
+import { useNavigate } from "react-router-dom";
 
 export default function MovieCard({ id, poster, title, score }) {
   const getScoreColor = (score) => {
@@ -18,6 +19,7 @@ export default function MovieCard({ id, poster, title, score }) {
   const [bookmarked, setBookmarked] = useState(false);
   const [userId, setUserId] = useState(null);
   const { getUserInfo } = useSupabaseAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -31,7 +33,11 @@ export default function MovieCard({ id, poster, title, score }) {
   }, [id]);
 
   const handleBookmarkToggle = async () => {
-    if (!userId) return;
+    if (!userId) {
+      alert("해당 기능은 로그인 후 이용하실 수 있습니다.");
+      navigate("/login");
+      return;
+    }
 
     if (bookmarked) {
       await removeBookmark(userId, id);

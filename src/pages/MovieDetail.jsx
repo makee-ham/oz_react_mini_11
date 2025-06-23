@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { TMDB_IMAGE_BASE_URL } from "../constants/imageBaseUrl";
 import useFetch from "../hooks/useFetch";
 import getMovieDetailsURL from "../utils/getMovieDetails";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { TMDB_API_OPTIONS } from "../constants/apiOptions";
 import MovieDetailSkeleton from "../components/skeletons/MovieDetailSkeleton";
 import {
@@ -17,6 +17,7 @@ export default function MovieDetail() {
   const [detailData, setDetailData] = useState({});
   const [bookmarked, setBookmarked] = useState(false);
   const [userId, setUserId] = useState(null);
+  const navigate = useNavigate();
 
   const { getUserInfo } = useSupabaseAuth();
 
@@ -39,7 +40,13 @@ export default function MovieDetail() {
   }, [params.id]);
 
   const handleBookmarkToggle = async () => {
-    if (!userId || !detailData.id) return;
+    if (!userId) {
+      alert("해당 기능은 로그인 후 이용하실 수 있습니다.");
+      navigate("/login");
+      return;
+    }
+
+    if (!detailData.id) return;
 
     if (bookmarked) {
       await removeBookmark(userId, detailData.id);
