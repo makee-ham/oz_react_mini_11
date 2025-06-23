@@ -37,6 +37,14 @@ export default function SearchResults() {
   };
 
   useEffect(() => {
+    if (query) {
+      setMovieData([]);
+      setPage(1);
+      setHasMore(true);
+    }
+  }, [query]);
+
+  useEffect(() => {
     if (query && hasMore) {
       fetchMovies(query, page);
     }
