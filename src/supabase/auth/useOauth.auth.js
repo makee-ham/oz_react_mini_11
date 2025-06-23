@@ -4,8 +4,6 @@ export const useOAuth = () => {
   const supabase = useSupabase();
   // 카카오 로그인
   const loginWithKakao = async (redirectTo = null, ...otherOptions) => {
-    console.log("👉 redirectTo:", redirectTo);
-    console.log("👉 otherOptions:", otherOptions);
     try {
       await supabase.auth.signInWithOAuth({
         provider: "kakao",

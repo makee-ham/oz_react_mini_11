@@ -4,19 +4,70 @@ import { DTO_TYPE } from "./config";
 export const changeFromDto = ({ type, dto }) => {
   switch (type) {
     case DTO_TYPE.user:
-      const { user_metadata: userInfo } = dto?.user;
+      const user = dto?.user;
+      const { user_metadata: userInfo } = user || {};
+
+      // 로그인 방식에 따른 사용자 정보 추출
+      let id, email, userName, profileImageUrl;
+
+      // 이메일 로그인 (일반 회원가입)
+      if (
+        !user.app_metadata?.provider ||
+        user.app_metadata?.provider === "email"
+      ) {
+        id = user.id;
+        email = user.email;
+        userName =
+          userInfo?.userName || user.email?.split("@")[0] || "알 수 없음";
+        profileImageUrl = userInfo?.profileImageUrl || null;
+      }
+      // Google 로그인
+      else if (user.app_metadata?.provider === "google") {
+        id = user.id;
+        email = user.email;
+        userName =
+          userInfo?.full_name ||
+          userInfo?.name ||
+          user.email?.split("@")[0] ||
+          "알 수 없음";
+        profileImageUrl = userInfo?.avatar_url || userInfo?.picture || null;
+      }
+      // Kakao 로그인
+      else if (user.app_metadata?.provider === "kakao") {
+        id = user.id;
+        email = user.email;
+        userName =
+          userInfo?.full_name ||
+          userInfo?.name ||
+          userInfo?.nickname ||
+          user.email?.split("@")[0] ||
+          "알 수 없음";
+        profileImageUrl =
+          userInfo?.avatar_url || userInfo?.profile_image_url || null;
+      }
+      // 기타 OAuth 로그인
+      else {
+        id = user.id;
+        email = user.email;
+        userName =
+          userInfo?.full_name ||
+          userInfo?.name ||
+          userInfo?.userName ||
+          user.email?.split("@")[0] ||
+          "알 수 없음";
+        profileImageUrl =
+          userInfo?.avatar_url || userInfo?.profileImageUrl || null;
+      }
+
       return {
         user: {
-          id: userInfo.id || userInfo.sub,
-          email: userInfo.email,
-          userName:
-            userInfo.userName ??
-            userInfo.full_name ??
-            (userInfo.email ? userInfo.email.split("@")[0] : "알 수 없음"),
-          profileImageUrl:
-            userInfo.avatar_url || userInfo.profileImageUrl || null,
+          id,
+          email,
+          userName,
+          profileImageUrl,
         },
       };
+
     case DTO_TYPE.error:
       if (!dto.error) {
         return {
