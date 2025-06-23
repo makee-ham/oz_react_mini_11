@@ -9,12 +9,26 @@ import { useSupabaseAuth } from "./supabase";
 import { useEffect } from "react";
 import OAuthKakaoCallback from "./pages/OAuthKakaoCallback";
 import OAuthGoogleCallback from "./pages/OAuthGoogleCallback";
+import { useUserInfo } from "./contexts/UserInfoContext";
+import { useIsLogin } from "./contexts/IsLoginContext";
 
 function App() {
   const { getUserInfo } = useSupabaseAuth();
+  const [_, setUserInfo] = useUserInfo();
+  const [__, setIsLogin] = useIsLogin();
 
   useEffect(() => {
-    getUserInfo();
+    const fetchUser = async () => {
+      const data = await getUserInfo();
+      if (data) {
+        setUserInfo(data.user);
+        setIsLogin(true);
+      } else {
+        setIsLogin(false);
+      }
+    };
+
+    setTimeout(fetchUser, 100);
   }, []);
 
   return (

@@ -8,9 +8,10 @@ import Close from "../assets/Close";
 import SearchIcon from "../assets/SearchIcon";
 import Hamburger from "../assets/Hamburger";
 import { useIsLogin } from "../contexts/IsLoginContext";
-import UserThumbnail from "./UserTumbnail";
+import UserThumbnail from "./UserThumbnail";
 import { useSupabaseAuth } from "../supabase";
 import { useUserInfo } from "../contexts/UserInfoContext";
+import defaultThumb from "../assets/user.webp";
 
 export default function NavBar() {
   const [query, setQuery] = useState("");
@@ -127,7 +128,7 @@ export default function NavBar() {
           {isLogin ? (
             <UserThumbnail
               onClick={handleMenuToggle}
-              thumbnail={userInfo.profileImageUrl}
+              thumbnail={userInfo?.profileImageUrl ?? defaultThumb}
             />
           ) : (
             <button
@@ -150,7 +151,7 @@ export default function NavBar() {
           {isLogin ? (
             <UserThumbnail
               onClick={handleMenuToggle}
-              thumbnail={userInfo.profileImageUrl}
+              thumbnail={userInfo?.profileImageUrl ?? defaultThumb}
             />
           ) : (
             <>

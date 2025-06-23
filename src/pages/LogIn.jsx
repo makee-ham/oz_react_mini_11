@@ -8,6 +8,7 @@ import { useUserInfo } from "../contexts/UserInfoContext";
 import { useIsLogin } from "../contexts/IsLoginContext";
 import KakaoBtn from "../components/signBtns/KakaoBtn";
 import GoogleBtn from "../components/signBtns/GoogleBtn";
+import { USER_INFO_KEY, localStorageUtils } from "../supabase/utilities";
 
 export default function LogIn() {
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ export default function LogIn() {
 
   const emailRef = useRef();
   const passwordRef = useRef();
+
+  const { setItemToLocalStorage } = localStorageUtils();
 
   const [errors, setErrors] = useState({
     email: "",
@@ -67,6 +70,7 @@ export default function LogIn() {
         const result = await login({ email, password });
         const localUserData = await getUserInfo();
         setUserInfo(localUserData.user);
+        setItemToLocalStorage(USER_INFO_KEY.sbKey, { user: result.user });
         setIsLogin(true);
 
         alert(`환영합니다, ${result.user.userName} 님!`);

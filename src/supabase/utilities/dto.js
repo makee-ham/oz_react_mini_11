@@ -7,12 +7,14 @@ export const changeFromDto = ({ type, dto }) => {
       const { user_metadata: userInfo } = dto?.user;
       return {
         user: {
-          id: userInfo.sub,
+          id: userInfo.id || userInfo.sub,
           email: userInfo.email,
-          userName: userInfo.userName
-            ? userInfo.userName
-            : userInfo.email.split("@")[0],
-          profileImageUrl: userInfo.avatar_url,
+          userName:
+            userInfo.userName ??
+            userInfo.full_name ??
+            (userInfo.email ? userInfo.email.split("@")[0] : "알 수 없음"),
+          profileImageUrl:
+            userInfo.avatar_url || userInfo.profileImageUrl || null,
         },
       };
     case DTO_TYPE.error:
