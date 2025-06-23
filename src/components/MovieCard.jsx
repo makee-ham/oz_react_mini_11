@@ -1,15 +1,66 @@
+import { useEffect, useState } from "react";
 import { TMDB_IMAGE_BASE_URL } from "../constants/imageBaseUrl";
 import noPoster from "../assets/no-poster.webp";
+import {
+  addBookmark,
+  removeBookmark,
+  isBookmarked,
+} from "../utils/bookmarkAPI";
+import { useSupabaseAuth } from "../supabase"; // 경로 필요하면 조정!
 
-export default function MovieCard({ poster, title, score }) {
+export default function MovieCard({ id, poster, title, score }) {
   const getScoreColor = (score) => {
     if (score >= 8) return "#ff5f5f";
     if (score >= 6) return "#fb923c";
     return "#facc15";
   };
 
+  const [bookmarked, setBookmarked] = useState(false);
+  const [userId, setUserId] = useState(null);
+  const { getUserInfo } = useSupabaseAuth();
+
+  useEffect(() => {
+    (async () => {
+      const user = await getUserInfo();
+      if (!user?.user?.id) return;
+      setUserId(user.user.id);
+
+      const exists = await isBookmarked(user.user.id, id);
+      setBookmarked(exists);
+    })();
+  }, [id]);
+
+  const handleBookmarkToggle = async () => {
+    if (!userId) return;
+
+    if (bookmarked) {
+      await removeBookmark(userId, id);
+      setBookmarked(false);
+    } else {
+      await addBookmark(userId, {
+        id,
+        title,
+        poster_path: poster,
+        vote_average: score,
+      });
+      setBookmarked(true);
+    }
+  };
+
   return (
-    <div className="flex flex-col w-full max-w-[220px] max-h-[370px] rounded-lg overflow-hidden bg-(--bg-secondary) hover:shadow-[0_6px_20px_rgba(0,255,255,0.22)] transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015]">
+    <div className="relative flex flex-col w-full max-w-[220px] max-h-[370px] rounded-lg overflow-hidden bg-(--bg-secondary) hover:shadow-[0_6px_20px_rgba(0,255,255,0.22)] transform transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015]">
+      {/* 북마크 버튼 */}
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          handleBookmarkToggle();
+        }}
+        className="absolute top-2 right-2 text-xl z-10"
+      >
+        {bookmarked ? "❤️" : "🤍"}
+      </button>
+
       <div className="aspect-[2/3] w-full overflow-hidden">
         <img
           className="w-full h-full object-cover"

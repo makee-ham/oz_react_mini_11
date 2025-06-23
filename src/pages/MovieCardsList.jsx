@@ -68,6 +68,7 @@ export default function MovieCardsList() {
         {movieData.map((movie) => (
           <Link to={`/details/${movie.id}`} key={movie.id}>
             <MovieCard
+              id={movie.id}
               poster={movie.poster_path}
               title={movie.title}
               score={Math.round(movie.vote_average * 10) / 10}
