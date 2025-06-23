@@ -11,6 +11,7 @@ import OAuthKakaoCallback from "./pages/OAuthKakaoCallback";
 import OAuthGoogleCallback from "./pages/OAuthGoogleCallback";
 import { useUserInfo } from "./contexts/UserInfoContext";
 import { useIsLogin } from "./contexts/IsLoginContext";
+import MyPage from "./pages/MyPage";
 
 function App() {
   const { getUserInfo } = useSupabaseAuth();
@@ -37,6 +38,7 @@ function App() {
         <Route path="/" element={<MovieCardsList />} />
         <Route path="/search" element={<SearchResults />} />
         <Route path="/details/:id" element={<MovieDetail />} />
+        <Route path="/mypage" element={<MyPage />} />
       </Route>
 
       <Route path="/signup" element={<SignUp />} />
