@@ -82,7 +82,7 @@ export default function BookmarkSection() {
               />
 
               {/* 영화 카드 */}
-              <Link to={`/movie/${movie.movie_id}`} className="block">
+              <Link to={`/details/${movie.movie_id}`} className="block">
                 <MovieCard
                   id={movie.movie_id}
                   title={movie.title}
