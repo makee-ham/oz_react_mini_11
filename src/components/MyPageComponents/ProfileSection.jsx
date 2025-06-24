@@ -37,8 +37,7 @@ export default function ProfileSection() {
     const fileName = `${Date.now()}.${fileExt}`;
     const filePath = `avatars/${fileName}`;
 
-    // TODO 여기 에러랑 이미지 업로드 실패: new row violates row-level security policy 에러
-    const { data, error: uploadError } = await supabase.storage
+    const { data: uploadData, error: uploadError } = await supabase.storage
       .from("profile")
       .upload(filePath, file);
 
@@ -52,18 +51,23 @@ export default function ProfileSection() {
       data: { publicUrl },
     } = supabase.storage.from("profile").getPublicUrl(filePath);
 
-    // const { error: updateError } = await supabase.auth.updateUser({
-    //   data: {
-    //     profileImageUrl: publicUrl,
-    //   },
-    // });
+    // ✅ 세션 우선 확인
+    const { data: sessionData } = await supabase.auth.getSession();
 
-    // if (updateError) {
-    //   alert("유저 정보 업데이트에 실패했어요 🥲");
-    //   return;
-    // }
+    if (!sessionData?.session) {
+      alert("세션이 준비되지 않았어요. 다시 로그인하거나 새로고침 해주세요.");
+      return;
+    }
 
-    // db user-profile 테이블에 저장
+    const { data: userData, error: userError } = await supabase.auth.getUser();
+
+    if (!userData?.user) {
+      console.warn("유저 정보 없음", userData, userError);
+      alert("유저 인증 정보를 가져오지 못했어요.");
+      return;
+    }
+
+    // 이제 안전하게 user-profile 테이블에 업데이트
     await supabase.from("user-profile").upsert([
       {
         uuid: userInfo.id,
@@ -71,32 +75,23 @@ export default function ProfileSection() {
           userInfo.nickname ??
           userInfo.userName ??
           userInfo.email.split("@")[0],
-        // nickname은 null이면 안 되게 설정되어서 같이 넣어줘야 함 (이거 땜에 3시간 날림)
         profilepic: publicUrl,
       },
     ]);
+
     setProfileImage(publicUrl);
-    // Context + 로컬 스토리지 갱신
     const updatedUserInfo = { ...userInfo, profilepic: publicUrl };
     setUserInfo(updatedUserInfo);
     setItemToLocalStorage(USER_INFO_KEY.customKey, updatedUserInfo);
   };
 
   const handleImageReset = async () => {
-    // const { error: updateError } = await supabase.auth.updateUser({
-    //   data: {
-    //     profileImageUrl: null,
-    //   },
-    // });
+    const { data: userData, error: authError } = await supabase.auth.getUser();
+    if (authError || !userData?.user) {
+      alert("세션 정보를 불러올 수 없어 프로필을 초기화할 수 없습니다.");
+      return;
+    }
 
-    // if (updateError) {
-    //   alert("이미지를 초기화하는 데 실패했어요 🥲");
-    //   return;
-    // }
-
-    setProfileImage(defaultThumb);
-
-    // db user-profile 테이블에 저장
     await supabase.from("user-profile").upsert([
       {
         uuid: userInfo.id,
@@ -108,7 +103,7 @@ export default function ProfileSection() {
       },
     ]);
 
-    // Context + 로컬 스토리지 갱신
+    setProfileImage(defaultThumb);
     const updatedUserInfo = { ...userInfo, profilepic: null };
     setUserInfo(updatedUserInfo);
     setItemToLocalStorage(USER_INFO_KEY.customKey, updatedUserInfo);

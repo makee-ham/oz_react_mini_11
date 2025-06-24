@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import { validateEmail, validatePassword } from "../utils/validation";
 import bg from "../assets/formbg.webp";
-import { useSupabaseAuth } from "../supabase";
+import { useSupabase, useSupabaseAuth } from "../supabase";
 import { useUserInfo } from "../contexts/UserInfoContext";
 import { useIsLogin } from "../contexts/IsLoginContext";
 import KakaoBtn from "../components/signBtns/KakaoBtn";
@@ -12,9 +12,9 @@ import { USER_INFO_KEY, localStorageUtils } from "../supabase/utilities";
 
 export default function LogIn() {
   const navigate = useNavigate();
-  const { login } = useSupabaseAuth();
+  const { login, getUserInfo } = useSupabaseAuth();
   const [_, setUserInfo] = useUserInfo();
-  const { getUserInfo } = useSupabaseAuth();
+  const supabase = useSupabase();
 
   const [__, setIsLogin] = useIsLogin();
 
@@ -68,8 +68,16 @@ export default function LogIn() {
     if (isValid) {
       try {
         const result = await login({ email, password });
+
+        // ✅ 세션 준비까지 기다리기
+        for (let i = 0; i < 5; i++) {
+          const { data } = await supabase.auth.getSession();
+          if (data?.session) break;
+          await new Promise((r) => setTimeout(r, 100));
+        }
+
         const localUserData = await getUserInfo();
-        setUserInfo(localUserData.user);
+        setUserInfo(result.user);
         setItemToLocalStorage(USER_INFO_KEY.sbKey, { user: result.user });
         setIsLogin(true);
 
