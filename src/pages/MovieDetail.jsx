@@ -86,7 +86,6 @@ export default function MovieDetail() {
           </span>
         </div>
 
-        {/* TODO (선택) 장르 클릭 시 카테고리 필터된 목록 이동 */}
         {/* 장르 + 하트 */}
         <div className="flex justify-between items-center">
           {/* 장르들 */}
@@ -94,7 +93,8 @@ export default function MovieDetail() {
             {detailData.genres?.map((genre, idx) => (
               <span
                 key={idx}
-                className="px-3 py-1 bg-(--line-color) text-sm rounded-full"
+                className="px-3 py-1 bg-(--line-color) hover:bg-(--line-color)/60 text-sm rounded-full cursor-pointer"
+                onClick={() => navigate(`/genres/${genre.id}`)}
               >
                 {genre.name}
               </span>
