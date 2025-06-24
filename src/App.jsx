@@ -11,6 +11,7 @@ import { useUserInfo } from "./contexts/UserInfoContext";
 import { useIsLogin } from "./contexts/IsLoginContext";
 import MyPage from "./pages/MyPage";
 import OAuthCallback from "./pages/OAuthCallback";
+import GenrePage from "./pages/GenrePage";
 
 function App() {
   const { getUserInfo } = useSupabaseAuth();
@@ -18,30 +19,8 @@ function App() {
   const [__, setIsLogin] = useIsLogin();
   const supabase = useSupabase();
 
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     const data = await getUserInfo();
-  //     if (data?.user) {
-  //       setUserInfo(data.user);
-  //       setIsLogin(true);
-  //     } else {
-  //       setUserInfo(null);
-  //       setIsLogin(false);
-  //     }
-  //   };
-
-  //   fetchUser();
-  // }, []);
-
   useEffect(() => {
     const fetchUser = async () => {
-      // ✅ 세션이 준비될 때까지 기다림
-      for (let i = 0; i < 5; i++) {
-        const { data } = await supabase.auth.getSession();
-        if (data?.session) break;
-        await new Promise((r) => setTimeout(r, 100));
-      }
-
       const data = await getUserInfo();
       if (data?.user) {
         setUserInfo(data.user);
@@ -61,6 +40,7 @@ function App() {
         <Route path="/" element={<MovieCardsList />} />
         <Route path="/search" element={<SearchResults />} />
         <Route path="/details/:id" element={<MovieDetail />} />
+        <Route path="/genres/:id" element={<GenrePage />} />
         <Route path="/mypage" element={<MyPage />} />
       </Route>
 
