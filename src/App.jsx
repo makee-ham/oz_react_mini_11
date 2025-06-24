@@ -5,7 +5,7 @@ import Layout from "./layout/Layout";
 import SearchResults from "./pages/SearchResults";
 import SignUp from "./pages/SignUp";
 import LogIn from "./pages/LogIn";
-import { useSupabase, useSupabaseAuth } from "./supabase";
+import { useSupabaseAuth } from "./supabase";
 import { useEffect } from "react";
 import { useUserInfo } from "./contexts/UserInfoContext";
 import { useIsLogin } from "./contexts/IsLoginContext";
@@ -17,7 +17,6 @@ function App() {
   const { getUserInfo } = useSupabaseAuth();
   const [_, setUserInfo] = useUserInfo();
   const [__, setIsLogin] = useIsLogin();
-  const supabase = useSupabase();
 
   useEffect(() => {
     const fetchUser = async () => {
