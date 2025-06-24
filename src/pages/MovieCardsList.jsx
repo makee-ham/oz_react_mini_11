@@ -5,6 +5,7 @@ import TopMoviesSlider from "../components/TopMoviesSlider/TopMoviesSlider";
 import { POPULAR_MOVIES_DATA_URL } from "../constants/tmdbUrl";
 import { TMDB_API_OPTIONS } from "../constants/apiOptions";
 import MovieCardSkeleton from "../components/skeletons/MovieCardSkeleton";
+import GenresSlider from "../components/GenreSection/GenresSlider";
 
 export default function MovieCardsList() {
   const [movieData, setMovieData] = useState([]);
@@ -64,7 +65,9 @@ export default function MovieCardsList() {
   return (
     <>
       <TopMoviesSlider />
-      <section className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-6 w-full max-w-[1800px] mx-auto mt-10 px-6">
+      <GenresSlider />
+      <h2 className="text-2xl font-bold ml-10 mb-5 mt-10">인기 영화</h2>
+      <section className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-6 w-full max-w-[1800px] mx-auto mt-5 px-6">
         {movieData.map((movie) => (
           <Link to={`/details/${movie.id}`} key={movie.id}>
             <MovieCard
