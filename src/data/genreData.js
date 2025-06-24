@@ -1,4 +1,4 @@
-export const GENRES = [
+export const genreData = [
   { id: 28, name: "액션", gradientBg: "from-red-500 to-orange-500" },
   { id: 12, name: "모험", gradientBg: "from-amber-500 to-yellow-400" },
   { id: 16, name: "애니메이션", gradientBg: "from-pink-400 to-purple-400" },
