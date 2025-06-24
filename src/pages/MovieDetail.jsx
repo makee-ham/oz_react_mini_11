@@ -11,6 +11,7 @@ import {
   isBookmarked,
 } from "../utils/bookmarkAPI";
 import { useSupabaseAuth } from "../supabase";
+import SimilarMovieList from "../components/SimilarMovieList";
 
 export default function MovieDetail() {
   const params = useParams();
@@ -70,52 +71,59 @@ export default function MovieDetail() {
   if (error) return <p>에러 발생: {error.message}</p>;
 
   return (
-    <section className="flex flex-col md:flex-row items-center md:items-start gap-10 w-full max-w-6xl mx-auto mt-30 px-4 md:px-8">
-      {/* 왼쪽: 포스터 */}
-      <article className="w-[70%] md:w-[300px] aspect-[2/3] shrink-0 overflow-hidden rounded shadow-lg">
-        <img
-          src={TMDB_IMAGE_BASE_URL + detailData.poster_path}
-          alt={detailData.title}
-          className="w-full h-full object-cover"
-        />
-      </article>
+    <>
+      <section className="flex flex-col md:flex-row items-center md:items-start gap-10 w-full max-w-5xl mx-auto mt-30 px-4 md:px-8">
+        {/* 왼쪽: 포스터 */}
+        <article className="w-[70%] md:w-[300px] aspect-[2/3] shrink-0 overflow-hidden rounded shadow-lg">
+          <img
+            src={TMDB_IMAGE_BASE_URL + detailData.poster_path}
+            alt={detailData.title}
+            className="w-full h-full object-cover"
+          />
+        </article>
 
-      {/* 오른쪽: 텍스트 정보 */}
-      <article className="flex flex-col gap-6 flex-1">
-        {/* 제목 + 평점 */}
-        <div className="flex justify-between items-center">
-          <h2 className="text-3xl font-bold">{detailData.title}</h2>
-          <span className="text-lg text-yellow-500 font-semibold">
-            ⭐ {Math.round(detailData.vote_average * 10) / 10}
-          </span>
-        </div>
-
-        {/* 장르 + 하트 */}
-        <div className="flex justify-between items-center">
-          {/* 장르들 */}
-          <div className="flex flex-wrap gap-2">
-            {detailData.genres?.map((genre, idx) => (
-              <span
-                key={idx}
-                className="px-3 py-1 bg-(--line-color) hover:bg-(--line-color)/60 text-sm rounded-full cursor-pointer"
-                onClick={() => navigate(`/genres/${genre.id}`)}
-              >
-                {genre.name}
-              </span>
-            ))}
+        {/* 오른쪽: 텍스트 정보 */}
+        <article className="flex flex-col gap-6 flex-1">
+          {/* 제목 + 평점 */}
+          <div className="flex justify-between items-center">
+            <h2 className="text-3xl font-bold">{detailData.title}</h2>
+            <span className="text-lg text-yellow-500 font-semibold">
+              ⭐ {Math.round(detailData.vote_average * 10) / 10}
+            </span>
           </div>
 
-          {/* 북마크 하트 */}
-          <button onClick={handleBookmarkToggle} className="text-2xl shrink-0">
-            {bookmarked ? "❤️" : "🤍"}
-          </button>
-        </div>
+          {/* 장르 + 하트 */}
+          <div className="flex justify-between items-center">
+            {/* 장르들 */}
+            <div className="flex flex-wrap gap-2">
+              {detailData.genres?.map((genre, idx) => (
+                <span
+                  key={idx}
+                  className="px-3 py-1 bg-(--line-color) hover:bg-(--line-color)/60 text-sm rounded-full cursor-pointer"
+                  onClick={() => navigate(`/genres/${genre.id}`)}
+                >
+                  {genre.name}
+                </span>
+              ))}
+            </div>
 
-        {/* 줄거리 */}
-        <div className="bg-(--bg-secondary) p-4 rounded text-sm leading-relaxed">
-          <p>{detailData.overview}</p>
-        </div>
-      </article>
-    </section>
+            {/* 북마크 하트 */}
+            <button
+              onClick={handleBookmarkToggle}
+              className="text-2xl shrink-0"
+            >
+              {bookmarked ? "❤️" : "🤍"}
+            </button>
+          </div>
+
+          {/* 줄거리 */}
+          <div className="bg-(--bg-secondary) p-4 rounded text-sm leading-relaxed">
+            <p>{detailData.overview}</p>
+          </div>
+        </article>
+      </section>
+
+      <SimilarMovieList movieId={detailData.id} />
+    </>
   );
 }

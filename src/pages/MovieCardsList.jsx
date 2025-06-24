@@ -13,6 +13,10 @@ export default function MovieCardsList() {
   const [isFetching, setIsFetching] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const fetchMovies = async (page) => {
     setIsFetching(true);
 
