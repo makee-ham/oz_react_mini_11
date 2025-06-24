@@ -16,6 +16,10 @@ export default function GenrePage() {
   const [hasMore, setHasMore] = useState(true);
   const observerRef = useRef(null);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const fetchMovies = async (genreId, page) => {
     setIsFetching(true);
     try {

@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import bg from "../assets/formbg.webp";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   validateName,
   validateEmail,
@@ -28,6 +28,10 @@ export default function SignUp() {
     password: "",
     confirm: "",
   });
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleSubmit = async () => {
     const name = nameRef.current.value.trim();

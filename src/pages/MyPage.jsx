@@ -9,6 +9,10 @@ export default function MyPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (isLogin === false) {
       alert("해당 페이지는 로그인 후 이용하실 수 있습니다.");
       navigate("/login");

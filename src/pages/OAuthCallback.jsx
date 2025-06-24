@@ -28,6 +28,7 @@ export default function OAuthCallback() {
       }
     };
 
+    window.scrollTo(0, 0);
     fetchSession();
   }, []);
 

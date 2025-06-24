@@ -16,6 +16,10 @@ export default function SearchResults() {
   const [hasMore, setHasMore] = useState(true);
   const observerRef = useRef(null);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const fetchMovies = async (query, page) => {
     setIsFetching(true);
     try {
