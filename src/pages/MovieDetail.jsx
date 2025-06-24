@@ -25,6 +25,10 @@ export default function MovieDetail() {
   const { loading, data, error } = useFetch(url, TMDB_API_OPTIONS);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (data) setDetailData(data);
   }, [data]);
 
@@ -66,7 +70,7 @@ export default function MovieDetail() {
   if (error) return <p>에러 발생: {error.message}</p>;
 
   return (
-    <section className="flex flex-col md:flex-row items-center md:items-start gap-10 w-full max-w-6xl mx-auto mt-24 px-4 md:px-8">
+    <section className="flex flex-col md:flex-row items-center md:items-start gap-10 w-full max-w-6xl mx-auto mt-30 px-4 md:px-8">
       {/* 왼쪽: 포스터 */}
       <article className="w-[70%] md:w-[300px] aspect-[2/3] shrink-0 overflow-hidden rounded shadow-lg">
         <img
