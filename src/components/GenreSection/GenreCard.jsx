@@ -8,12 +8,17 @@ export default function GenreCard({ genre, onClick }) {
         if (onClick) onClick(e);
         if (!e.defaultPrevented) navigate(`/genres/${genre.id}`);
       }}
-      className={`aspect-square w-24 min-w-24 max-w-24
-        rounded-xl text-[#f1f1f1] flex items-center justify-center text-sm font-semibold
-        bg-gradient-to-br ${genre.gradientBg}
-        hover:scale-105 transition-transform cursor-pointer shadow-md`}
+      className={`relative aspect-square w-24 min-w-24 max-w-24 rounded-xl overflow-hidden cursor-pointer transition-transform hover:scale-105 shadow-md`}
     >
-      {genre.name}
+      <div
+        className={`absolute inset-0 bg-gradient-to-br ${genre.gradientBg}`}
+      />
+
+      <div className="absolute inset-0 bg-black/10" />
+
+      <div className="relative z-10 text-[#f1f1f1] font-semibold text-sm pt-3 pl-3">
+        {genre.name}
+      </div>
     </div>
   );
 }
