@@ -8,7 +8,7 @@ export default function GenreCard({ genre, onClick }) {
         if (onClick) onClick(e);
         if (!e.defaultPrevented) navigate(`/genres/${genre.id}`);
       }}
-      className={`relative aspect-square w-24 min-w-24 max-w-24 rounded-xl overflow-hidden cursor-pointer transition-transform hover:scale-105 shadow-md`}
+      className={`relative aspect-square w-30 min-w-30 max-w-30 rounded-xl overflow-hidden cursor-pointer transition-transform hover:scale-105 shadow-md`}
     >
       <div
         className={`absolute inset-0 bg-gradient-to-br ${genre.gradientBg}`}

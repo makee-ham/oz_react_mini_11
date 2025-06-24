@@ -16,7 +16,7 @@ export default function GenresSlider() {
       >
         <div
           ref={containerRef}
-          className="flex items-center gap-4 overflow-x-hidden px-10 pb-2 h-[110px] cursor-grab active:cursor-grabbing transition-transform will-change-transform"
+          className="flex items-center gap-4 overflow-x-hidden px-10 pb-2 h-[140px] cursor-grab active:cursor-grabbing transition-transform will-change-transform"
           {...bindDrag(containerRef)}
         >
           {genreData.map((genre) => (
