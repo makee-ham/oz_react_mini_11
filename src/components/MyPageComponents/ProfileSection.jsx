@@ -38,11 +38,9 @@ export default function ProfileSection() {
     const filePath = `avatars/${fileName}`;
 
     // TODO 여기 에러랑 이미지 업로드 실패: new row violates row-level security policy 에러
-    const { _, error: uploadError } = await supabase.storage
+    const { data, error: uploadError } = await supabase.storage
       .from("profile")
-      .upload(filePath, file, {
-        upsert: true, // 중복 이름 덮어쓰기
-      });
+      .upload(filePath, file);
 
     if (uploadError) {
       console.error("🔥 업로드 에러:", uploadError);
@@ -66,19 +64,17 @@ export default function ProfileSection() {
     // }
 
     // db user-profile 테이블에 저장
-    await supabase.from("user-profile").upsert(
-      [
-        {
-          uuid: userInfo.id,
-          nickname: userInfo.userName ?? userInfo.email.split("@")[0],
-          // nickname은 null이면 안 되게 설정되어서 같이 넣어줘야 함 (이거 땜에 3시간 날림)
-          profilepic: publicUrl,
-        },
-      ],
+    await supabase.from("user-profile").upsert([
       {
-        onConflict: "uuid",
-      }
-    );
+        uuid: userInfo.id,
+        nickname:
+          userInfo.nickname ??
+          userInfo.userName ??
+          userInfo.email.split("@")[0],
+        // nickname은 null이면 안 되게 설정되어서 같이 넣어줘야 함 (이거 땜에 3시간 날림)
+        profilepic: publicUrl,
+      },
+    ]);
     setProfileImage(publicUrl);
     // Context + 로컬 스토리지 갱신
     const updatedUserInfo = { ...userInfo, profilepic: publicUrl };
@@ -101,18 +97,16 @@ export default function ProfileSection() {
     setProfileImage(defaultThumb);
 
     // db user-profile 테이블에 저장
-    await supabase.from("user-profile").upsert(
-      [
-        {
-          uuid: userInfo.id,
-          profilepic: null,
-          nickname: userInfo.userName ?? userInfo.email.split("@")[0],
-        },
-      ],
+    await supabase.from("user-profile").upsert([
       {
-        onConflict: "uuid",
-      }
-    );
+        uuid: userInfo.id,
+        profilepic: null,
+        nickname:
+          userInfo.nickname ??
+          userInfo.userName ??
+          userInfo.email.split("@")[0],
+      },
+    ]);
 
     // Context + 로컬 스토리지 갱신
     const updatedUserInfo = { ...userInfo, profilepic: null };
@@ -149,17 +143,12 @@ export default function ProfileSection() {
     //   return;
     // }
 
-    await supabase.from("user-profile").upsert(
-      [
-        {
-          uuid: userInfo.id,
-          nickname: nickname,
-        },
-      ],
+    await supabase.from("user-profile").upsert([
       {
-        onConflict: "uuid",
-      }
-    );
+        uuid: userInfo.id,
+        nickname: nickname,
+      },
+    ]);
 
     const updatedUserInfo = { ...userInfo, nickname };
     setUserInfo(updatedUserInfo);
