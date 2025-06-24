@@ -19,7 +19,7 @@ export default function GenrePage() {
   const fetchMovies = async (genreId, page) => {
     setIsFetching(true);
     try {
-      const url = `https://api.themoviedb.org/3/discover/movie?with_genres=${genreId}&language=ko&page=${page}`;
+      const url = `https://api.themoviedb.org/3/discover/movie?with_genres=${genreId}&language=ko-KR&page=${page}`;
       const res = await fetch(url, TMDB_API_OPTIONS);
       const data = await res.json();
 
