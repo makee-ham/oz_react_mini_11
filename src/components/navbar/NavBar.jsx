@@ -112,7 +112,7 @@ export default function NavBar() {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="영화 제목을 입력해보세요"
+            placeholder="찾으시는 영화가 있나요? 제목을 입력하여 검색해보세요"
             className="w-full max-w-5xl rounded-full px-4 py-2 bg-(--text-default) outline-none text-(--bg-secondary) text-sm focus:ring-2 focus:ring-(--point-color) transition"
           />
         </div>
