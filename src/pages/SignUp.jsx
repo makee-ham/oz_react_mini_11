@@ -1,16 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
-import FormInput from "../components/FormInput";
-import bg from "../assets/formbg.webp";
+import FormInput from "@signpages/FormInput";
+import bg from "@assets/formbg.webp";
 import { useEffect, useRef, useState } from "react";
 import {
   validateName,
   validateEmail,
   validatePassword,
   passwordsMatch,
-} from "../utils/validation";
-import { useSupabase, useSupabaseAuth } from "../supabase";
-import KakaoBtn from "../components/signBtns/KakaoBtn";
-import GoogleBtn from "../components/signBtns/GoogleBtn";
+} from "@utils/validation";
+import { useSupabase, useSupabaseAuth } from "@/supabase";
+import KakaoBtn from "@signpages/signBtns/KakaoBtn";
+import GoogleBtn from "@signpages/signBtns/GoogleBtn";
 
 export default function SignUp() {
   const navigate = useNavigate();

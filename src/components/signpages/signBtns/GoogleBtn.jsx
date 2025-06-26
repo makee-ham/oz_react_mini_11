@@ -1,4 +1,4 @@
-import { useSupabaseAuth } from "../../supabase";
+import { useSupabaseAuth } from "@/supabase";
 
 export default function GoogleBtn({ label }) {
   const { loginWithGoogle } = useSupabaseAuth();

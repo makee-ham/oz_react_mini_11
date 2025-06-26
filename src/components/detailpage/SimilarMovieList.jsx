@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { TMDB_API_OPTIONS } from "../../constants/apiOptions";
-import getSimilarMoviesURL from "../../utils/getSimilarMoviesURL";
-import MovieCard from "./MovieCard";
-import MovieCardSkeleton from "../skeletons/MovieCardSkeleton";
+import { TMDB_API_OPTIONS } from "@constants/apiOptions";
+import getSimilarMoviesURL from "@utils/getSimilarMoviesURL";
+import MovieCard from "@common/MovieCard";
+import MovieCardSkeleton from "@skeletons/MovieCardSkeleton";
 
 export default function SimilarMovieList({ movieId }) {
   const [movies, setMovies] = useState([]);

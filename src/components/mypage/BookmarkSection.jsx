@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useUserInfo } from "../../contexts/UserInfoContext";
-import { getBookmarks, removeBookmark } from "../../utils/bookmarkAPI";
-import MovieCard from "../MovieCard";
-import MovieCardSkeleton from "../skeletons/MovieCardSkeleton";
+import { useUserInfo } from "@contexts/UserInfoContext";
+import { getBookmarks, removeBookmark } from "@utils/bookmarkAPI";
+import MovieCard from "@common/MovieCard";
+import MovieCardSkeleton from "@skeletons/MovieCardSkeleton";
 import { Link } from "react-router-dom";
 
 export default function BookmarkSection() {

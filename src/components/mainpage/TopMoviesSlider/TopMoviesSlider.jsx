@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
-import getTopRatedMovies from "../../utils/getTopRatedMovies";
+import getTopRatedMovies from "@utils/getTopRatedMovies";
 import TopMovieCard from "./TopMovieCard";
-import useThrottle from "../../hooks/useThrottle.js";
-import useSliderDrag from "../../hooks/useSliderDrag.js";
-import ChevronLeft from "../../assets/ChevronLeft.jsx";
-import ChevronRight from "../../assets/ChevronRight.jsx";
-import useFetch from "../../hooks/useFetch.js";
-import { TMDB_API_OPTIONS } from "../../constants/apiOptions.js";
-import { TOP_RATED_MOVIES_DATA_URL } from "../../constants/tmdbUrl.js";
-import TopMovieCardSkeleton from "../skeletons/TopMovieCardSkeleton";
+import useThrottle from "@hooks/useThrottle.js";
+import useSliderDrag from "@hooks/useSliderDrag.js";
+import ChevronLeft from "@assets/ChevronLeft.jsx";
+import ChevronRight from "@assets/ChevronRight.jsx";
+import useFetch from "@hooks/useFetch.js";
+import { TMDB_API_OPTIONS } from "@constants/apiOptions.js";
+import { TOP_RATED_MOVIES_DATA_URL } from "@constants/tmdbUrl.js";
+import TopMovieCardSkeleton from "@skeletons/TopMovieCardSkeleton";
 
 export default function TopMoviesSlider() {
   const [topMovies, setTopMovies] = useState([]);

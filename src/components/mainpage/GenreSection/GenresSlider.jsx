@@ -1,7 +1,7 @@
 import { useRef } from "react";
-import { genreData } from "../../data/genreData";
+import { genreData } from "@data/genreData";
 import GenreCard from "./GenreCard";
-import useFreeSliderDrag from "../../hooks/useFreeSliderDrag";
+import useFreeSliderDrag from "@hooks/useFreeSliderDrag";
 
 export default function GenresSlider() {
   const containerRef = useRef(null);

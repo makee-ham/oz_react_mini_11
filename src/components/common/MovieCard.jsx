@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
-import { TMDB_IMAGE_BASE_URL } from "../../constants/imageBaseUrl";
-import noPoster from "../assets/no-poster.webp";
-import {
-  addBookmark,
-  removeBookmark,
-  isBookmarked,
-} from "../../utils/bookmarkAPI";
-import { useSupabaseAuth } from "../../supabase"; // 경로 필요하면 조정!
+import { TMDB_IMAGE_BASE_URL } from "@constants/imageBaseUrl";
+import noPoster from "@assets/no-poster.webp";
+import { addBookmark, removeBookmark, isBookmarked } from "@utils/bookmarkAPI";
+import { useSupabaseAuth } from "@/supabase";
 import { useNavigate } from "react-router-dom";
 
 export default function MovieCard({ id, poster, title, score }) {

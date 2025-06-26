@@ -1,17 +1,13 @@
 import { useEffect, useState } from "react";
-import { TMDB_IMAGE_BASE_URL } from "../constants/imageBaseUrl";
-import useFetch from "../hooks/useFetch";
-import getMovieDetailsURL from "../utils/getMovieDetails";
+import { TMDB_IMAGE_BASE_URL } from "@constants/imageBaseUrl";
+import useFetch from "@hooks/useFetch";
+import getMovieDetailsURL from "@utils/getMovieDetails";
 import { useNavigate, useParams } from "react-router-dom";
-import { TMDB_API_OPTIONS } from "../constants/apiOptions";
-import MovieDetailSkeleton from "../components/skeletons/MovieDetailSkeleton";
-import {
-  addBookmark,
-  removeBookmark,
-  isBookmarked,
-} from "../utils/bookmarkAPI";
-import { useSupabaseAuth } from "../supabase";
-import SimilarMovieList from "../components/SimilarMovieList";
+import { TMDB_API_OPTIONS } from "@constants/apiOptions";
+import MovieDetailSkeleton from "@skeletons/MovieDetailSkeleton";
+import { addBookmark, removeBookmark, isBookmarked } from "@utils/bookmarkAPI";
+import { useSupabaseAuth } from "@/supabase";
+import SimilarMovieList from "@detailpage/SimilarMovieList";
 
 export default function MovieDetail() {
   const params = useParams();

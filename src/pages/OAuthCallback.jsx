@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSupabaseAuth } from "../supabase";
-import { useUserInfo } from "../contexts/UserInfoContext";
-import { useIsLogin } from "../contexts/IsLoginContext";
+import { useSupabaseAuth } from "@/supabase";
+import { useUserInfo } from "@contexts/UserInfoContext";
+import { useIsLogin } from "@contexts/IsLoginContext";
 
 export default function OAuthCallback() {
   const navigate = useNavigate();

@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useIsLogin } from "../contexts/IsLoginContext";
-import ProfileSection from "../components/MyPageComponents/ProfileSection";
-import BookmarkSection from "../components/MyPageComponents/BookmarkSection";
+import { useIsLogin } from "@contexts/IsLoginContext";
+import ProfileSection from "@mypage/ProfileSection";
+import BookmarkSection from "@mypage/BookmarkSection";
 
 export default function MyPage() {
   const [isLogin] = useIsLogin();

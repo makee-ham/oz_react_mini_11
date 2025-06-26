@@ -1,4 +1,4 @@
-import defaultThumb from "../assets/user.webp";
+import defaultThumb from "@assets/user.webp";
 
 export default function UserThumbnail({ onClick, thumbnail = defaultThumb }) {
   return (

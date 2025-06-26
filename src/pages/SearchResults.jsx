@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import MovieCard from "../components/MovieCard";
+import MovieCard from "@common/MovieCard";
 import { Link, useSearchParams } from "react-router-dom";
-import { TMDB_API_OPTIONS } from "../constants/apiOptions";
-import MovieCardSkeleton from "../components/skeletons/MovieCardSkeleton";
-import getSearchURL from "../utils/getSearchURL";
+import { TMDB_API_OPTIONS } from "@constants/apiOptions";
+import MovieCardSkeleton from "@skeletons/MovieCardSkeleton";
+import getSearchURL from "@utils/getSearchURL";
 
 export default function SearchResults() {
   const [movieData, setMovieData] = useState([]);

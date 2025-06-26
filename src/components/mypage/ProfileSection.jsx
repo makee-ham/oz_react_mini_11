@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from "react";
-import defaultThumb from "../../assets/user.webp";
-import { useUserInfo } from "../../contexts/UserInfoContext";
-import { validateName } from "../../utils/validation";
-import { useSupabase } from "../../supabase";
-import { USER_INFO_KEY, localStorageUtils } from "../../supabase/utilities";
+import defaultThumb from "@assets/user.webp";
+import { useUserInfo } from "@contexts/UserInfoContext";
+import { validateName } from "@utils/validation";
+import { useSupabase } from "@/supabase";
+import { USER_INFO_KEY, localStorageUtils } from "@/supabase/utilities";
 
 export default function ProfileSection() {
   const [userInfo, setUserInfo] = useUserInfo();

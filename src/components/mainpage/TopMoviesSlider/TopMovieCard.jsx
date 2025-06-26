@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { TMDB_IMAGE_BASE_URL } from "../../../constants/imageBaseUrl";
+import { TMDB_IMAGE_BASE_URL } from "@constants/imageBaseUrl";
 
 export default function TopMovieCard({
   data,

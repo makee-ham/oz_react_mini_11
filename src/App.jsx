@@ -1,17 +1,17 @@
 import { Route, Routes } from "react-router-dom";
-import MovieDetail from "./pages/MovieDetail";
-import Layout from "./layout/Layout";
-import SearchResults from "./pages/SearchResults";
-import SignUp from "./pages/SignUp";
-import LogIn from "./pages/LogIn";
+import MovieDetail from "@pages/MovieDetail";
+import Layout from "@layout/Layout";
+import SearchResults from "@pages/SearchResults";
+import SignUp from "@pages/SignUp";
+import LogIn from "@pages/LogIn";
 import { useSupabaseAuth } from "./supabase";
 import { useEffect } from "react";
-import { useUserInfo } from "./contexts/UserInfoContext";
-import { useIsLogin } from "./contexts/IsLoginContext";
-import MyPage from "./pages/MyPage";
-import OAuthCallback from "./pages/OAuthCallback";
-import GenrePage from "./pages/GenrePage";
-import Main from "./pages/Main";
+import { useUserInfo } from "@contexts/UserInfoContext";
+import { useIsLogin } from "@contexts/IsLoginContext";
+import MyPage from "@pages/MyPage";
+import OAuthCallback from "@pages/OAuthCallback";
+import GenrePage from "@pages/GenrePage";
+import Main from "@pages/Main";
 
 function App() {
   const { getUserInfo } = useSupabaseAuth();

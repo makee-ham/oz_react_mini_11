@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import MovieCard from "../components/MovieCard";
+import MovieCard from "@common/MovieCard";
 import { Link } from "react-router-dom";
-import { TMDB_API_OPTIONS } from "../constants/apiOptions";
-import MovieCardSkeleton from "../components/skeletons/MovieCardSkeleton";
-import { genreData } from "../data/genreData";
+import { TMDB_API_OPTIONS } from "@constants/apiOptions";
+import MovieCardSkeleton from "@skeletons/MovieCardSkeleton";
+import { genreData } from "@data/genreData";
 
 export default function GenrePage() {
   const { id } = useParams();

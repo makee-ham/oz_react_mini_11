@@ -1,14 +1,14 @@
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import FormInput from "../components/FormInput";
-import { validateEmail, validatePassword } from "../utils/validation";
-import bg from "../assets/formbg.webp";
-import { useSupabaseAuth } from "../supabase";
-import { useUserInfo } from "../contexts/UserInfoContext";
-import { useIsLogin } from "../contexts/IsLoginContext";
-import KakaoBtn from "../components/signBtns/KakaoBtn";
-import GoogleBtn from "../components/signBtns/GoogleBtn";
-import { USER_INFO_KEY, localStorageUtils } from "../supabase/utilities";
+import FormInput from "@signpages/FormInput";
+import { validateEmail, validatePassword } from "@utils/validation";
+import bg from "@assets/formbg.webp";
+import { useSupabaseAuth } from "@/supabase";
+import { useUserInfo } from "@contexts/UserInfoContext";
+import { useIsLogin } from "@contexts/IsLoginContext";
+import KakaoBtn from "@signpages/signBtns/KakaoBtn";
+import GoogleBtn from "@signpages/signBtns/GoogleBtn";
+import { USER_INFO_KEY, localStorageUtils } from "@/supabase/utilities";
 
 export default function LogIn() {
   const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import TopMoviesSlider from "../components/TopMoviesSlider/TopMoviesSlider";
-import GenresSlider from "../components/GenreSection/GenresSlider";
-import PopularMoviesList from "../components/PopularMoviesList";
+import TopMoviesSlider from "@mainpage/TopMoviesSlider/TopMoviesSlider";
+import GenresSlider from "@mainpage/GenreSection/GenresSlider";
+import PopularMoviesList from "@mainpage/PopularMoviesList";
 
 export default function Main() {
   useEffect(() => {
