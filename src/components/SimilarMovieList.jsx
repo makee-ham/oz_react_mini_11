@@ -73,7 +73,7 @@ export default function SimilarMovieList({ movieId }) {
         ))}
 
         {isFetching &&
-          Array.from({ length: 4 }).map((_, idx) => (
+          Array.from({ length: 8 }).map((_, idx) => (
             <MovieCardSkeleton key={`skeleton-${idx}`} />
           ))}
       </div>

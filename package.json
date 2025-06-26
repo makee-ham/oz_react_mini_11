@@ -1,14 +1,26 @@
 {
-  "name": "mini-project",
+  "name": "cinevisor",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "CineVisor | Discover, track, and bookmark your favorite movies – movie discovery platform built by React.",
   "type": "module",
+  "author": "Ham Seoyeon <ina0312@naver.com>",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "keywords": [
+    "react",
+    "vite",
+    "tailwindcss",
+    "movies",
+    "cinema",
+    "supabase",
+    "cinevisor"
+  ],
   "dependencies": {
     "@supabase/supabase-js": "^2.50.0",
     "@tailwindcss/vite": "^4.1.10",
@@ -28,5 +40,10 @@
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
     "vite": "^6.3.5"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/makee-ham/oz_react_mini_11"
+  },
+  "homepage": "oz-react-mini-11-nine.vercel.app"
 }
