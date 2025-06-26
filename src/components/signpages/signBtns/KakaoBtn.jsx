@@ -1,5 +1,5 @@
-import KakaoLogo from "../../assets/KakaoLogo";
-import { useSupabaseAuth } from "../../supabase";
+import KakaoLogo from "../../../assets/KakaoLogo";
+import { useSupabaseAuth } from "../../../supabase";
 
 export default function KakaoBtn({ label }) {
   const { loginWithKakao } = useSupabaseAuth();

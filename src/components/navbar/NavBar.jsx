@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import useDebounce from "../hooks/useDebounce";
-import toggleTheme from "../utils/toggleTheme";
-import Dark from "../assets/Dark";
-import Light from "../assets/Light";
-import Close from "../assets/Close";
-import SearchIcon from "../assets/SearchIcon";
-import Hamburger from "../assets/Hamburger";
-import { useIsLogin } from "../contexts/IsLoginContext";
+import useDebounce from "../../hooks/useDebounce";
+import toggleTheme from "../../utils/toggleTheme";
+import Dark from "../../assets/Dark";
+import Light from "../../assets/Light";
+import Close from "../../assets/Close";
+import SearchIcon from "../../assets/SearchIcon";
+import Hamburger from "../../assets/Hamburger";
+import { useIsLogin } from "../../contexts/IsLoginContext";
 import UserThumbnail from "./UserThumbnail";
-import { useSupabaseAuth } from "../supabase";
-import { useUserInfo } from "../contexts/UserInfoContext";
+import { useSupabaseAuth } from "../../supabase";
+import { useUserInfo } from "../../contexts/UserInfoContext";
 import defaultThumb from "../assets/user.webp";
 
 export default function NavBar() {

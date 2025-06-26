@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import MovieCard from "./MovieCard";
 import { Link } from "react-router-dom";
-import { POPULAR_MOVIES_DATA_URL } from "../constants/tmdbUrl";
-import { TMDB_API_OPTIONS } from "../constants/apiOptions";
-import MovieCardSkeleton from "./skeletons/MovieCardSkeleton";
+import { POPULAR_MOVIES_DATA_URL } from "../../constants/tmdbUrl";
+import { TMDB_API_OPTIONS } from "../../constants/apiOptions";
+import MovieCardSkeleton from "../skeletons/MovieCardSkeleton";
 
 export default function PopularMoviesList() {
   const [movieData, setMovieData] = useState([]);
