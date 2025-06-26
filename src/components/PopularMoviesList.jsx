@@ -1,21 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import MovieCard from "../components/MovieCard";
+import MovieCard from "./MovieCard";
 import { Link } from "react-router-dom";
-import TopMoviesSlider from "../components/TopMoviesSlider/TopMoviesSlider";
 import { POPULAR_MOVIES_DATA_URL } from "../constants/tmdbUrl";
 import { TMDB_API_OPTIONS } from "../constants/apiOptions";
-import MovieCardSkeleton from "../components/skeletons/MovieCardSkeleton";
-import GenresSlider from "../components/GenreSection/GenresSlider";
+import MovieCardSkeleton from "./skeletons/MovieCardSkeleton";
 
-export default function MovieCardsList() {
+export default function PopularMoviesList() {
   const [movieData, setMovieData] = useState([]);
   const [page, setPage] = useState(1);
   const [isFetching, setIsFetching] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   const fetchMovies = async (page) => {
     setIsFetching(true);
@@ -68,8 +62,6 @@ export default function MovieCardsList() {
 
   return (
     <>
-      <TopMoviesSlider />
-      <GenresSlider />
       <h2 className="text-2xl font-bold ml-10 mb-5 mt-10">인기 영화</h2>
       <section className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-6 w-full max-w-[1800px] mx-auto mt-5 px-6">
         {movieData.map((movie) => (

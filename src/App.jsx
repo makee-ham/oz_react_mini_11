@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import MovieCardsList from "./pages/MovieCardsList";
 import MovieDetail from "./pages/MovieDetail";
 import Layout from "./layout/Layout";
 import SearchResults from "./pages/SearchResults";
@@ -12,6 +11,7 @@ import { useIsLogin } from "./contexts/IsLoginContext";
 import MyPage from "./pages/MyPage";
 import OAuthCallback from "./pages/OAuthCallback";
 import GenrePage from "./pages/GenrePage";
+import Main from "./pages/Main";
 
 function App() {
   const { getUserInfo } = useSupabaseAuth();
@@ -36,7 +36,7 @@ function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path="/" element={<MovieCardsList />} />
+        <Route path="/" element={<Main />} />
         <Route path="/search" element={<SearchResults />} />
         <Route path="/details/:id" element={<MovieDetail />} />
         <Route path="/genres/:id" element={<GenrePage />} />
