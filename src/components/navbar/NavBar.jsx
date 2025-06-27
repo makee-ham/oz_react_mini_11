@@ -97,7 +97,14 @@ export default function NavBar() {
       )}
       <div className="flex items-center justify-between h-full px-4 text-(--text-default)">
         {/* 로고 */}
-        <Link to="/" onClick={() => setQuery("")}>
+        <Link
+          to="/"
+          onClick={() => {
+            setQuery("");
+            window.location.reload();
+            window.scrollTo(0, 0);
+          }}
+        >
           <h1 className="text-2xl sm:text-3xl font-logo tracking-wider">
             Cine
             <span className="text-(--point-color) text-3xl sm:text-4xl">V</span>

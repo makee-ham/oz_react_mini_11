@@ -118,12 +118,12 @@ export default function MovieDetail() {
             </button>
           </div>
 
-          {/* 줄거리 */}
+          {/* 시놉시스 */}
           <div className="bg-(--bg-secondary) p-4 rounded text-sm leading-relaxed">
             <p>
               {detailData.overview
                 ? detailData.overview
-                : "한국어로 작성된 줄거리가 아직 없습니다."}
+                : "한국어로 작성된 시놉시스가 아직 없습니다."}
             </p>
           </div>
         </article>
