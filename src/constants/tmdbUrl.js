@@ -7,3 +7,5 @@ export const TOP_RATED_MOVIES_DATA_URL =
 
 export const NOW_PLAYING_MOVIES_DATA_URL =
   BASE_URL + "/now_playing?language=ko-KR&page=1&region=KR";
+
+export const PERSON_URL = "https://api.themoviedb.org/3/person/";

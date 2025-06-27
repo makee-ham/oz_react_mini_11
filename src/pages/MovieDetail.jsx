@@ -129,8 +129,8 @@ export default function MovieDetail() {
         </article>
       </section>
 
-      <CreditSlider movieId={detailData.id} />
-      <SimilarMovieList movieId={detailData.id} />
+      {detailData.id && <CreditSlider movieId={detailData.id} />}
+      {detailData.id && <SimilarMovieList movieId={detailData.id} />}
     </>
   );
 }

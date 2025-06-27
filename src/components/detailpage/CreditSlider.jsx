@@ -63,7 +63,7 @@ export default function CreditSlider({ movieId }) {
           <div className="flex gap-3 overflow-x-hidden">
             <div
               key={credits.director.id}
-              onClick={() => navigate(credits.director)}
+              onClick={() => handleCardClick(credits.director)}
               className="shrink-0 w-[120px] flex flex-col items-center text-center cursor-pointer"
             >
               <img
