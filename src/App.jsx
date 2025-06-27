@@ -12,6 +12,7 @@ import MyPage from "@pages/MyPage";
 import OAuthCallback from "@pages/OAuthCallback";
 import GenrePage from "@pages/GenrePage";
 import Main from "@pages/Main";
+import PersonDetail from "./pages/PersonDetail";
 
 function App() {
   const { getUserInfo } = useSupabaseAuth();
@@ -40,6 +41,7 @@ function App() {
         <Route path="/search" element={<SearchResults />} />
         <Route path="/details/:id" element={<MovieDetail />} />
         <Route path="/genres/:id" element={<GenrePage />} />
+        <Route path="/person/:id" element={<PersonDetail />} />
         <Route path="/mypage" element={<MyPage />} />
       </Route>
 
