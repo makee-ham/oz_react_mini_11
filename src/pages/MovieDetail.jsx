@@ -9,6 +9,7 @@ import { addBookmark, removeBookmark, isBookmarked } from "@utils/bookmarkAPI";
 import { useSupabaseAuth } from "@/supabase";
 import SimilarMovieList from "@detailpage/SimilarMovieList";
 import noPoster from "@assets/no-poster.webp";
+import CreditSlider from "../components/detailpage/CreditSlider";
 
 export default function MovieDetail() {
   const params = useParams();
@@ -119,11 +120,16 @@ export default function MovieDetail() {
 
           {/* 줄거리 */}
           <div className="bg-(--bg-secondary) p-4 rounded text-sm leading-relaxed">
-            <p>{detailData.overview}</p>
+            <p>
+              {detailData.overview
+                ? detailData.overview
+                : "한국어로 작성된 줄거리가 아직 없습니다."}
+            </p>
           </div>
         </article>
       </section>
 
+      <CreditSlider movieId={detailData.id} />
       <SimilarMovieList movieId={detailData.id} />
     </>
   );
