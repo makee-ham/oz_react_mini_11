@@ -94,7 +94,7 @@ export default function SearchResults() {
         ))}
 
         {isFetching &&
-          Array.from({ length: 8 }).map((_, idx) => (
+          Array.from({ length: 9 }).map((_, idx) => (
             <MovieCardSkeleton key={`skeleton-${idx}`} />
           ))}
       </section>
