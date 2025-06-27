@@ -104,7 +104,7 @@ export default function TopMoviesSlider() {
   if (error) return <p>에러 발생: {error.message}</p>;
 
   return (
-    <section className="mt-30">
+    <section className="mt-20">
       <h2 className="text-2xl font-bold ml-10 mb-5">평점순 TOP 20</h2>
       <div
         className="flex flex-col gap-8 overflow-hidden select-none w-full"

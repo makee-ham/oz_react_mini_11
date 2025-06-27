@@ -69,3 +69,7 @@ body,
 button {
   cursor: pointer;
 }
+
+.swiper-progress .swiper-pagination-progressbar-fill {
+  background-color: #00ffff !important;
+}

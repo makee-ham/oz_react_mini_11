@@ -8,6 +8,7 @@ import MovieDetailSkeleton from "@skeletons/MovieDetailSkeleton";
 import { addBookmark, removeBookmark, isBookmarked } from "@utils/bookmarkAPI";
 import { useSupabaseAuth } from "@/supabase";
 import SimilarMovieList from "@detailpage/SimilarMovieList";
+import noPoster from "@assets/no-poster.webp";
 
 export default function MovieDetail() {
   const params = useParams();
@@ -72,7 +73,11 @@ export default function MovieDetail() {
         {/* 왼쪽: 포스터 */}
         <article className="w-[70%] md:w-[300px] aspect-[2/3] shrink-0 overflow-hidden rounded shadow-lg">
           <img
-            src={TMDB_IMAGE_BASE_URL + detailData.poster_path}
+            src={
+              detailData.poster_path
+                ? TMDB_IMAGE_BASE_URL + detailData.poster_path
+                : noPoster
+            }
             alt={detailData.title}
             className="w-full h-full object-cover"
           />
