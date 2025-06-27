@@ -88,35 +88,37 @@ export default function CreditSlider({ movieId }) {
       {credits.cast.length > 0 && (
         <article className="w-full mt-10">
           <h3 className="text-xl font-semibold mb-4">출연진</h3>
-          <div
-            ref={castSliderRef}
-            {...bindDrag(castSliderRef)}
-            className={`flex gap-3 overflow-x-hidden scrollbar-hide select-none cursor-grab active:cursor-grabbing`}
-          >
-            {credits.cast.map((person) => (
-              <div
-                key={person.id}
-                onClick={() => handleCardClick(person)}
-                className="shrink-0 w-[120px] flex flex-col items-center text-center cursor-pointer"
-              >
-                <img
-                  src={
-                    person.profile_path
-                      ? TMDB_IMAGE_BASE_URL + person.profile_path
-                      : noProfile
-                  }
-                  alt={person.name}
-                  draggable="false"
-                  className="w-24 h-24 rounded-full object-cover mb-2 select-none"
-                />
-                <span className="text-sm font-medium">{person.name}</span>
-                {person.character && (
-                  <span className="text-xs text-(--text-sub)">
-                    {person.character}
-                  </span>
-                )}
-              </div>
-            ))}
+          <div className="w-full overflow-hidden">
+            <div
+              ref={castSliderRef}
+              {...bindDrag(castSliderRef)}
+              className={`flex gap-3 overflow-x-hidden scrollbar-hide select-none cursor-grab active:cursor-grabbing`}
+            >
+              {credits.cast.map((person) => (
+                <div
+                  key={person.id}
+                  onClick={() => handleCardClick(person)}
+                  className="shrink-0 w-[120px] flex flex-col items-center text-center cursor-pointer"
+                >
+                  <img
+                    src={
+                      person.profile_path
+                        ? TMDB_IMAGE_BASE_URL + person.profile_path
+                        : noProfile
+                    }
+                    alt={person.name}
+                    draggable="false"
+                    className="w-24 h-24 rounded-full object-cover mb-2 select-none"
+                  />
+                  <span className="text-sm font-medium">{person.name}</span>
+                  {person.character && (
+                    <span className="text-xs text-(--text-sub)">
+                      {person.character}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </article>
       )}
