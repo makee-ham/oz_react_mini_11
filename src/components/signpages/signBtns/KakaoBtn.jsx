@@ -5,8 +5,8 @@ export default function KakaoBtn({ label }) {
   const { loginWithKakao } = useSupabaseAuth();
 
   const handleLogin = () => {
-    // loginWithKakao("http://localhost:5173/oauth/kakao");
-    loginWithKakao("https://oz-react-mini-11-nine.vercel.app/oauth/kakao");
+    loginWithKakao("http://localhost:5173/oauth/kakao");
+    // loginWithKakao("https://oz-react-mini-11-nine.vercel.app/oauth/kakao");
   };
 
   return (
