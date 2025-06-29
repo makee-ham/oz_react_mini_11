@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /login
+Disallow: /signup
+Disallow: /mypage
+Disallow: /api/
+
+Allow: /
