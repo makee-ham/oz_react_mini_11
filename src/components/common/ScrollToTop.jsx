@@ -22,7 +22,7 @@ export default function ScrollToTop() {
       onClick={scrollToTop}
       className={`fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 p-3 sm:p-4 rounded-full shadow-lg 
         bg-black/70 hover:bg-black transition-all duration-300
-        ${visible ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-4 pointer-events-none"}`}
+        ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
