@@ -4,8 +4,8 @@ export default function GoogleBtn({ label }) {
   const { loginWithGoogle } = useSupabaseAuth();
 
   const handleLogin = () => {
-    loginWithGoogle("http://localhost:5173/oauth/google");
-    // loginWithGoogle("https://oz-react-mini-11-nine.vercel.app/oauth/google");
+    // loginWithGoogle("http://localhost:5173/oauth/google");
+    loginWithGoogle("https://oz-react-mini-11-nine.vercel.app/oauth/google");
   };
 
   return (
