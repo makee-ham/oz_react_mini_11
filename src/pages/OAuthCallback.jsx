@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSupabaseAuth } from "@/supabase";
 import { useUserInfo } from "@contexts/UserInfoContext";
 import { useIsLogin } from "@contexts/IsLoginContext";
+import Meta from "@components/common/Meta";
 
 export default function OAuthCallback() {
   const navigate = useNavigate();
@@ -33,9 +34,12 @@ export default function OAuthCallback() {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen gap-4">
-      <div className="w-12 h-12 border-4 border-[#00ffff] border-t-transparent rounded-full animate-spin"></div>
-      <p className="text-sm text-(--text-sub)">로그인 처리 중입니다...</p>
-    </div>
+    <>
+      <Meta robots="noindex, follow" />
+      <div className="flex flex-col justify-center items-center h-screen gap-4">
+        <div className="w-12 h-12 border-4 border-[#00ffff] border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-sm text-(--text-sub)">로그인 처리 중입니다...</p>
+      </div>
+    </>
   );
 }

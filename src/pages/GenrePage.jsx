@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { TMDB_API_OPTIONS } from "@constants/apiOptions";
 import MovieCardSkeleton from "@skeletons/MovieCardSkeleton";
 import { genreData } from "@data/genreData";
+import { detailedKeywords } from "@constants/metaKeywords";
+import Meta from "@components/common/Meta";
 
 export default function GenrePage() {
   const { id } = useParams();
@@ -73,6 +75,12 @@ export default function GenrePage() {
 
   return (
     <>
+      <Meta
+        title={`${genreName} 장르 영화 | CineVisor`}
+        url={`https://oz-react-mini-11-nine.vercel.app/genres/${id}`}
+        description={`${genreName} 장르 영화`}
+        keywords={detailedKeywords(genreName)}
+      />
       <h2 className="text-2xl font-bold mt-30 ml-4 mb-6 px-6">
         {genreName} 장르 영화
       </h2>

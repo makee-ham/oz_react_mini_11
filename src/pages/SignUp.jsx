@@ -11,6 +11,7 @@ import {
 import { useSupabase, useSupabaseAuth } from "@/supabase";
 import KakaoBtn from "@signpages/signBtns/KakaoBtn";
 import GoogleBtn from "@signpages/signBtns/GoogleBtn";
+import Meta from "@components/common/Meta";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -120,82 +121,91 @@ export default function SignUp() {
   };
 
   return (
-    <section className="relative w-full h-screen flex justify-center items-center overflow-hidden bg-[#0f0f0f] text-[#f1f1f1]">
-      {/* 배경 이미지 */}
-      <div
-        className="absolute inset-0 bg-cover bg-center blur-sm opacity-60"
-        style={{ backgroundImage: `url(${bg})` }}
-      ></div>
+    <>
+      <Meta
+        title="회원가입 | CineVisor"
+        robots="noindex, follow"
+        url={`https://oz-react-mini-11-nine.vercel.app/signup`}
+      />
+      <section className="relative w-full h-screen flex justify-center items-center overflow-hidden bg-[#0f0f0f] text-[#f1f1f1]">
+        {/* 배경 이미지 */}
+        <div
+          className="absolute inset-0 bg-cover bg-center blur-sm opacity-60"
+          style={{ backgroundImage: `url(${bg})` }}
+        ></div>
 
-      {/* 로그인 카드 */}
-      <div className="relative z-10 flex flex-col gap-5 p-8 rounded-2xl bg-[#0f0f0f]/70 backdrop-blur-md shadow-lg w-[90%] max-w-sm">
-        <Link to="/" className="self-center">
-          <h1 className="text-3xl sm:text-4xl font-logo tracking-widest">
-            Cine
-            <span className="text-[#00ffff] text-4xl sm:text-5xl ml-1">V</span>
-            isor
-          </h1>
-        </Link>
-
-        <FormInput
-          label="이메일"
-          type="email"
-          placeholder="이메일 형식 사용"
-          inputRef={emailRef}
-          validation={errors.email}
-          onInput={() => handleInput("email")}
-        />
-        <FormInput
-          label="이름"
-          type="text"
-          placeholder="2~8자 사이 숫자, 한글, 영어만 사용"
-          inputRef={nameRef}
-          validation={errors.name}
-          onInput={() => handleInput("name")}
-        />
-        <FormInput
-          label="비밀번호"
-          type="password"
-          placeholder="영어 대소문자 + 숫자의 조합 8자 이상"
-          inputRef={passwordRef}
-          validation={errors.password}
-          onInput={() => handleInput("password")}
-        />
-        <FormInput
-          label="비밀번호 확인"
-          type="password"
-          placeholder="비밀번호 일치 여부 확인"
-          inputRef={confirmRef}
-          validation={errors.confirm}
-          onInput={() => handleInput("confirm")}
-        />
-
-        <button
-          onClick={handleSubmit}
-          className="bg-linear-to-r from-cyan-500 to-blue-500 text-black font-bold py-2 rounded hover:opacity-90 transition"
-        >
-          회원가입
-        </button>
-
-        <div className="text-sm text-center text-[#aaaaaa]">
-          이미 가입하셨나요?{" "}
-          <Link
-            to="/login"
-            className="text-[#00ffff] font-semibold hover:underline"
-          >
-            로그인하기
+        {/* 로그인 카드 */}
+        <div className="relative z-10 flex flex-col gap-5 p-8 rounded-2xl bg-[#0f0f0f]/70 backdrop-blur-md shadow-lg w-[90%] max-w-sm">
+          <Link to="/" className="self-center">
+            <h1 className="text-3xl sm:text-4xl font-logo tracking-widest">
+              Cine
+              <span className="text-[#00ffff] text-4xl sm:text-5xl ml-1">
+                V
+              </span>
+              isor
+            </h1>
           </Link>
-        </div>
 
-        <div className="flex items-center gap-4 text-xs text-[#aaaaaa]/70 my-4">
-          <hr className="flex-grow border-t border-[#aaaaaa]/45" />
-          <span>또는</span>
-          <hr className="flex-grow border-t border-[#aaaaaa]/45" />
-        </div>
+          <FormInput
+            label="이메일"
+            type="email"
+            placeholder="이메일 형식 사용"
+            inputRef={emailRef}
+            validation={errors.email}
+            onInput={() => handleInput("email")}
+          />
+          <FormInput
+            label="이름"
+            type="text"
+            placeholder="2~8자 사이 숫자, 한글, 영어만 사용"
+            inputRef={nameRef}
+            validation={errors.name}
+            onInput={() => handleInput("name")}
+          />
+          <FormInput
+            label="비밀번호"
+            type="password"
+            placeholder="영어 대소문자 + 숫자의 조합 8자 이상"
+            inputRef={passwordRef}
+            validation={errors.password}
+            onInput={() => handleInput("password")}
+          />
+          <FormInput
+            label="비밀번호 확인"
+            type="password"
+            placeholder="비밀번호 일치 여부 확인"
+            inputRef={confirmRef}
+            validation={errors.confirm}
+            onInput={() => handleInput("confirm")}
+          />
 
-        <KakaoBtn label="Sign up with Kakao" />
-        <GoogleBtn label="Sign up with Google" />
-      </div>
-    </section>
+          <button
+            onClick={handleSubmit}
+            className="bg-linear-to-r from-cyan-500 to-blue-500 text-black font-bold py-2 rounded hover:opacity-90 transition"
+          >
+            회원가입
+          </button>
+
+          <div className="text-sm text-center text-[#aaaaaa]">
+            이미 가입하셨나요?{" "}
+            <Link
+              to="/login"
+              className="text-[#00ffff] font-semibold hover:underline"
+            >
+              로그인하기
+            </Link>
+          </div>
+
+          <div className="flex items-center gap-4 text-xs text-[#aaaaaa]/70 my-4">
+            <hr className="flex-grow border-t border-[#aaaaaa]/45" />
+            <span>또는</span>
+            <hr className="flex-grow border-t border-[#aaaaaa]/45" />
+          </div>
+
+          <KakaoBtn label="Sign up with Kakao" />
+          <GoogleBtn label="Sign up with Google" />
+        </div>
+      </section>
+    </>
   );
 }

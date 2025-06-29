@@ -1,8 +1,10 @@
 import { useNavigate, useParams } from "react-router-dom";
 import useFetch from "@hooks/useFetch";
 import { TMDB_API_OPTIONS } from "@constants/apiOptions";
-import { PERSON_URL } from "../constants/tmdbUrl";
+import { PERSON_URL } from "@constants/tmdbUrl";
 import MovieCard from "@common/MovieCard";
+import Meta from "@components/common/Meta";
+import { detailedKeywords } from "@constants/metaKeywords";
 
 export default function PersonDetail() {
   const { id } = useParams();
@@ -39,59 +41,67 @@ export default function PersonDetail() {
   const acted = data.cast ?? [];
 
   return (
-    <section className="max-w-5xl mx-auto px-4 md:px-8 mt-30">
-      <h1 className="text-2xl font-bold mb-4">
-        {personInfo?.name} 님의 작품들
-      </h1>
+    <>
+      <Meta
+        title={`${personInfo?.name} | CineVisor`}
+        url={`https://oz-react-mini-11-nine.vercel.app/person/${personInfo?.id}`}
+        description={`${personInfo?.name} 작품들`}
+        keywords={detailedKeywords(personInfo?.name)}
+      />
+      <section className="max-w-5xl mx-auto px-4 md:px-8 mt-30">
+        <h1 className="text-2xl font-bold mb-4">
+          {personInfo?.name} 님의 작품들
+        </h1>
 
-      {directed.length > 0 && (
-        <div className="bg-[rgba(255,255,255,0.02)] p-6 rounded-xl mb-12 shadow-md">
-          <h2 className="text-xl font-bold mb-4 border-b pb-2 border-(--line-color) flex items-center gap-2">
-            연출작
-          </h2>
-          <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            {directed.map((movie) => (
-              <li
-                key={movie.id}
-                onClick={() => navigate(`/details/${movie.id}`)}
-                className="cursor-pointer"
-              >
-                <MovieCard
-                  id={movie.id}
-                  poster={movie.poster_path}
-                  title={movie.title}
-                  score={Math.round(movie.vote_average * 10) / 10}
-                />
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+        {directed.length > 0 && (
+          <div className="bg-[rgba(255,255,255,0.02)] p-6 rounded-xl mb-12 shadow-md">
+            <h2 className="text-xl font-bold mb-4 border-b pb-2 border-(--line-color) flex items-center gap-2">
+              연출작
+            </h2>
+            <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              {directed.map((movie) => (
+                <li
+                  key={movie.id}
+                  onClick={() => navigate(`/details/${movie.id}`)}
+                  className="cursor-pointer"
+                >
+                  <MovieCard
+                    id={movie.id}
+                    poster={movie.poster_path}
+                    title={movie.title}
+                    score={Math.round(movie.vote_average * 10) / 10}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
-      {acted.length > 0 && (
-        <div className="bg-[rgba(255,255,255,0.015)] p-6 rounded-xl mb-12 shadow-inner">
-          <h2 className="text-xl font-bold mb-4 border-b pb-2 border-(--line-color) flex items-center gap-2">
-            출연작
-          </h2>
-          <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            {acted.map((movie) => (
-              <li
-                key={movie.id}
-                onClick={() => navigate(`/details/${movie.id}`)}
-                className="cursor-pointer"
-              >
-                <MovieCard
-                  id={movie.id}
-                  poster={movie.poster_path}
-                  title={movie.title}
-                  score={Math.round(movie.vote_average * 10) / 10}
-                />
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      <div className="h-8"></div>
-    </section>
+        {acted.length > 0 && (
+          <div className="bg-[rgba(255,255,255,0.015)] p-6 rounded-xl mb-12 shadow-inner">
+            <h2 className="text-xl font-bold mb-4 border-b pb-2 border-(--line-color) flex items-center gap-2">
+              출연작
+            </h2>
+            <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              {acted.map((movie) => (
+                <li
+                  key={movie.id}
+                  onClick={() => navigate(`/details/${movie.id}`)}
+                  className="cursor-pointer"
+                >
+                  <MovieCard
+                    id={movie.id}
+                    poster={movie.poster_path}
+                    title={movie.title}
+                    score={Math.round(movie.vote_average * 10) / 10}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <div className="h-8"></div>
+      </section>
+    </>
   );
 }

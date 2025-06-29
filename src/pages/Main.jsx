@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import TopMoviesSlider from "@mainpage/TopMoviesSlider/TopMoviesSlider";
 import GenresSlider from "@mainpage/GenreSection/GenresSlider";
 import PopularMoviesList from "@mainpage/PopularMoviesList";
-import NowPlayingSlider from "../components/mainpage/NowPlayingSlider/NowPlayingSlider";
+import NowPlayingSlider from "@components/mainpage/NowPlayingSlider/NowPlayingSlider";
+import Meta from "@components/common/Meta";
 
 export default function Main() {
   useEffect(() => {
@@ -11,6 +12,7 @@ export default function Main() {
 
   return (
     <>
+      <Meta />
       <NowPlayingSlider />
       <TopMoviesSlider />
       <GenresSlider />

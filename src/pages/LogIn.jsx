@@ -9,6 +9,7 @@ import { useIsLogin } from "@contexts/IsLoginContext";
 import KakaoBtn from "@signpages/signBtns/KakaoBtn";
 import GoogleBtn from "@signpages/signBtns/GoogleBtn";
 import { USER_INFO_KEY, localStorageUtils } from "@/supabase/utilities";
+import Meta from "@components/common/Meta";
 
 export default function LogIn() {
   const navigate = useNavigate();
@@ -85,64 +86,73 @@ export default function LogIn() {
   };
 
   return (
-    <section className="relative w-full h-screen flex justify-center items-center overflow-hidden bg-[#0f0f0f] text-[#f1f1f1]">
-      <div
-        className="absolute inset-0 bg-cover bg-center blur-sm opacity-60"
-        style={{ backgroundImage: `url(${bg})` }}
-      ></div>
+    <>
+      <Meta
+        title="로그인 | CineVisor"
+        robots="noindex, follow"
+        url={`https://oz-react-mini-11-nine.vercel.app/login`}
+      />
+      <section className="relative w-full h-screen flex justify-center items-center overflow-hidden bg-[#0f0f0f] text-[#f1f1f1]">
+        <div
+          className="absolute inset-0 bg-cover bg-center blur-sm opacity-60"
+          style={{ backgroundImage: `url(${bg})` }}
+        ></div>
 
-      <div className="relative z-10 flex flex-col gap-5 p-8 rounded-2xl bg-[#0f0f0f]/70 backdrop-blur-md shadow-lg w-[90%] max-w-sm">
-        <Link to="/" className="self-center">
-          <h1 className="text-3xl sm:text-4xl font-logo tracking-widest">
-            Cine
-            <span className="text-[#00ffff] text-4xl sm:text-5xl ml-1">V</span>
-            isor
-          </h1>
-        </Link>
-
-        <FormInput
-          label="이메일"
-          type="email"
-          placeholder="이메일을 입력해주세요"
-          inputRef={emailRef}
-          validation={errors.email}
-          onInput={() => handleInput("email")}
-        />
-        <FormInput
-          label="비밀번호"
-          type="password"
-          placeholder="비밀번호를 입력해주세요"
-          inputRef={passwordRef}
-          validation={errors.password}
-          onInput={() => handleInput("password")}
-        />
-
-        <button
-          onClick={handleSubmit}
-          className="bg-gradient-to-r from-cyan-500 to-blue-500 text-black font-bold py-2 rounded hover:opacity-90 transition"
-        >
-          로그인
-        </button>
-
-        <div className="text-sm text-center text-[#aaaaaa]">
-          아직 계정이 없으신가요?{" "}
-          <Link
-            to="/signup"
-            className="text-[#00ffff] font-semibold hover:underline"
-          >
-            간편 가입하기
+        <div className="relative z-10 flex flex-col gap-5 p-8 rounded-2xl bg-[#0f0f0f]/70 backdrop-blur-md shadow-lg w-[90%] max-w-sm">
+          <Link to="/" className="self-center">
+            <h1 className="text-3xl sm:text-4xl font-logo tracking-widest">
+              Cine
+              <span className="text-[#00ffff] text-4xl sm:text-5xl ml-1">
+                V
+              </span>
+              isor
+            </h1>
           </Link>
-        </div>
 
-        <div className="flex items-center gap-4 text-xs text-[#aaaaaa]/70 my-4">
-          <hr className="flex-grow border-t border-[#aaaaaa]/45" />
-          <span>또는</span>
-          <hr className="flex-grow border-t border-[#aaaaaa]/45" />
-        </div>
+          <FormInput
+            label="이메일"
+            type="email"
+            placeholder="이메일을 입력해주세요"
+            inputRef={emailRef}
+            validation={errors.email}
+            onInput={() => handleInput("email")}
+          />
+          <FormInput
+            label="비밀번호"
+            type="password"
+            placeholder="비밀번호를 입력해주세요"
+            inputRef={passwordRef}
+            validation={errors.password}
+            onInput={() => handleInput("password")}
+          />
 
-        <KakaoBtn label="Sign in with Kakao" />
-        <GoogleBtn label="Sign in with Google" />
-      </div>
-    </section>
+          <button
+            onClick={handleSubmit}
+            className="bg-gradient-to-r from-cyan-500 to-blue-500 text-black font-bold py-2 rounded hover:opacity-90 transition"
+          >
+            로그인
+          </button>
+
+          <div className="text-sm text-center text-[#aaaaaa]">
+            아직 계정이 없으신가요?{" "}
+            <Link
+              to="/signup"
+              className="text-[#00ffff] font-semibold hover:underline"
+            >
+              간편 가입하기
+            </Link>
+          </div>
+
+          <div className="flex items-center gap-4 text-xs text-[#aaaaaa]/70 my-4">
+            <hr className="flex-grow border-t border-[#aaaaaa]/45" />
+            <span>또는</span>
+            <hr className="flex-grow border-t border-[#aaaaaa]/45" />
+          </div>
+
+          <KakaoBtn label="Sign in with Kakao" />
+          <GoogleBtn label="Sign in with Google" />
+        </div>
+      </section>
+    </>
   );
 }

@@ -4,6 +4,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { TMDB_API_OPTIONS } from "@constants/apiOptions";
 import MovieCardSkeleton from "@skeletons/MovieCardSkeleton";
 import getSearchURL from "@utils/getSearchURL";
+import Meta from "@components/common/Meta";
 
 export default function SearchResults() {
   const [movieData, setMovieData] = useState([]);
@@ -73,6 +74,7 @@ export default function SearchResults() {
 
   return (
     <>
+      <Meta title={`검색 | CineVisor`} description={`검색 페이지`} />
       <section className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-6 w-full max-w-[1800px] mx-auto mt-30 px-6">
         {movieData.length === 0 && !isFetching && (
           <p className="col-span-full text-center mt-20 text-lg text-(--text-sub)">

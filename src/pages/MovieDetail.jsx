@@ -9,7 +9,10 @@ import { addBookmark, removeBookmark, isBookmarked } from "@utils/bookmarkAPI";
 import { useSupabaseAuth } from "@/supabase";
 import SimilarMovieList from "@detailpage/SimilarMovieList";
 import noPoster from "@assets/no-poster.webp";
-import CreditSlider from "../components/detailpage/CreditSlider";
+import CreditSlider from "@components/detailpage/CreditSlider";
+import Meta from "@components/common/Meta";
+import logo from "/cvIcon.webp";
+import { detailedKeywords } from "@constants/metaKeywords";
 
 export default function MovieDetail() {
   const params = useParams();
@@ -70,6 +73,21 @@ export default function MovieDetail() {
 
   return (
     <>
+      <Meta
+        title={`${detailData.title} | CineVisor`}
+        image={
+          detailData.poster_path
+            ? TMDB_IMAGE_BASE_URL + detailData.poster_path
+            : logo
+        }
+        url={`https://oz-react-mini-11-nine.vercel.app/details/${detailData.id}`}
+        description={
+          detailData.overview
+            ? detailData.overview
+            : "한국어로 작성된 시놉시스가 아직 없습니다."
+        }
+        keywords={detailedKeywords(detailData.title)}
+      />
       <section className="flex flex-col md:flex-row items-center md:items-start gap-10 w-full max-w-5xl mx-auto mt-30 px-4 md:px-8">
         {/* 왼쪽: 포스터 */}
         <article className="w-[70%] md:w-[300px] aspect-[2/3] shrink-0 overflow-hidden rounded shadow-lg">
