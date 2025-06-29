@@ -76,7 +76,7 @@ export default function GenrePage() {
   return (
     <>
       <Meta
-        title={`${genreName} 장르 영화 | CineVisor`}
+        title={`${genreName} | CineVisor`}
         url={`https://oz-react-mini-11-nine.vercel.app/genres/${id}`}
         description={`${genreName} 장르 영화`}
         keywords={detailedKeywords(genreName)}
@@ -103,7 +103,7 @@ export default function GenrePage() {
         ))}
 
         {isFetching &&
-          Array.from({ length: 20 }).map((_, idx) => (
+          Array.from({ length: 18 }).map((_, idx) => (
             <MovieCardSkeleton key={`skeleton-${idx}`} />
           ))}
       </section>

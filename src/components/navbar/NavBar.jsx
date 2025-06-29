@@ -55,9 +55,9 @@ export default function NavBar() {
     alert("로그아웃 되었습니다.");
   };
 
-  // TODO 검색어 없으면 검색 페이지에서 안내하도록 (지금은 home으로 가게 해둠)
-  // TODO 왓챠처럼, 검색 페이지로 검색 버튼 누르면 아예 넘어가게 - handleSearchClick에서 navigate("/search"); 하게 하고 페이지 만들고
-  // TODO 이건 진짜 하고싶음 하는 건데 모바일 버전 넘어가선 아예 맨 밑에.. 하단에 내비게이션 고정 (진짜 앱처럼...)
+  // @TODO 검색어 없으면 검색 페이지에서 안내하도록 (지금은 home으로 가게 해둠)
+  // 왓챠처럼, 검색 페이지로 검색 버튼 누르면 아예 넘어가게 - handleSearchClick에서 navigate("/search"); 하게 하고 페이지 만들고
+  // 모바일 버전 넘어가선 아예 맨 밑에.. 하단에 내비게이션 고정 (진짜 앱처럼...)
 
   const debouncedQuery = useDebounce(query);
 
@@ -69,10 +69,9 @@ export default function NavBar() {
     }
   }, [debouncedQuery]);
 
-  // TODO 검색하다가 타이틀 누르거나 해서 홈 페이지 갔을 때 검색어 지워져야
   return (
     <header className="fixed top-0 left-0 w-full h-20 z-50 bg-(--bg-secondary)">
-      {/* TODO 아래 조건부렌더링은 모바일/태블릿용인데, 추후 버튼이나 검색 방식 등 조정하여 UX/UI 개선하기... */}
+      {/* @TODO 아래 조건부렌더링은 모바일/태블릿용인데, 추후 버튼이나 검색 방식 등 조정하여 UX/UI 개선하기... */}
       {isSearchActive && (
         <div className="absolute top-0 left-0 w-full h-20 bg-(--bg-secondary) px-4 flex items-center gap-2 z-50 md:hidden">
           <input

@@ -28,7 +28,7 @@ export default function PersonDetail() {
   if (error)
     return (
       <div className="flex flex-col justify-center items-center h-screen gap-4">
-        <div className="text-2xl text-red-400">🚫 에러 발생</div>
+        <div className="text-2xl text-(--point-sub-color)">🚫 에러 발생</div>
         <p className="text-sm text-(--text-sub)">
           작품 정보를 불러오는 중 문제가 발생했어요.
           <br />
